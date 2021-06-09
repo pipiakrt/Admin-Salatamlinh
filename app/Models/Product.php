@@ -16,11 +16,15 @@ class Product extends MySQL
     protected $fillable = [
         'name',
         'slug',
-        'image',
+        'avatar',
+        'video',
+        'price',
+        'discount',
         'description',
         'content',
         'status',
-        'category_id'
+        'category_id',
+        'owner_id',
     ];
 
     protected $casts = [

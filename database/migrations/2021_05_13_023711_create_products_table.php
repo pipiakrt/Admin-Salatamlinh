@@ -16,10 +16,14 @@ class CreatePostsTable extends Migration
         Schema::create('products', function (Blueprint $table) {
             $table->id('_id');
             $table->integer('category_id')->index();
+            $table->string('owner_id')->index();
             $table->string('name')->index();
             $table->string('slug')->index();
-            $table->string('image');
-            $table->text('description')->nullable()->index();
+            $table->string('avatar');
+            $table->string('video')->index();
+            $table->integer('price')->index();
+            $table->integer('discount')->index();
+            $table->text('description')->nullable();
             $table->longText('content')->nullable();
             $table->boolean('status')->index();
             $table->timestamps();

@@ -39,8 +39,7 @@ class ProductController extends Controller
      */
     public function store(Request $request)
     {
-        $category = Category::find($request->category_id);
-        return $product = $category->Posts()->create($request->all());
+        return $product = Model::create($request->all());
     }
 
     /**
