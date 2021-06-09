@@ -1,0 +1,296 @@
+<template>
+<div class="content d-flex flex-column flex-column-fluid" id="kt_content">
+    <Breadcrumb :data="subHeader" />
+    <div class="d-flex flex-column-fluid">
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class='col-md-12'>
+                    <div class="card card-custom gutter-b example example-compact">
+                        <div class="card-header">
+                            <h3 class="card-title">Thông tin chung</h3>
+                        </div>
+                        <form ref="FormPost">
+                            <ValidationObserver ref="errors">
+                                <div class="card-body">
+                                    <div class="form-group mb">
+                                        <div class="alert alert-custom alert-default" role="alert">
+                                            <div class="alert-icon">
+                                                <i class="ki ki-outline-info icon-2x text-primary"></i>
+                                            </div>
+                                            <div class="alert-text">Lưu ý <code>URL</code> Không nên để khoảng trống!</div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label for="name" class="col-2 col-form-label">Tên</label>
+                                        <div class="col-10">
+                                            <validation-provider rules="required|length:0,255" v-slot="{ errors }">
+                                                <input v-model="name" class="form-control" type="text" placeholder="Tên bài viết" />
+                                                <div v-if="errors[0]" class="invalid-feedback d-block" v-text="errors[0]"></div>
+                                            </validation-provider>
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label for="slug" class="col-2 col-form-label">URL</label>
+                                        <div class="col-10">
+                                            <validation-provider rules="required|length:0,255" v-slot="{ errors }">
+                                                <input v-model="slug" class="form-control" type="search" placeholder="Đường dấn" />
+                                                <div v-if="errors[0]" class="invalid-feedback d-block" v-text="errors[0]"></div>
+                                            </validation-provider>
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label for="categories" class="col-2 col-form-label">Danh mục</label>
+                                        <div class="col-10">
+                                            <validation-provider rules="required" v-slot="{ errors }">
+                                                <select v-model="category" class="form-control" style="height: 35px">
+                                                    <option value="" selected>Chọn danh mục</option>
+                                                    <option v-for="item in categories" :key="item.id" v-text="item.name" :value="item.id"></option>
+                                                </select>
+                                                <div v-if="errors[0]" class="invalid-feedback d-block" v-text="errors[0]"></div>
+                                            </validation-provider>
+                                        </div>
+                                    </div>
+                                    <div v-if="false" class="form-group row">
+                                        <label for="keyword" class="col-2 col-form-label">Ảnh bài viết</label>
+                                        <div class="col-10">
+                                            <validation-provider rules="required|length:0,255" v-slot="{ errors }">
+                                                <div class="image-input image-input-outline" id="kt_image_4" style="background-position: center; background-image: url(/img/blank.png);">
+                                                    <div class="image-input-wrapper" :style="preview ? { 'background-image': 'url(' + preview + ')' } : ''"></div>
+                                                    <label @click="setTypeGetImg(), modal = true" data-toggle="modal" data-target="#filemanager" class="btn btn-xs btn-icon btn-circle btn-white btn-hover-text-primary btn-shadow" data-action="change">
+                                                        <i class="fa fa-pen icon-sm text-muted"></i>
+                                                    </label>
+                                                    <input v-model="preview" type="text" hidden>
+                                                    <span v-if="preview" @click="preview = ''" class="btn btn-xs btn-icon btn-circle btn-white btn-hover-text-primary btn-shadow" data-action="remove">
+                                                        <i class="ki ki-bold-close icon-xs text-muted"></i>
+                                                    </span>
+                                                </div>
+                                                <div v-if="errors[0]" class="invalid-feedback d-block" v-text="errors[0]"></div>
+                                            </validation-provider>
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label for="description" class="col-2 col-form-label">Mô tả</label>
+                                        <div class="col-10">
+                                            <validation-provider rules="required|length:0,65535" v-slot="{ errors }">
+                                                <textarea v-model="description" class="form-control" placeholder="Mô tả" rows="9" id="description"></textarea>
+                                                <div v-if="errors[0]" class="invalid-feedback d-block" v-text="errors[0]"></div>
+                                            </validation-provider>
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label for="kt_summernote_1" class="col-2 col-form-label">Nội dung</label>
+                                        <div class="col-10">
+                                            <div class="summernote" id="kt_summernote_1"></div>
+                                            <div v-if="errorContent" class="invalid-feedback d-block">Không được để trống</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </ValidationObserver>
+                        </form>
+                        <div class="card-footer text-center">
+                            <router-link to="/san-pham/danh-sach" type="reset" class="btn btn-light-primary mr-1 font-weight-bolder"><i class="icon-sm ki ki-long-arrow-back"></i> Quay Lại</router-link>
+                            <button type="reset" @click="submit(1)" class="btn btn-primary mr-1"><i class="icon-sm ki ki-bold-check-1   "></i> Lưu Bài Viết</button>
+                            <button type="reset" @click="submit(0)" class="btn btn-primary mr-1"><i class="icon-sm ki ki-info"></i> Lưu Ẩn</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div v-if="modal" class="modal fade" id="filemanager">
+        <div class="modal-dialog modal-full min-vh-100">
+            <div class="modal-content min-vh-100">
+                <div class="modal-body">
+                    <FileManage :getUrl="true" @url="setUrl($event)"/>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</template>
+<script>
+import Extends from '../../extend';
+import Breadcrumb from '../../components/breadcrumb/index'
+import FileManage from '../../components/FileManager/index'
+import { ValidationObserver, ValidationProvider, extend } from 'vee-validate';
+import { required } from 'vee-validate/dist/rules';
+extend('required', {
+    ...required,
+    message: 'Không được để trống'
+});
+extend('length', {
+    validate(value, { min, max }) {
+        return value.length >= min && value.length <= max;
+    },
+    params: ['min', 'max'],
+    message: 'Độ dài không hợp lệ'
+});
+var typeimage = 'avatar';
+export default {
+    components: { FileManage, Breadcrumb, ValidationProvider, ValidationObserver },
+    data() {
+        return {
+            subHeader: {
+                links: [
+                    {
+                        name: 'Bài viết',
+                        url: '/san-pham/danh-sach',
+                    },
+                    {
+                        name: 'Thêm mới',
+                        url: '/san-pham/them-moi',
+                    },
+                ],
+                action: {
+                    url: '/san-pham/danh-sach',
+                    icon: 'icon-sm ki ki-long-arrow-back',
+                    text: 'Danh Sách',
+                }
+            },
+            modal: false,
+            name: '',
+            file: '',
+            preview: window.location.origin + '/img/post.png',
+            slug: '',
+            description: '',
+            categories: [],
+            category: '',
+            keyword: '',
+            content: '',
+            errorCategories: false,
+            errorKeyword: false,
+            errorContent: false
+        }
+    },
+    watch: {
+        name() {
+            this.slug = Extends.ChangeToSlug(this.name)
+        },
+    },
+    mounted() {
+        Extends.LoadPage()
+        axios('/api/category-post').then(res => {
+            this.categories = res.data.data
+            KTApp.unblockPage();
+            KTUtil.ready(function () {
+                var HelloButton = function (context) {
+                var ui = $.summernote.ui;
+                var button = ui.button({
+                    contents: '<i class="fa far fa-folder"/>',
+                    tooltip: 'Folder',
+                    click: function () {
+                        typeimage = 'summernote';
+                        $('#filemanager').modal('show');
+                    }
+                });
+                return button.render(); 
+                }
+                $('.summernote').summernote({
+                    height: 350,
+                    toolbar: [
+                        ['style', ['style']],
+                        ['font', ['bold', 'underline', 'clear']],
+                        ['color', ['color']],
+                        ['para', ['ul', 'ol', 'paragraph']],
+                        ['table', ['table']],
+                        ['insert', ['link', 'picture', 'video']],
+                        ['mybutton', ['hello']],
+                        ['view', ['fullscreen', 'codeview', 'help']]
+                    ],
+                    buttons: {
+                        hello: HelloButton
+                    },
+                    callbacks: {
+                        onImageUpload: function(files) {
+                            let formdata = new FormData();
+                            formdata.append("file", files[0]);
+                            formdata.append("summernote", true);
+                            axios.post('/api/images', formdata).then(res => {
+                                var image = $('<img>').attr('src', res.data);
+                                $('.summernote').summernote("insertNode", image[0]);
+                            })
+                        },
+                    },
+                });
+            });
+        })
+    },
+    methods: {
+        setTypeGetImg() {
+            typeimage = 'avatar'
+        },
+        setUrl(path) {
+            $('#filemanager').modal('hide');
+            if (typeimage == 'summernote') {
+                var image = $('<img>').attr('src', path);
+                $('.summernote').summernote("insertNode", image[0]);
+            }
+            else {
+                this.preview = path
+            }
+        },
+        async submit(status) {
+            if (await this.errors() && await this.checkFromExtend()) {
+                let params = {
+                    name: this.name,
+                    slug: this.slug,
+                    category_id: this.category,
+                    keyword: this.keyword,
+                    image: this.preview,
+                    description: this.description,
+                    content: this.content,
+                    status: String(status),
+                }
+                KTApp.blockPage({
+                    overlayColor: "#000000",
+                    state: "primary",
+                    message: "Đợi Xíu...",
+                })
+                axios.post('/api/products', params).then((res) => {
+                    KTApp.unblockPage();
+                    toastr.success("Tạo Bài viết thành công!")
+                    this.$router.push('/san-pham/danh-sach');
+                })
+            }
+            else {
+                this.$smoothScroll({
+                    scrollTo: this.$refs.FormPost,
+                    duration: 600,
+                    offset: -50,
+                })
+            }
+        },
+        async checkFromExtend() {
+            let check = 0;
+            let keyword = $('#keyword').select2("val");
+            let content = $('.summernote').summernote('isEmpty') ? '' : $(".summernote").summernote('code');
+            if (keyword != '') {
+                this.keyword = keyword;
+                this.errorKeyword = false;
+            }
+            else {
+                check++
+                this.errorKeyword = true;
+            }
+            if (content) {
+                this.content = content;
+                this.errorContent = false;
+            }
+            else {
+                check++
+                this.errorContent = true;
+            }
+            if (check == 0) {
+                return true
+            }
+            else {
+                return false
+            }
+        },
+        async errors() {
+            this.checkFromExtend()
+            return await this.$refs['errors'].validate();
+        },
+    },
+}
+</script>
