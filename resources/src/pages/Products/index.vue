@@ -52,7 +52,7 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr v-for="item in posts.data" :key="'row' + item.id">
+                                <tr v-for="item in products.data" :key="'row' + item.id">
                                     <td>
                                         <label class="checkbox">
                                             <input v-model="checkbox" :value="item.id" type="checkbox"/>
@@ -134,7 +134,7 @@
                         :first-button-text="`<i class='ki ki-bold-double-arrow-back icon-xs'></i>`"
                         :last-button-text="`<i class='ki ki-bold-double-arrow-next icon-xs'></i>`"
                         :no-li-surround="true"
-                        :page-count="posts.meta.last_page"
+                        :page-count="products.meta.last_page"
                         :page-range="3"
                         :click-handler="toPage"
                         :disabled-class="'disable'"
@@ -182,7 +182,7 @@ export default {
             checkAll: false,
             checkbox: [],
             allID: [],
-            posts: []
+            products: []
         }
     },
     watch: {
@@ -197,9 +197,9 @@ export default {
     },
     created() {
         Extends.LoadPage()
-        axios('/api/posts').then(res => {
+        axios('/api/products').then(res => {
             KTApp.unblockPage();
-            this.posts = res.data
+            this.products = res.data
             res.data.data.forEach(item => {
                 this.allID.push(item.id)
             });
@@ -208,16 +208,16 @@ export default {
     methods: {
         async toPage(page = 1) {
             Extends.LoadPage()
-            let posts = await axios("/api/posts?page=" + page);
-            this.posts = posts.data
+            let products = await axios("/api/products?page=" + page);
+            this.products = products.data
             this.allID = [];
-            posts.data.data.forEach(item => {
+            products.data.data.forEach(item => {
                 this.allID.push(item.id)
             });
             KTApp.unblockPage();
         },
         changeStatus(id, status) {
-            axios.put('/api/posts/' + id + '?status=' + ~~status).then(res => {
+            axios.put('/api/products/' + id + '?status=' + ~~status).then(res => {
                 toastr.success("Thay đổi trạng thái thành công!")
             })
         },
@@ -231,9 +231,9 @@ export default {
                     confirmButtonText: "Ok xóa!"
                 }).then((result) => {
                     if (result.value) {
-                        axios.delete('/api/posts/destroy', { params: { id: id } }).then(res => {
+                        axios.delete('/api/products/destroy', { params: { id: id } }).then(res => {
                             id.forEach(i => {
-                                this.posts.data = this.posts.data.filter(item => item.id !== i)
+                                this.products.data = this.products.data.filter(item => item.id !== i)
                             });
                             Swal.fire(
                                 "Thành Công!",
