@@ -22,7 +22,9 @@ class CreateProductsTable extends Migration
             $table->string('seo_title')->nullable();
             $table->string('seo_description')->nullable();
             $table->string('seo_keyword')->nullable();
-            $table->string('avatar');
+            $table->json('images')->nullable();
+            $table->json('attributes')->nullable();
+            $table->string('avatar')->nullable();
             $table->string('video')->nullable();
             $table->integer('price')->index();
             $table->integer('discount')->index();

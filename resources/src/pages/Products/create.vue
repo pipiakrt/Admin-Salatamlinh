@@ -324,8 +324,8 @@ export default {
                     seo_description: this.seo_description,
                     seo_keyword: this.seo_keyword,
                     category_id: this.category,
-                    avatar: this.images[0],
-                    images: this.images,
+                    avatar: this.images[0].url,
+                    images: JSON.stringify(this.images),
                     description: this.description,
                     content: this.content,
                     status: String(status)

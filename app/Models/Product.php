@@ -17,6 +17,7 @@ class Product extends MySQL
         'name',
         'slug',
         'avatar',
+        'images',
         'video',
         'price',
         'discount',

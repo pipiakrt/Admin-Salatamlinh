@@ -45,6 +45,7 @@
                                         <span class="text-dark-75">Sản phẩm</span>
                                     </th>
                                     <th style="min-width: 100px">Mô tả</th>
+                                    <th style="min-width: 120px">Giá</th>
                                     <th style="min-width: 120px">Ngày tạo</th>
                                     <th style="min-width: 120px">cập nhật</th>
                                     <th style="min-width: 100px">Trạng thái</th>
@@ -72,6 +73,10 @@
                                     </td>
                                     <td>
                                         <span class="text-dark-75 font-weight-bolder d-block font-size-lg" v-text="Text(item.description, 250)"></span>
+                                    </td>
+                                    <td>
+                                        <span class="text-dark-75 font-weight-bolder d-block font-size-lg" v-text="formatTime(item.price)"></span>
+                                        <span class="text-muted font-weight-bold" v-text="formatHuors(item.discount)"></span>
                                     </td>
                                     <td>
                                         <span class="text-dark-75 font-weight-bolder d-block font-size-lg" v-text="formatTime(item.created_at)"></span>
