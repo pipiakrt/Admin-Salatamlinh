@@ -6,7 +6,7 @@
             <div class="card card-custom gutter-b">
                 <div class="card-header border-0 py-5">
                     <h3 class="card-title align-items-start flex-column">
-                        <span class="card-label font-weight-bolder text-dark">Danh sách bài viết</span>
+                        <span class="card-label font-weight-bolder text-dark">Danh sách Sản phẩm</span>
                     </h3>
                     <div class="symbol-group symbol-hover">
                         <div class="card-toolbar">
@@ -42,7 +42,7 @@
                                         </label>
                                     </th>
                                     <th style="min-width: 300px" class="pl-0">
-                                        <span class="text-dark-75">Bài viết</span>
+                                        <span class="text-dark-75">Sản phẩm</span>
                                     </th>
                                     <th style="min-width: 100px">Mô tả</th>
                                     <th style="min-width: 120px">Ngày tạo</th>
@@ -113,7 +113,7 @@
                                                             <span class="navi-icon">
                                                                 <i class="flaticon2 flaticon2-trash"></i>
                                                             </span>
-                                                            <span class="navi-text">Xóa bài viết</span>
+                                                            <span class="navi-text">Xóa Sản phẩm</span>
                                                         </a>
                                                     </li>
                                                 </ul>
@@ -165,7 +165,7 @@ export default {
         return {
             subHeader: {
                 links: [{
-                        name: 'Bài viết',
+                        name: 'Sản phẩm',
                         url: '/san-pham/danh-sach',
                     },
                     {
@@ -225,7 +225,7 @@ export default {
             if (id != '') {
                 Swal.fire({
                     title: "Chắc chăn chứ?",
-                    text: "Bạn sẽ xóa xóa "+ id.length +" bài viết!",
+                    text: "Bạn sẽ xóa xóa "+ id.length +" Sản phẩm!",
                     icon: "warning",
                     showCancelButton: true,
                     confirmButtonText: "Ok xóa!"
@@ -237,7 +237,7 @@ export default {
                             });
                             Swal.fire(
                                 "Thành Công!",
-                                "Bài viết đã bị xóa hoàn toàn.",
+                                "Sản phẩm đã bị xóa hoàn toàn.",
                                 "success"
                             )
                         })
@@ -246,7 +246,7 @@ export default {
             }
             else {
                 Swal.fire({
-                title: 'Chưa chọn bài viết',
+                title: 'Chưa chọn Sản phẩm',
                 showClass: {
                         popup: 'animate__animated animate__fadeInDown'
                     },

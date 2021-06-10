@@ -24,7 +24,7 @@
                                         <label for="name" class="col-2 col-form-label">Tên</label>
                                         <div class="col-10">
                                             <validation-provider rules="required|length:0,255" v-slot="{ errors }">
-                                                <input v-model="name" class="form-control" type="text" placeholder="Tên bài viết" />
+                                                <input v-model="name" class="form-control" type="text" placeholder="Tên Sản phẩm" />
                                                 <div v-if="errors[0]" class="invalid-feedback d-block" v-text="errors[0]"></div>
                                             </validation-provider>
                                         </div>
@@ -51,7 +51,7 @@
                                         </div>
                                     </div>
                                     <div v-if="false" class="form-group row">
-                                        <label for="keyword" class="col-2 col-form-label">Ảnh bài viết</label>
+                                        <label for="keyword" class="col-2 col-form-label">Ảnh Sản phẩm</label>
                                         <div class="col-10">
                                             <validation-provider rules="required|length:0,255" v-slot="{ errors }">
                                                 <div class="image-input image-input-outline" id="kt_image_4" style="background-position: center; background-image: url(/img/blank.png);">
@@ -89,7 +89,7 @@
                         </form>
                         <div class="card-footer text-center">
                             <router-link to="/san-pham/danh-sach" type="reset" class="btn btn-light-primary mr-1 font-weight-bolder"><i class="icon-sm ki ki-long-arrow-back"></i> Quay Lại</router-link>
-                            <button type="reset" @click="submit(1)" class="btn btn-primary mr-1"><i class="icon-sm ki ki-bold-check-1   "></i> Lưu Bài Viết</button>
+                            <button type="reset" @click="submit(1)" class="btn btn-primary mr-1"><i class="icon-sm ki ki-bold-check-1   "></i> Lưu Sản phẩm</button>
                             <button type="reset" @click="submit(0)" class="btn btn-primary mr-1"><i class="icon-sm ki ki-info"></i> Lưu Ẩn</button>
                         </div>
                     </div>
@@ -133,7 +133,7 @@ export default {
             subHeader: {
                 links: [
                     {
-                        name: 'Bài viết',
+                        name: 'Sản phẩm',
                         url: '/san-pham/danh-sach',
                     },
                     {
@@ -248,7 +248,7 @@ export default {
                 })
                 axios.post('/api/products', params).then((res) => {
                     KTApp.unblockPage();
-                    toastr.success("Tạo Bài viết thành công!")
+                    toastr.success("Tạo Sản phẩm thành công!")
                     this.$router.push('/san-pham/danh-sach');
                 })
             }

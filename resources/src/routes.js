@@ -1,14 +1,16 @@
 // home
 import Home from './pages/Home'
-Products
+// Categories
+import Categories from './pages/Categories/index'
+// Products
 import Products from './pages/Products/index'
-import CreatePost from './pages/Products/create'
-import EditPost from './pages/Products/edit'
-import CategoryPost from './pages/Products/category'
+import CreateProduct from './pages/Products/create'
+import EditProduct from './pages/Products/edit'
+import CategoryProduct from './pages/Products/category'
 // Banner
 import Banner from './pages/Banner/index'
 import CreateBanner from './pages/Banner/create'
-// // Slider
+// Slider
 import Slider from './pages/Slider/index'
 import CreateSlider from './pages/Slider/create'
 // Account
@@ -27,6 +29,12 @@ const routes = [
         component: Home,
         name: 'Home',
     },
+    // Categories
+    {
+        path: '/danh-muc',
+        component: Categories,
+        name: 'Categories',
+    },
     // Products
     {
         path: '/san-pham/danh-sach',
@@ -35,17 +43,17 @@ const routes = [
     },
     {
         path: '/san-pham/them-moi',
-        component: CreatePost,
+        component: CreateProduct,
         name: 'Products',
     },
     {
         path: '/san-pham/:id/chinh-sua',
-        component: EditPost,
+        component: EditProduct,
         name: 'Products',
     },
     {
         path: '/san-pham/danh-muc',
-        component: CategoryPost,
+        component: CategoryProduct,
         name: 'Products',
     },
     // Banner

@@ -105,20 +105,6 @@
                                             </validation-provider>
                                         </div>
                                     </div>
-                                    <div class="form-group row">
-                                        <label for="slug" class="col-2 col-form-label">Cha</label>
-                                        <div class="col-10">
-                                            <validation-provider rules="required|length:0,255" v-slot="{ errors }">
-                                                <select class="form-control">
-                                                    <option selected>Chọn danh mục cha</option>
-                                                    <template v-for="item in categories">
-                                                        <option :key="item.id" v-if="item.parent_id == 0" :value="item.id" v-text="item.name"></option>
-                                                    </template>
-                                                </select>
-                                                <div v-if="errors[0]" class="invalid-feedback d-block" v-text="errors[0]"></div>
-                                            </validation-provider>
-                                        </div>
-                                    </div>
                                     </div>
                                 </ValidationObserver>
                             </form>
@@ -147,24 +133,24 @@
                             <form>
                                 <ValidationObserver ref="errorUpdate">
                                     <div class="card-body">
-                                        <div class="form-group row">
-                                            <label for="name" class="col-2 col-form-label">Tên</label>
-                                            <div class="col-10">
-                                                <validation-provider rules="required|length:0,255" v-slot="{ errors }">
-                                                    <input v-model="nameUpdate" class="form-control" type="text" placeholder="Tên danh mục" />
-                                                    <div v-if="errors[0]" class="invalid-feedback d-block" v-text="errors[0]"></div>
-                                                </validation-provider>
-                                            </div>
+                                    <div class="form-group row">
+                                        <label for="name" class="col-2 col-form-label">Tên</label>
+                                        <div class="col-10">
+                                            <validation-provider rules="required|length:0,255" v-slot="{ errors }">
+                                                <input v-model="nameUpdate" class="form-control" type="text" placeholder="Tên danh mục" />
+                                                <div v-if="errors[0]" class="invalid-feedback d-block" v-text="errors[0]"></div>
+                                            </validation-provider>
                                         </div>
-                                        <div class="form-group row">
-                                            <label for="slug" class="col-2 col-form-label">URL</label>
-                                            <div class="col-10">
-                                                <validation-provider rules="required|length:0,255" v-slot="{ errors }">
-                                                    <input v-model="slugUpdate" class="form-control" type="search" placeholder="Đường dấn" />
-                                                    <div v-if="errors[0]" class="invalid-feedback d-block" v-text="errors[0]"></div>
-                                                </validation-provider>
-                                            </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label for="slug" class="col-2 col-form-label">URL</label>
+                                        <div class="col-10">
+                                            <validation-provider rules="required|length:0,255" v-slot="{ errors }">
+                                                <input v-model="slugUpdate" class="form-control" type="search" placeholder="Đường dấn" />
+                                                <div v-if="errors[0]" class="invalid-feedback d-block" v-text="errors[0]"></div>
+                                            </validation-provider>
                                         </div>
+                                    </div>
                                     </div>
                                 </ValidationObserver>
                             </form>

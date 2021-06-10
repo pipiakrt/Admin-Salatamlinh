@@ -2,7 +2,7 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\Api\ProductsController;
+use App\Http\Controllers\Api\ProductController;
 use App\Http\Controllers\Api\AuthController;
 use App\Http\Controllers\Api\ImageController;
 use App\Http\Controllers\Api\SliderController;
@@ -23,7 +23,8 @@ use App\Http\Controllers\Api\CategoryController;
 
 Route::resources([
     'auth' => AuthController::class,
-    'products' => ProductsController::class,
+    'categories' => CategoryController::class,
+    'products' => ProductController::class,
     'images' => ImageController::class,
     'banners' => BannerController::class,
     'sliders' => SliderController::class,
