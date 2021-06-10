@@ -26,15 +26,15 @@
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" data-toggle="tab" href="#kt_tab_pane_2_5">
-                                    <span class="nav-icon"><i class="flaticon2-drop"></i></span>
-                                    <h3 class="card-title">Seo</h3>
-                                </a>
-                            </li>
-                            <li class="nav-item">
                                 <a class="nav-link" data-toggle="tab" href="#kt_tab_pane_2_6">
                                     <span class="nav-icon"><i class="flaticon2-drop"></i></span>
                                     <h3 class="card-title">Nội dung</h3>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" data-toggle="tab" href="#kt_tab_pane_2_5">
+                                    <span class="nav-icon"><i class="flaticon2-drop"></i></span>
+                                    <h3 class="card-title">Seo</h3>
                                 </a>
                             </li>
                         </ul>
@@ -45,61 +45,59 @@
                         <ValidationObserver ref="errors">
                             <div class="tab-content">
                                 <div class="tab-pane fade show active" id="kt_tab_pane_1_4" role="tabpanel" aria-labelledby="kt_tab_pane_1_4">
-                                    <div class="card-body">
-                                        <div class="form-group row">
-                                            <label for="name" class="col-2 col-form-label">Tên</label>
-                                            <div class="col-10">
-                                                <validation-provider rules="required|length:0,255" v-slot="{ errors }">
-                                                    <input v-model="name" class="form-control" type="text" placeholder="Tên Sản phẩm" />
-                                                    <div v-if="errors[0]" class="invalid-feedback d-block" v-text="errors[0]"></div>
-                                                </validation-provider>
-                                            </div>
+                                    <div class="form-group row">
+                                        <label for="name" class="col-2 col-form-label">Tên</label>
+                                        <div class="col-10">
+                                            <validation-provider rules="required|length:0,255" v-slot="{ errors }">
+                                                <input v-model="name" class="form-control" type="text" placeholder="Tên Sản phẩm" />
+                                                <div v-if="errors[0]" class="invalid-feedback d-block" v-text="errors[0]"></div>
+                                            </validation-provider>
                                         </div>
-                                        <div class="form-group row">
-                                            <label for="slug" class="col-2 col-form-label">URL</label>
-                                            <div class="col-10">
-                                                <validation-provider rules="required|length:0,255" v-slot="{ errors }">
-                                                    <input v-model="slug" class="form-control" type="search" placeholder="Đường dấn" />
-                                                    <div v-if="errors[0]" class="invalid-feedback d-block" v-text="errors[0]"></div>
-                                                </validation-provider>
-                                            </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label for="slug" class="col-2 col-form-label">URL</label>
+                                        <div class="col-10">
+                                            <validation-provider rules="required|length:0,255" v-slot="{ errors }">
+                                                <input v-model="slug" class="form-control" type="search" placeholder="Đường dấn" />
+                                                <div v-if="errors[0]" class="invalid-feedback d-block" v-text="errors[0]"></div>
+                                            </validation-provider>
                                         </div>
-                                        <div class="form-group row">
-                                            <label for="categories" class="col-2 col-form-label">Danh mục</label>
-                                            <div class="col-10">
-                                                <validation-provider rules="required" v-slot="{ errors }">
-                                                    <select v-model="category" class="form-control" style="height: 35px">
-                                                        <option value="" selected>Chọn danh mục</option>
-                                                        <template v-for="item in categories">
-                                                            <option :key="item.id" v-if="item.parent_id > 0" :value="item.id" v-text="item.name"></option>
-                                                        </template>
-                                                    </select>
-                                                    <div v-if="errors[0]" class="invalid-feedback d-block" v-text="errors[0]"></div>
-                                                </validation-provider>
-                                            </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label for="categories" class="col-2 col-form-label">Danh mục</label>
+                                        <div class="col-10">
+                                            <validation-provider rules="required" v-slot="{ errors }">
+                                                <select v-model="category" class="form-control" style="height: 35px">
+                                                    <option value="" selected>Chọn danh mục</option>
+                                                    <template v-for="item in categories">
+                                                        <option :key="item.id" v-if="item.parent_id > 0" :value="item.id" v-text="item.name"></option>
+                                                    </template>
+                                                </select>
+                                                <div v-if="errors[0]" class="invalid-feedback d-block" v-text="errors[0]"></div>
+                                            </validation-provider>
                                         </div>
-                                        <div class="form-group row">
-                                            <label class="col-2 col-form-label">Ảnh Sản phẩm</label>
-                                            <div class="col-10">
-                                                <div class="row">
-                                                    <div class="col-2 mb-5" v-for="(item, key) in images" :key="key">
-                                                        <div class="image-input image-input-outline" style="background-position: center; background-image: url(/img/no-image.png);">
-                                                            <div class="image-input-wrapper background-position-center" :style="item.url ? { 'background-image': 'url(' + item.url + ')' } : ''"></div>
-                                                            <label @click="setTypeGetImg(key), modal = true" data-toggle="modal" data-target="#filemanager" class="btn btn-xs btn-icon btn-circle btn-white btn-hover-text-primary btn-shadow" data-action="change">
-                                                                <i class="fa fa-pen icon-sm text-muted"></i>
-                                                            </label>
-                                                            <span v-if="item.url" @click="images.splice(key, 1)" class="btn btn-xs btn-icon btn-circle btn-white btn-hover-text-primary btn-shadow" data-action="remove">
-                                                                <i class="ki ki-bold-close icon-xs text-muted"></i>
-                                                            </span>
-                                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label class="col-2 col-form-label">Ảnh Sản phẩm</label>
+                                        <div class="col-10">
+                                            <div class="row">
+                                                <div class="col-2 mb-5" v-for="(item, key) in images" :key="key">
+                                                    <div class="image-input image-input-outline" style="background-position: center; background-image: url(/img/no-image.png);">
+                                                        <div class="image-input-wrapper background-position-center" :style="item.url ? { 'background-image': 'url(' + item.url + ')' } : ''"></div>
+                                                        <label @click="setTypeGetImg(key), modal = true" data-toggle="modal" data-target="#filemanager" class="btn btn-xs btn-icon btn-circle btn-white btn-hover-text-primary btn-shadow" data-action="change">
+                                                            <i class="fa fa-pen icon-sm text-muted"></i>
+                                                        </label>
+                                                        <span v-if="item.url" @click="images.splice(key, 1)" class="btn btn-xs btn-icon btn-circle btn-white btn-hover-text-primary btn-shadow" data-action="remove">
+                                                            <i class="ki ki-bold-close icon-xs text-muted"></i>
+                                                        </span>
                                                     </div>
-                                                    <div class="col-2">
-                                                        <div class="image-input image-input-outline" style="background-position: center; background-image: url(/img/no-image.png);">
-                                                            <div class="image-input-wrapper"></div>
-                                                            <label @click="setTypeGetImg(''), modal = true" data-toggle="modal" data-target="#filemanager" class="btn btn-xs btn-icon btn-circle btn-white btn-hover-text-primary btn-shadow" data-action="change">
-                                                                <i class="fa fa-pen icon-sm text-muted"></i>
-                                                            </label>
-                                                        </div>
+                                                </div>
+                                                <div class="col-2">
+                                                    <div class="image-input image-input-outline" style="background-position: center; background-image: url(/img/no-image.png);">
+                                                        <div class="image-input-wrapper"></div>
+                                                        <label @click="setTypeGetImg(''), modal = true" data-toggle="modal" data-target="#filemanager" class="btn btn-xs btn-icon btn-circle btn-white btn-hover-text-primary btn-shadow" data-action="change">
+                                                            <i class="fa fa-pen icon-sm text-muted"></i>
+                                                        </label>
                                                     </div>
                                                 </div>
                                             </div>
@@ -108,10 +106,10 @@
                                 </div>
                                 <div class="tab-pane fade" id="kt_tab_pane_2_4" role="tabpanel" aria-labelledby="kt_tab_pane_2_4">
                                     <div class="form-group row">
-                                        <label for="price" class="col-2 col-form-label">Giá</label>
+                                        <label for="price" class="col-2 col-form-label">Giá bán</label>
                                         <div class="col-10">
                                             <validation-provider rules="required|length:0,255" v-slot="{ errors }">
-                                                <input v-model="price" class="form-control" type="number" placeholder="Giá" />
+                                                <input v-model="price" class="form-control" type="number" placeholder="Giá bán" />
                                                 <div v-if="errors[0]" class="invalid-feedback d-block" v-text="errors[0]"></div>
                                             </validation-provider>
                                         </div>
