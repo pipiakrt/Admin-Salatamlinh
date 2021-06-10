@@ -1,3 +1,9 @@
+<style scoped>
+    .background-position-center{
+        background-position:center
+    }
+</style>
+
 <template>
 <div class="content d-flex flex-column flex-column-fluid" id="kt_content">
     <Breadcrumb :data="subHeader" />
@@ -44,28 +50,92 @@
                                             <validation-provider rules="required" v-slot="{ errors }">
                                                 <select v-model="category" class="form-control" style="height: 35px">
                                                     <option value="" selected>Chọn danh mục</option>
-                                                    <option v-for="item in categories" :key="item.id" v-text="item.name" :value="item.id"></option>
+                                                    <template v-for="item in categories">
+                                                        <option :key="item.id" v-if="item.parent_id > 0" :value="item.id" v-text="item.name"></option>
+                                                    </template>
                                                 </select>
                                                 <div v-if="errors[0]" class="invalid-feedback d-block" v-text="errors[0]"></div>
                                             </validation-provider>
                                         </div>
                                     </div>
-                                    <div v-if="false" class="form-group row">
-                                        <label for="keyword" class="col-2 col-form-label">Ảnh Sản phẩm</label>
+                                    <div class="form-group row">
+                                        <label for="price" class="col-2 col-form-label">Giá</label>
                                         <div class="col-10">
                                             <validation-provider rules="required|length:0,255" v-slot="{ errors }">
-                                                <div class="image-input image-input-outline" id="kt_image_4" style="background-position: center; background-image: url(/img/blank.png);">
-                                                    <div class="image-input-wrapper" :style="preview ? { 'background-image': 'url(' + preview + ')' } : ''"></div>
-                                                    <label @click="setTypeGetImg(), modal = true" data-toggle="modal" data-target="#filemanager" class="btn btn-xs btn-icon btn-circle btn-white btn-hover-text-primary btn-shadow" data-action="change">
-                                                        <i class="fa fa-pen icon-sm text-muted"></i>
-                                                    </label>
-                                                    <input v-model="preview" type="text" hidden>
-                                                    <span v-if="preview" @click="preview = ''" class="btn btn-xs btn-icon btn-circle btn-white btn-hover-text-primary btn-shadow" data-action="remove">
-                                                        <i class="ki ki-bold-close icon-xs text-muted"></i>
-                                                    </span>
-                                                </div>
+                                                <input v-model="price" class="form-control" type="number" placeholder="Giá" />
                                                 <div v-if="errors[0]" class="invalid-feedback d-block" v-text="errors[0]"></div>
                                             </validation-provider>
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label for="discount" class="col-2 col-form-label">Chiết khấu</label>
+                                        <div class="col-10">
+                                            <validation-provider rules="required|length:0,255" v-slot="{ errors }">
+                                                <input v-model="discount" class="form-control" type="number" placeholder="Chiết khấu" />
+                                                <div v-if="errors[0]" class="invalid-feedback d-block" v-text="errors[0]"></div>
+                                            </validation-provider>
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label for="video" class="col-2 col-form-label">Video</label>
+                                        <div class="col-10">
+                                            <validation-provider rules="required|length:0,255" v-slot="{ errors }">
+                                                <input v-model="video" class="form-control" type="text" placeholder='Nhập đường link... vd: "https://youtu.be/l8v0hzD3llI"' />
+                                                <div v-if="errors[0]" class="invalid-feedback d-block" v-text="errors[0]"></div>
+                                            </validation-provider>
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label for="seo_title" class="col-2 col-form-label">Seo Title</label>
+                                        <div class="col-10">
+                                            <validation-provider rules="required|length:0,255" v-slot="{ errors }">
+                                                <input v-model="seo_title" class="form-control" type="text" placeholder="Seo Title" />
+                                                <div v-if="errors[0]" class="invalid-feedback d-block" v-text="errors[0]"></div>
+                                            </validation-provider>
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label for="name" class="col-2 col-form-label">Seo Description</label>
+                                        <div class="col-10">
+                                            <validation-provider rules="required|length:0,255" v-slot="{ errors }">
+                                                <input v-model="seo_description" class="form-control" type="text" placeholder="Seo Description" />
+                                                <div v-if="errors[0]" class="invalid-feedback d-block" v-text="errors[0]"></div>
+                                            </validation-provider>
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label for="seo_keyword" class="col-2 col-form-label">Seo Keyword</label>
+                                        <div class="col-10">
+                                            <validation-provider rules="required|length:0,255" v-slot="{ errors }">
+                                                <input v-model="seo_keyword" class="form-control" type="text" placeholder="Seo Keyword" />
+                                                <div v-if="errors[0]" class="invalid-feedback d-block" v-text="errors[0]"></div>
+                                            </validation-provider>
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label class="col-2 col-form-label">Ảnh Sản phẩm</label>
+                                        <div class="col-10">
+                                            <div class="row">
+                                                <div class="col-2 mb-5" v-for="(item, key) in images" :key="key">
+                                                    <div class="image-input image-input-outline" style="background-position: center; background-image: url(/img/no-image.png);">
+                                                        <div class="image-input-wrapper background-position-center" :style="item.url ? { 'background-image': 'url(' + item.url + ')' } : ''"></div>
+                                                        <label @click="setTypeGetImg(key), modal = true" data-toggle="modal" data-target="#filemanager" class="btn btn-xs btn-icon btn-circle btn-white btn-hover-text-primary btn-shadow" data-action="change">
+                                                            <i class="fa fa-pen icon-sm text-muted"></i>
+                                                        </label>
+                                                        <span v-if="item.url" @click="images.splice(key, 1)" class="btn btn-xs btn-icon btn-circle btn-white btn-hover-text-primary btn-shadow" data-action="remove">
+                                                            <i class="ki ki-bold-close icon-xs text-muted"></i>
+                                                        </span>
+                                                    </div>
+                                                </div>
+                                                <div class="col-2">
+                                                    <div class="image-input image-input-outline" style="background-position: center; background-image: url(/img/no-image.png);">
+                                                        <div class="image-input-wrapper"></div>
+                                                        <label @click="setTypeGetImg(''), modal = true" data-toggle="modal" data-target="#filemanager" class="btn btn-xs btn-icon btn-circle btn-white btn-hover-text-primary btn-shadow" data-action="change">
+                                                            <i class="fa fa-pen icon-sm text-muted"></i>
+                                                        </label>
+                                                    </div>
+                                                </div>
+                                            </div>
                                         </div>
                                     </div>
                                     <div class="form-group row">
@@ -147,18 +217,22 @@ export default {
                     text: 'Danh Sách',
                 }
             },
+            images: [],
             modal: false,
             name: '',
             file: '',
-            preview: window.location.origin + '/img/post.png',
             slug: '',
+            video: '',
+            seo_title: '',
+            seo_description: '',
+            seo_keyword: '',
+            price: '',
+            discount: '',
             description: '',
             categories: [],
             category: '',
-            keyword: '',
             content: '',
             errorCategories: false,
-            errorKeyword: false,
             errorContent: false
         }
     },
@@ -169,7 +243,7 @@ export default {
     },
     mounted() {
         Extends.LoadPage()
-        axios('/api/category-post').then(res => {
+        axios('/api/categories').then(res => {
             this.categories = res.data.data
             KTApp.unblockPage();
             KTUtil.ready(function () {
@@ -216,8 +290,11 @@ export default {
         })
     },
     methods: {
-        setTypeGetImg() {
-            typeimage = 'avatar'
+        setTypeGetImg(status) {
+            if (status === '')
+                typeimage = 'avatar'
+            else
+                typeimage = status
         },
         setUrl(path) {
             $('#filemanager').modal('hide');
@@ -225,21 +302,33 @@ export default {
                 var image = $('<img>').attr('src', path);
                 $('.summernote').summernote("insertNode", image[0]);
             }
+            else if (typeimage == 'avatar') {
+                this.images.push({
+                    url: path
+                })
+            }
             else {
-                this.preview = path
+                this.images[typeimage].url = path
             }
         },
         async submit(status) {
             if (await this.errors() && await this.checkFromExtend()) {
                 let params = {
+                    owner_id: 1,
                     name: this.name,
                     slug: this.slug,
+                    price: this.price,
+                    discount: this.discount,
+                    video: this.video,
+                    seo_title: this.seo_title,
+                    seo_description: this.seo_description,
+                    seo_keyword: this.seo_keyword,
                     category_id: this.category,
-                    keyword: this.keyword,
-                    image: this.preview,
+                    avatar: this.images[0],
+                    images: this.images,
                     description: this.description,
                     content: this.content,
-                    status: String(status),
+                    status: String(status)
                 }
                 KTApp.blockPage({
                     overlayColor: "#000000",
@@ -262,16 +351,7 @@ export default {
         },
         async checkFromExtend() {
             let check = 0;
-            let keyword = $('#keyword').select2("val");
             let content = $('.summernote').summernote('isEmpty') ? '' : $(".summernote").summernote('code');
-            if (keyword != '') {
-                this.keyword = keyword;
-                this.errorKeyword = false;
-            }
-            else {
-                check++
-                this.errorKeyword = true;
-            }
             if (content) {
                 this.content = content;
                 this.errorContent = false;

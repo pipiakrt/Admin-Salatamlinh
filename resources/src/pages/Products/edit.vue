@@ -114,7 +114,6 @@ import Breadcrumb from '../../components/breadcrumb/index'
 import FileManage from '../../components/FileManager/index'
 import { ValidationObserver, ValidationProvider, extend } from 'vee-validate';
 import { required } from 'vee-validate/dist/rules';
-// // toastr.options = { "progressBar": true, "positionClass": "toast-top-right" };
 extend('required', {
     ...required,
     message: 'Không được để trống'
@@ -170,7 +169,7 @@ export default {
     },
     async created() {
         Extends.LoadPage()
-        await axios('/api/category-post').then(res => {
+        await axios('/api/categories').then(res => {
             this.categories = res.data.data
         })
         await axios('/api/products/' + this.$route.params.id).then(res => {

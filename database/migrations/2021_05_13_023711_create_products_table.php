@@ -19,8 +19,11 @@ class CreateProductsTable extends Migration
             $table->string('owner_id')->index();
             $table->string('name')->index();
             $table->string('slug')->index();
+            $table->string('seo_title')->nullable();
+            $table->string('seo_description')->nullable();
+            $table->string('seo_keyword')->nullable();
             $table->string('avatar');
-            $table->string('video')->index();
+            $table->string('video')->nullable();
             $table->integer('price')->index();
             $table->integer('discount')->index();
             $table->text('description')->nullable();

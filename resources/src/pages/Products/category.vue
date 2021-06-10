@@ -24,45 +24,55 @@
                             <table class="table table-head-custom table-head-bg table-borderless table-vertical-center">
                                 <thead>
                                     <tr class="text-uppercase">
+                                        <th>Id</th>
                                         <th style="min-width: 100px">Tên</th>
                                         <th style="min-width: 120px">URL</th>
+                                        <th style="min-width: 120px">Danh mục cha</th>
                                         <th class="text-center">EXT</th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <tr v-for="item in categories" :key="'row' + item.id">
-                                        <td>
-                                            <span class="text-dark-75 font-weight-bolder d-block font-size-lg" v-text="item.name"></span>
-                                        </td>
-                                        <td>
-                                            <span class="text-dark-75 font-weight-bolder d-block font-size-lg" v-text="item.slug"></span>
-                                        </td>
-                                        <td class="text-center">
-                                            <div class="dropdown dropdown-inline">
-                                                <a href="#" class="btn btn-clean btn-hover-light-primary btn-sm btn-icon" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                                    <i class="ki ki-bold-more-hor"></i>
-                                                </a>
-                                                <div class="dropdown-menu dropdown-menu-sm dropdown-menu-right">
-                                                    <ul class="navi navi-hover">
-                                                        <li class="navi-item">
-                                                            <a @click="nameUpdate = item.name, idUpdate = item.id" class="navi-link" data-toggle="modal" data-target="#exampleModalLongUpdate">
-                                                                <span class="navi-icon">
-                                                                    <i class="fa fas fa-edit"></i>
-                                                                </span>
-                                                                <span class="navi-text">Chỉnh sửa</span>
-                                                            </a>
-                                                            <a @click="destroy(item.id)" class="navi-link">
-                                                                <span class="navi-icon">
-                                                                    <i class="flaticon2 flaticon2-trash"></i>
-                                                                </span>
-                                                                <span class="navi-text">Xóa danh mục</span>
-                                                            </a>
-                                                        </li>
-                                                    </ul>
+                                    <template v-for="item in categories">
+                                        <tr v-if="item.parent_id > 0" :key="'row' + item.id">
+                                            <td>
+                                                <span class="text-dark-75 font-weight-bolder d-block font-size-lg" v-text="item.id"></span>
+                                            </td>
+                                            <td>
+                                                <span class="text-dark-75 font-weight-bolder d-block font-size-lg" v-text="item.name"></span>
+                                            </td>
+                                            <td>
+                                                <span class="text-dark-75 font-weight-bolder d-block font-size-lg" v-text="item.slug"></span>
+                                            </td>
+                                            <td>
+                                                <span class="text-dark-75 font-weight-bolder d-block font-size-lg" v-text="filterName(item)"></span>
+                                            </td>
+                                            <td class="text-center">
+                                                <div class="dropdown dropdown-inline">
+                                                    <a href="#" class="btn btn-clean btn-hover-light-primary btn-sm btn-icon" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                        <i class="ki ki-bold-more-hor"></i>
+                                                    </a>
+                                                    <div class="dropdown-menu dropdown-menu-sm dropdown-menu-right">
+                                                        <ul class="navi navi-hover">
+                                                            <li class="navi-item">
+                                                                <a @click="nameUpdate = item.name, idUpdate = item.id, category_idUpdate = item.parent_id" class="navi-link" data-toggle="modal" data-target="#exampleModalLongUpdate">
+                                                                    <span class="navi-icon">
+                                                                        <i class="fa fas fa-edit"></i>
+                                                                    </span>
+                                                                    <span class="navi-text">Chỉnh sửa</span>
+                                                                </a>
+                                                                <a @click="destroy(item.id)" class="navi-link">
+                                                                    <span class="navi-icon">
+                                                                        <i class="flaticon2 flaticon2-trash"></i>
+                                                                    </span>
+                                                                    <span class="navi-text">Xóa danh mục</span>
+                                                                </a>
+                                                            </li>
+                                                        </ul>
+                                                    </div>
                                                 </div>
-                                            </div>
-                                        </td>
-                                    </tr>
+                                            </td>
+                                        </tr>
+                                    </template>
                                 </tbody>
                             </table>
                         </div>
@@ -87,38 +97,38 @@
                             <form>
                                 <ValidationObserver ref="errors">
                                     <div class="card-body">
-                                    <div class="form-group row">
-                                        <label for="name" class="col-2 col-form-label">Tên</label>
-                                        <div class="col-10">
-                                            <validation-provider rules="required|length:0,255" v-slot="{ errors }">
-                                                <input v-model="name" class="form-control" type="text" placeholder="Tên danh mục" />
-                                                <div v-if="errors[0]" class="invalid-feedback d-block" v-text="errors[0]"></div>
-                                            </validation-provider>
+                                        <div class="form-group row">
+                                            <label for="name" class="col-2 col-form-label">Tên</label>
+                                            <div class="col-10">
+                                                <validation-provider rules="required|length:0,255" v-slot="{ errors }">
+                                                    <input v-model="name" class="form-control" type="text" placeholder="Tên danh mục" />
+                                                    <div v-if="errors[0]" class="invalid-feedback d-block" v-text="errors[0]"></div>
+                                                </validation-provider>
+                                            </div>
                                         </div>
-                                    </div>
-                                    <div class="form-group row">
-                                        <label for="slug" class="col-2 col-form-label">URL</label>
-                                        <div class="col-10">
-                                            <validation-provider rules="required|length:0,255" v-slot="{ errors }">
-                                                <input v-model="slug" class="form-control" type="search" placeholder="Đường dấn" />
-                                                <div v-if="errors[0]" class="invalid-feedback d-block" v-text="errors[0]"></div>
-                                            </validation-provider>
+                                        <div class="form-group row">
+                                            <label for="slug" class="col-2 col-form-label">URL</label>
+                                            <div class="col-10">
+                                                <validation-provider rules="required|length:0,255" v-slot="{ errors }">
+                                                    <input v-model="slug" class="form-control" type="search" placeholder="Đường dấn" />
+                                                    <div v-if="errors[0]" class="invalid-feedback d-block" v-text="errors[0]"></div>
+                                                </validation-provider>
+                                            </div>
                                         </div>
-                                    </div>
-                                    <div class="form-group row">
-                                        <label for="slug" class="col-2 col-form-label">Cha</label>
-                                        <div class="col-10">
-                                            <validation-provider rules="required|length:0,255" v-slot="{ errors }">
-                                                <select class="form-control">
-                                                    <option selected>Chọn danh mục cha</option>
-                                                    <template v-for="item in categories">
-                                                        <option :key="item.id" v-if="item.parent_id == 0" :value="item.id" v-text="item.name"></option>
-                                                    </template>
-                                                </select>
-                                                <div v-if="errors[0]" class="invalid-feedback d-block" v-text="errors[0]"></div>
-                                            </validation-provider>
+                                        <div class="form-group row">
+                                            <label for="slug" class="col-2 col-form-label">Cha</label>
+                                            <div class="col-10">
+                                                <validation-provider rules="required" v-slot="{ errors }">
+                                                    <select v-model="category_id" class="form-control">
+                                                        <option value="" selected>Chọn danh mục cha</option>
+                                                        <template v-for="item in categories">
+                                                            <option :key="item.id" v-if="item.parent_id == 0" :value="item.id" v-text="item.name"></option>
+                                                        </template>
+                                                    </select>
+                                                    <div v-if="errors[0]" class="invalid-feedback d-block" v-text="errors[0]"></div>
+                                                </validation-provider>
+                                            </div>
                                         </div>
-                                    </div>
                                     </div>
                                 </ValidationObserver>
                             </form>
@@ -161,6 +171,19 @@
                                             <div class="col-10">
                                                 <validation-provider rules="required|length:0,255" v-slot="{ errors }">
                                                     <input v-model="slugUpdate" class="form-control" type="search" placeholder="Đường dấn" />
+                                                    <div v-if="errors[0]" class="invalid-feedback d-block" v-text="errors[0]"></div>
+                                                </validation-provider>
+                                            </div>
+                                        </div>
+                                        <div class="form-group row">
+                                            <label for="slug" class="col-2 col-form-label">Cha</label>
+                                            <div class="col-10">
+                                                <validation-provider rules="required" v-slot="{ errors }">
+                                                    <select v-model="category_idUpdate" class="form-control">
+                                                        <template v-for="item in categories">
+                                                            <option :key="item.id" v-if="item.parent_id == 0" :value="item.id" v-text="item.name"></option>
+                                                        </template>
+                                                    </select>
                                                     <div v-if="errors[0]" class="invalid-feedback d-block" v-text="errors[0]"></div>
                                                 </validation-provider>
                                             </div>
@@ -220,6 +243,8 @@ export default {
             idUpdate: '',
             nameUpdate: '',
             slugUpdate: '',
+            category_id: '',
+            category_idUpdate: '',
             categories: []
         }
     },
@@ -241,11 +266,15 @@ export default {
         })
     },
     methods: {
+        filterName (item) {
+            return this.categories.find(category => category.id == item.parent_id).name
+        },
         async submit() {
             if (await this.errors()) {
                 let params = {
                     name: this.name,
                     slug: this.slug,
+                    parent_id: this.category_id
                 }
                 KTApp.blockPage({
                     overlayColor: "#000000",
@@ -275,6 +304,7 @@ export default {
                 let params = {
                     name: this.nameUpdate,
                     slug: this.slugUpdate,
+                    parent_id: this.category_idUpdate
                 }
                 KTApp.blockPage({
                     overlayColor: "#000000",
@@ -286,6 +316,7 @@ export default {
                     let key = this.categories.findIndex(item => item.id == this.idUpdate)
                     this.categories[key].name = this.nameUpdate
                     this.categories[key].slug = this.slugUpdate
+                    this.categories[key].parent_id = this.category_idUpdate
                     $('#exampleModalLongUpdate').modal('hide')
                     toastr.success("Cập nhật thành công!")
                     this.$refs['errorupdate'].reset();
