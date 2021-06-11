@@ -14,7 +14,7 @@
                                 <div class="card-toolbar">
                                     <div class="dropdown dropdown-inline">
                                         <button data-toggle="modal" data-target="#exampleModalLong" class="btn btn-primary mr-2" aria-haspopup="true" aria-expanded="false">
-                                            <i class="icon-sm ki ki-plus"></i> Thêm Mới 
+                                            <i class="icon-sm ki ki-plus"></i> Thêm Mới
                                         </button>
                                     </div>
                                 </div>
@@ -32,47 +32,49 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <tr v-for="item in categories" :key="'row' + item.id">
-                                        <td>
-                                            <span class="text-dark-75 font-weight-bolder d-block font-size-lg" v-text="item.id"></span>
-                                        </td>
-                                        <td>
-                                            <span class="text-dark-75 font-weight-bolder d-block font-size-lg">
-                                                <img class="w-100" :src="item.avatar">
-                                            </span>
-                                        </td>
-                                        <td>
-                                            <span class="text-dark-75 font-weight-bolder d-block font-size-lg" v-text="item.name"></span>
-                                        </td>
-                                        <td>
-                                            <span class="text-dark-75 font-weight-bolder d-block font-size-lg" v-text="item.slug"></span>
-                                        </td>
-                                        <td class="text-center">
-                                            <div class="dropdown dropdown-inline">
-                                                <a href="#" class="btn btn-clean btn-hover-light-primary btn-sm btn-icon" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                                    <i class="ki ki-bold-more-hor"></i>
-                                                </a>
-                                                <div class="dropdown-menu dropdown-menu-sm dropdown-menu-right">
-                                                    <ul class="navi navi-hover">
-                                                        <li class="navi-item">
-                                                            <a @click="nameUpdate = item.name, idUpdate = item.id, avatar = item.avatar" class="navi-link" data-toggle="modal" data-target="#exampleModalLongUpdate">
-                                                                <span class="navi-icon">
-                                                                    <i class="fa fas fa-edit"></i>
-                                                                </span>
-                                                                <span class="navi-text">Chỉnh sửa</span>
-                                                            </a>
-                                                            <a @click="destroy(item.id)" class="navi-link">
-                                                                <span class="navi-icon">
-                                                                    <i class="flaticon2 flaticon2-trash"></i>
-                                                                </span>
-                                                                <span class="navi-text">Xóa danh mục</span>
-                                                            </a>
-                                                        </li>
-                                                    </ul>
+                                    <template v-for="item in categories">
+                                        <tr v-if="item.parent_id == 0" :key="'row' + item.id">
+                                            <td>
+                                                <span class="text-dark-75 font-weight-bolder d-block font-size-lg" v-text="item.id"></span>
+                                            </td>
+                                            <td>
+                                                <span class="text-dark-75 font-weight-bolder d-block font-size-lg">
+                                                    <img class="w-100" :src="item.avatar">
+                                                </span>
+                                            </td>
+                                            <td>
+                                                <span class="text-dark-75 font-weight-bolder d-block font-size-lg" v-text="item.name"></span>
+                                            </td>
+                                            <td>
+                                                <span class="text-dark-75 font-weight-bolder d-block font-size-lg" v-text="item.slug"></span>
+                                            </td>
+                                            <td class="text-center">
+                                                <div class="dropdown dropdown-inline">
+                                                    <a href="#" class="btn btn-clean btn-hover-light-primary btn-sm btn-icon" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                        <i class="ki ki-bold-more-hor"></i>
+                                                    </a>
+                                                    <div class="dropdown-menu dropdown-menu-sm dropdown-menu-right">
+                                                        <ul class="navi navi-hover">
+                                                            <li class="navi-item">
+                                                                <a @click="nameUpdate = item.name, idUpdate = item.id, avatar = item.avatar" class="navi-link" data-toggle="modal" data-target="#exampleModalLongUpdate">
+                                                                    <span class="navi-icon">
+                                                                        <i class="fa fas fa-edit"></i>
+                                                                    </span>
+                                                                    <span class="navi-text">Chỉnh sửa</span>
+                                                                </a>
+                                                                <a @click="destroy(item.id)" class="navi-link">
+                                                                    <span class="navi-icon">
+                                                                        <i class="flaticon2 flaticon2-trash"></i>
+                                                                    </span>
+                                                                    <span class="navi-text">Xóa danh mục</span>
+                                                                </a>
+                                                            </li>
+                                                        </ul>
+                                                    </div>
                                                 </div>
-                                            </div>
-                                        </td>
-                                    </tr>
+                                            </td>
+                                        </tr>
+                                    </template>
                                 </tbody>
                             </table>
                         </div>
@@ -153,46 +155,46 @@
                     </button>
                 </div>
                 <div class="modal-body">
-                        <div class="card card-custom gutter-b example example-compact">
-                            <form>
-                                <ValidationObserver ref="errorUpdate">
-                                    <div class="card-body">
-                                        <div class="form-group row">
-                                            <label for="name" class="col-2 col-form-label">Tên</label>
-                                            <div class="col-10">
-                                                <validation-provider rules="required|length:0,255" v-slot="{ errors }">
-                                                    <input v-model="nameUpdate" class="form-control" type="text" placeholder="Tên danh mục" />
-                                                    <div v-if="errors[0]" class="invalid-feedback d-block" v-text="errors[0]"></div>
-                                                </validation-provider>
-                                            </div>
+                    <div class="card card-custom gutter-b example example-compact">
+                        <form>
+                            <ValidationObserver ref="errorUpdate">
+                                <div class="card-body">
+                                    <div class="form-group row">
+                                        <label for="name" class="col-2 col-form-label">Tên</label>
+                                        <div class="col-10">
+                                            <validation-provider rules="required|length:0,255" v-slot="{ errors }">
+                                                <input v-model="nameUpdate" class="form-control" type="text" placeholder="Tên danh mục" />
+                                                <div v-if="errors[0]" class="invalid-feedback d-block" v-text="errors[0]"></div>
+                                            </validation-provider>
                                         </div>
-                                        <div class="form-group row">
-                                            <label for="slug" class="col-2 col-form-label">URL</label>
-                                            <div class="col-10">
-                                                <validation-provider rules="required|length:0,255" v-slot="{ errors }">
-                                                    <input v-model="slugUpdate" class="form-control" type="search" placeholder="Đường dấn" />
-                                                    <div v-if="errors[0]" class="invalid-feedback d-block" v-text="errors[0]"></div>
-                                                </validation-provider>
-                                            </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label for="slug" class="col-2 col-form-label">URL</label>
+                                        <div class="col-10">
+                                            <validation-provider rules="required|length:0,255" v-slot="{ errors }">
+                                                <input v-model="slugUpdate" class="form-control" type="search" placeholder="Đường dấn" />
+                                                <div v-if="errors[0]" class="invalid-feedback d-block" v-text="errors[0]"></div>
+                                            </validation-provider>
                                         </div>
-                                        <div class="form-group row">
-                                            <label for="slug" class="col-2 col-form-label">Ảnh</label>
-                                            <div class="col-10">
-                                                <div class="image-input image-input-empty image-input-outline background-position-center" :style="'background-image: url(' + (avatar ? avatar : '/img/avatar.png') + ')'">
-                                                    <div class="image-input-wrapper" :style="avatar ? 'width: 325px' : ''"></div>
-                                                    <label @click="modal = true" data-toggle="modal" data-target="#filemanager" class="btn btn-xs btn-icon btn-circle btn-white btn-hover-text-primary btn-shadow" data-action="change">
-                                                        <i class="fa fa-pen icon-sm text-muted"></i>
-                                                    </label>
-                                                    <span v-if="avatar" @click="avatar = ''" class="btn btn-xs btn-icon btn-circle btn-white btn-hover-text-primary btn-shadow d-flex" data-action="remove">
-                                                        <i class="ki ki-bold-close icon-xs text-muted"></i>
-                                                    </span>
-                                                </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label for="slug" class="col-2 col-form-label">Ảnh</label>
+                                        <div class="col-10">
+                                            <div class="image-input image-input-empty image-input-outline background-position-center" :style="'background-image: url(' + (avatar ? avatar : '/img/avatar.png') + ')'">
+                                                <div class="image-input-wrapper" :style="avatar ? 'width: 325px' : ''"></div>
+                                                <label @click="modal = true" data-toggle="modal" data-target="#filemanager" class="btn btn-xs btn-icon btn-circle btn-white btn-hover-text-primary btn-shadow" data-action="change">
+                                                    <i class="fa fa-pen icon-sm text-muted"></i>
+                                                </label>
+                                                <span v-if="avatar" @click="avatar = ''" class="btn btn-xs btn-icon btn-circle btn-white btn-hover-text-primary btn-shadow d-flex" data-action="remove">
+                                                    <i class="ki ki-bold-close icon-xs text-muted"></i>
+                                                </span>
                                             </div>
                                         </div>
                                     </div>
-                                </ValidationObserver>
-                            </form>
-                        </div>
+                                </div>
+                            </ValidationObserver>
+                        </form>
+                    </div>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-light-primary font-weight-bold" data-dismiss="modal">Đóng</button>
@@ -201,7 +203,7 @@
             </div>
         </div>
     </div>
-    
+
     <div v-if="modal" class="modal fade" id="filemanager">
         <div class="modal-dialog modal-full min-vh-100">
             <div class="modal-content min-vh-100">
@@ -218,15 +220,27 @@
 import Extends from '../../extend';
 import FileManage from '../../components/FileManager/index'
 import Breadcrumb from '../../components/breadcrumb/index'
-import { ValidationObserver, ValidationProvider, extend } from 'vee-validate';
-import { required } from 'vee-validate/dist/rules';
-toastr.options = { "progressBar": true, "positionClass": "toast-top-right" };
+import {
+    ValidationObserver,
+    ValidationProvider,
+    extend
+} from 'vee-validate';
+import {
+    required
+} from 'vee-validate/dist/rules';
+toastr.options = {
+    "progressBar": true,
+    "positionClass": "toast-top-right"
+};
 extend('required', {
     ...required,
     message: 'Không được để trống'
 });
 extend('length', {
-    validate(value, { min, max }) {
+    validate(value, {
+        min,
+        max
+    }) {
         return value.length >= min && value.length <= max;
     },
     params: ['min', 'max'],
@@ -234,16 +248,19 @@ extend('length', {
 });
 var typeimage = 'create';
 export default {
-    components: { Breadcrumb, FileManage, ValidationProvider, ValidationObserver },
+    components: {
+        Breadcrumb,
+        FileManage,
+        ValidationProvider,
+        ValidationObserver
+    },
     data() {
         return {
             subHeader: {
-                links: [
-                    {
-                        name: 'Danh mục',
-                        url: '/tin-tuc/danh-muc',
-                    },
-                ],
+                links: [{
+                    name: 'Danh mục',
+                    url: '/tin-tuc/danh-muc',
+                }, ],
                 action: {
                     url: '/',
                     icon: 'icon-sm ki ki-long-arrow-back',
@@ -282,8 +299,7 @@ export default {
             $('#filemanager').modal('hide');
             if (typeimage == 'create') {
                 this.avatar = path
-            } 
-            else {
+            } else {
                 this.images[typeimage].url = path
             }
         },
@@ -305,12 +321,12 @@ export default {
                         this.name = ''
                         this.avatar = ''
                         params.id = res.data._id
+                        params.parent_id = 0
                         this.categories.push(params)
                         this.$refs['errors'].reset();
                         toastr.success("Tạo danh mục thành công!")
                         $('#exampleModalLong').modal('hide')
-                    }
-                    else {
+                    } else {
                         if (res.data.name) {
                             toastr.warning(res.data.name);
                         }
@@ -336,6 +352,7 @@ export default {
                     this.categories[key].name = this.nameUpdate
                     this.categories[key].slug = this.slugUpdate
                     this.categories[key].avatar = this.avatar
+                    this.avatar = ''
                     $('#exampleModalLongUpdate').modal('hide')
                     toastr.success("Cập nhật thành công!")
                     this.$refs['errorupdate'].reset();

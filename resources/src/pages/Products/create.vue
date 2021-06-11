@@ -83,7 +83,7 @@
                                     <div class="form-group row">
                                         <label for="price" class="col-2 col-form-label">Giá bán</label>
                                         <div class="col-10">
-                                            <validation-provider rules="required|length:0,255" v-slot="{ errors }">
+                                            <validation-provider rules="required" v-slot="{ errors }">
                                                 <input v-model="price" class="form-control" type="number" placeholder="Giá bán" />
                                                 <div v-if="errors[0]" class="invalid-feedback d-block" v-text="errors[0]"></div>
                                             </validation-provider>
@@ -92,7 +92,7 @@
                                     <div class="form-group row">
                                         <label for="discount" class="col-2 col-form-label">Giá gốc</label>
                                         <div class="col-10">
-                                            <validation-provider rules="required|length:0,255" v-slot="{ errors }">
+                                            <validation-provider rules="required" v-slot="{ errors }">
                                                 <input v-model="discount" class="form-control" type="number" placeholder="Giá gốc" />
                                                 <div v-if="errors[0]" class="invalid-feedback d-block" v-text="errors[0]"></div>
                                             </validation-provider>

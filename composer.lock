@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "dee3a92dd0502bf77d3c5ee38792a58c",
+    "content-hash": "1b9819f0c90041e5fd5c38ca7ab76677",
     "packages": [
         {
             "name": "asm89/stack-cors",
@@ -120,16 +120,16 @@
         },
         {
             "name": "composer/package-versions-deprecated",
-            "version": "1.11.99.1",
+            "version": "1.11.99.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/composer/package-versions-deprecated.git",
-                "reference": "7413f0b55a051e89485c5cb9f765fe24bb02a7b6"
+                "reference": "c6522afe5540d5fc46675043d3ed5a45a740b27c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/composer/package-versions-deprecated/zipball/7413f0b55a051e89485c5cb9f765fe24bb02a7b6",
-                "reference": "7413f0b55a051e89485c5cb9f765fe24bb02a7b6",
+                "url": "https://api.github.com/repos/composer/package-versions-deprecated/zipball/c6522afe5540d5fc46675043d3ed5a45a740b27c",
+                "reference": "c6522afe5540d5fc46675043d3ed5a45a740b27c",
                 "shasum": ""
             },
             "require": {
@@ -173,7 +173,7 @@
             "description": "Composer plugin that provides efficient querying for installed package versions (no runtime IO)",
             "support": {
                 "issues": "https://github.com/composer/package-versions-deprecated/issues",
-                "source": "https://github.com/composer/package-versions-deprecated/tree/1.11.99.1"
+                "source": "https://github.com/composer/package-versions-deprecated/tree/1.11.99.2"
             },
             "funding": [
                 {
@@ -189,7 +189,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2020-11-11T10:22:58+00:00"
+            "time": "2021-05-24T07:46:03+00:00"
         },
         {
             "name": "defuse/php-encryption",
@@ -1230,16 +1230,16 @@
         },
         {
             "name": "jenssegers/mongodb",
-            "version": "v3.8.3",
+            "version": "3.8.4",
             "source": {
                 "type": "git",
                 "url": "https://github.com/jenssegers/laravel-mongodb.git",
-                "reference": "09fcda8d21edfeb49416893bf916e13647d79f4b"
+                "reference": "6aa6ad12b3b52eeab1d090f282c14123ffad1dc9"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/jenssegers/laravel-mongodb/zipball/09fcda8d21edfeb49416893bf916e13647d79f4b",
-                "reference": "09fcda8d21edfeb49416893bf916e13647d79f4b",
+                "url": "https://api.github.com/repos/jenssegers/laravel-mongodb/zipball/6aa6ad12b3b52eeab1d090f282c14123ffad1dc9",
+                "reference": "6aa6ad12b3b52eeab1d090f282c14123ffad1dc9",
                 "shasum": ""
             },
             "require": {
@@ -1269,8 +1269,8 @@
                 }
             },
             "autoload": {
-                "psr-0": {
-                    "Jenssegers\\Mongodb": "src/"
+                "psr-4": {
+                    "Jenssegers\\Mongodb\\": "src/"
                 }
             },
             "notification-url": "https://packagist.org/downloads/",
@@ -1296,7 +1296,7 @@
             ],
             "support": {
                 "issues": "https://github.com/jenssegers/laravel-mongodb/issues",
-                "source": "https://github.com/jenssegers/laravel-mongodb/tree/v3.8.3"
+                "source": "https://github.com/jenssegers/laravel-mongodb/tree/3.8.4"
             },
             "funding": [
                 {
@@ -1308,7 +1308,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2021-02-21T06:21:18+00:00"
+            "time": "2021-05-27T06:52:51+00:00"
         },
         {
             "name": "laravel/framework",
@@ -2774,72 +2774,6 @@
                 }
             ],
             "time": "2021-04-19T03:20:48+00:00"
-        },
-        {
-            "name": "predis/predis",
-            "version": "v1.1.7",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/predis/predis.git",
-                "reference": "b240daa106d4e02f0c5b7079b41e31ddf66fddf8"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/predis/predis/zipball/b240daa106d4e02f0c5b7079b41e31ddf66fddf8",
-                "reference": "b240daa106d4e02f0c5b7079b41e31ddf66fddf8",
-                "shasum": ""
-            },
-            "require": {
-                "php": ">=5.3.9"
-            },
-            "require-dev": {
-                "phpunit/phpunit": "~4.8"
-            },
-            "suggest": {
-                "ext-curl": "Allows access to Webdis when paired with phpiredis",
-                "ext-phpiredis": "Allows faster serialization and deserialization of the Redis protocol"
-            },
-            "type": "library",
-            "autoload": {
-                "psr-4": {
-                    "Predis\\": "src/"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Daniele Alessandri",
-                    "email": "suppakilla@gmail.com",
-                    "homepage": "http://clorophilla.net",
-                    "role": "Creator & Maintainer"
-                },
-                {
-                    "name": "Till Krüss",
-                    "homepage": "https://till.im",
-                    "role": "Maintainer"
-                }
-            ],
-            "description": "Flexible and feature-complete Redis client for PHP and HHVM",
-            "homepage": "http://github.com/predis/predis",
-            "keywords": [
-                "nosql",
-                "predis",
-                "redis"
-            ],
-            "support": {
-                "issues": "https://github.com/predis/predis/issues",
-                "source": "https://github.com/predis/predis/tree/v1.1.7"
-            },
-            "funding": [
-                {
-                    "url": "https://github.com/sponsors/tillkruss",
-                    "type": "github"
-                }
-            ],
-            "time": "2021-04-04T19:34:46+00:00"
         },
         {
             "name": "psr/container",
@@ -6378,5 +6312,5 @@
         "php": "^7.3"
     },
     "platform-dev": [],
-    "plugin-api-version": "2.0.0"
+    "plugin-api-version": "2.1.0"
 }
