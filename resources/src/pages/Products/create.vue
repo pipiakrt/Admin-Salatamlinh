@@ -120,6 +120,7 @@
                                                             <i class="fa fa-pen icon-sm text-muted"></i>
                                                         </label>
                                                     </div>
+                                                    <div v-if="notImage" class="invalid-feedback d-block">Không được để trống</div>
                                                 </div>
                                             </div>
                                         </div>
@@ -272,6 +273,7 @@ export default {
                     text: 'Danh Sách',
                 }
             },
+            notImage: false,
             attributes: [
                 {
                     title: '',
@@ -364,6 +366,7 @@ export default {
         },
         setUrl(path) {
             $('#filemanager').modal('hide');
+            this.notImage = false
             if (typeimage == 'summernote') {
                 var image = $('<img>').attr('src', path);
                 $('.summernote').summernote("insertNode", image[0]);
@@ -376,7 +379,7 @@ export default {
             }
         },
         async submit(status) {
-            if (await this.errors()) {
+            if (await this.errors() && this.checkImage()) {
                 let params = {
                     owner_id: 1,
                     name: this.name,
@@ -389,8 +392,8 @@ export default {
                     seo_keyword: this.seo_keyword,
                     category_id: this.category,
                     avatar: this.images[0].url,
-                    images: JSON.stringify(this.images),
-                    attributes: JSON.stringify(this.attributes),
+                    images: this.images,
+                    attributes: this.attributes,
                     description: this.description,
                     content: this.content,
                     status: String(status)
@@ -406,12 +409,14 @@ export default {
                     this.$router.push('/san-pham/danh-sach');
                 })
             } else {
-                this.$smoothScroll({
-                    scrollTo: this.$refs.FormPost,
-                    duration: 600,
-                    offset: -50,
-                })
+                toastr.success("From thông tin chung (bắt buộc)!")
             }
+        },
+        checkImage () {
+            if (this.images == '') {
+                return !(this.notImage = true)
+            }
+            else return true
         },
         async errors() {
             return await this.$refs['errors'].validate();

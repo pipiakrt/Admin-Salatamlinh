@@ -3,10 +3,7 @@ import VueRouter from 'vue-router';
 import routes from './routes';
 import App from './App.vue';
 import VueProgressBar from 'vue-progressbar';
-import VueSmoothScroll from 'vue2-smooth-scroll'
 window.axios = require('axios');
-
-
 
 Vue.use(VueProgressBar, {
     color: '#3699ff',
@@ -22,10 +19,6 @@ Vue.use(VueProgressBar, {
     }
 })
 
-Vue.use(VueSmoothScroll, {
-    duration: 400,
-    updateHistory: false,
-})
 Vue.use(VueRouter);
 
 const router = new VueRouter({ routes, mode: 'history' });

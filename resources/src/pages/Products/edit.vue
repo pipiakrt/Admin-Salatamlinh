@@ -120,6 +120,7 @@
                                                             <i class="fa fa-pen icon-sm text-muted"></i>
                                                         </label>
                                                     </div>
+                                                    <div v-if="notImage" class="invalid-feedback d-block">Không được để trống</div>
                                                 </div>
                                             </div>
                                         </div>
@@ -287,6 +288,7 @@ export default {
             seo_title: '',
             seo_description: '',
             seo_keyword: '',
+            notImage: false
         }
     },
     watch: {
@@ -304,12 +306,12 @@ export default {
             this.slug = res.data.data.slug
             this.category = res.data.data.category_id
             this.video = res.data.data.video
-            this.images = JSON.parse(res.data.data.images)
+            this.images = res.data.data.images
             this.price = res.data.data.price
             this.discount = res.data.data.discount
             this.description = res.data.data.description
             this.content = res.data.data.content
-            this.attributes = JSON.parse(res.data.data.attributes)
+            this.attributes = res.data.data.attributes
             this.seo_title = res.data.data.seo_title
             this.seo_description = res.data.data.seo_description
             this.seo_keyword = res.data.data.seo_keyword
@@ -365,6 +367,7 @@ export default {
                 typeimage = status
         },
         setUrl(path) {
+            this.notImage = false
             $('#filemanager').modal('hide');
             if (typeimage == 'summernote') {
                 var image = $('<img>').attr('src', path);
@@ -378,7 +381,7 @@ export default {
             }
         },
         async submit(status) {
-            if (await this.errors()) {
+            if (await this.errors() && this.checkImage()) {
                 let params = {
                     owner_id: 1,
                     name: this.name,
@@ -391,8 +394,8 @@ export default {
                     seo_keyword: this.seo_keyword,
                     category_id: this.category,
                     avatar: this.images[0].url,
-                    images: JSON.stringify(this.images),
-                    attributes: JSON.stringify(this.attributes),
+                    images: this.images,
+                    attributes: this.attributes,
                     description: this.description,
                     content: this.content,
                     status: String(status)
@@ -408,12 +411,14 @@ export default {
                     this.$router.push('/san-pham/danh-sach');
                 })
             } else {
-                this.$smoothScroll({
-                    scrollTo: this.$refs.FormPost,
-                    duration: 600,
-                    offset: -50,
-                })
+                toastr.success("From thông tin chung (bắt buộc)!")
             }
+        },
+        checkImage () {
+            if (this.images == '') {
+                return !(this.notImage = true)
+            }
+            else return true
         },
         async errors() {
             return await this.$refs['errors'].validate();

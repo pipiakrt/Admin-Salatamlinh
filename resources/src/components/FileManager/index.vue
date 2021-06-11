@@ -260,7 +260,7 @@ export default {
         },
         returnUrl(path = false) {
             if (path) {
-                this.$emit("url", window.location.origin + '/uploads/' + path);
+                this.$emit("url", '/uploads/' + path);
             }
             else {
                 this.$emit("url", '');
@@ -360,7 +360,7 @@ export default {
             })
         },
         Clipboard(path) {
-            Extends.Clipboard_CopyTo(window.location.origin + path)
+            Extends.Clipboard_CopyTo(path)
             // toastr.success("Đã Coppy đường dẫn")
         },
         async errors() {
