@@ -55,7 +55,7 @@
                                                 <div class="dropdown-menu dropdown-menu-sm dropdown-menu-right">
                                                     <ul class="navi navi-hover">
                                                         <li class="navi-item">
-                                                            <a @click="nameUpdate = item.name, idUpdate = item.id" class="navi-link" data-toggle="modal" data-target="#exampleModalLongUpdate">
+                                                            <a @click="nameUpdate = item.name, idUpdate = item.id, avatar = item.avatar" class="navi-link" data-toggle="modal" data-target="#exampleModalLongUpdate">
                                                                 <span class="navi-icon">
                                                                     <i class="fa fas fa-edit"></i>
                                                                 </span>
@@ -157,24 +157,38 @@
                             <form>
                                 <ValidationObserver ref="errorUpdate">
                                     <div class="card-body">
-                                    <div class="form-group row">
-                                        <label for="name" class="col-2 col-form-label">Tên</label>
-                                        <div class="col-10">
-                                            <validation-provider rules="required|length:0,255" v-slot="{ errors }">
-                                                <input v-model="nameUpdate" class="form-control" type="text" placeholder="Tên danh mục" />
-                                                <div v-if="errors[0]" class="invalid-feedback d-block" v-text="errors[0]"></div>
-                                            </validation-provider>
+                                        <div class="form-group row">
+                                            <label for="name" class="col-2 col-form-label">Tên</label>
+                                            <div class="col-10">
+                                                <validation-provider rules="required|length:0,255" v-slot="{ errors }">
+                                                    <input v-model="nameUpdate" class="form-control" type="text" placeholder="Tên danh mục" />
+                                                    <div v-if="errors[0]" class="invalid-feedback d-block" v-text="errors[0]"></div>
+                                                </validation-provider>
+                                            </div>
                                         </div>
-                                    </div>
-                                    <div class="form-group row">
-                                        <label for="slug" class="col-2 col-form-label">URL</label>
-                                        <div class="col-10">
-                                            <validation-provider rules="required|length:0,255" v-slot="{ errors }">
-                                                <input v-model="slugUpdate" class="form-control" type="search" placeholder="Đường dấn" />
-                                                <div v-if="errors[0]" class="invalid-feedback d-block" v-text="errors[0]"></div>
-                                            </validation-provider>
+                                        <div class="form-group row">
+                                            <label for="slug" class="col-2 col-form-label">URL</label>
+                                            <div class="col-10">
+                                                <validation-provider rules="required|length:0,255" v-slot="{ errors }">
+                                                    <input v-model="slugUpdate" class="form-control" type="search" placeholder="Đường dấn" />
+                                                    <div v-if="errors[0]" class="invalid-feedback d-block" v-text="errors[0]"></div>
+                                                </validation-provider>
+                                            </div>
                                         </div>
-                                    </div>
+                                        <div class="form-group row">
+                                            <label for="slug" class="col-2 col-form-label">Ảnh</label>
+                                            <div class="col-10">
+                                                <div class="image-input image-input-empty image-input-outline background-position-center" :style="'background-image: url(' + (avatar ? avatar : '/img/avatar.png') + ')'">
+                                                    <div class="image-input-wrapper" :style="avatar ? 'width: 325px' : ''"></div>
+                                                    <label @click="modal = true" data-toggle="modal" data-target="#filemanager" class="btn btn-xs btn-icon btn-circle btn-white btn-hover-text-primary btn-shadow" data-action="change">
+                                                        <i class="fa fa-pen icon-sm text-muted"></i>
+                                                    </label>
+                                                    <span v-if="avatar" @click="avatar = ''" class="btn btn-xs btn-icon btn-circle btn-white btn-hover-text-primary btn-shadow d-flex" data-action="remove">
+                                                        <i class="ki ki-bold-close icon-xs text-muted"></i>
+                                                    </span>
+                                                </div>
+                                            </div>
+                                        </div>
                                     </div>
                                 </ValidationObserver>
                             </form>
@@ -289,6 +303,7 @@ export default {
                     KTApp.unblockPage();
                     if (res.status == 201) {
                         this.name = ''
+                        this.avatar = ''
                         params.id = res.data._id
                         this.categories.push(params)
                         this.$refs['errors'].reset();
@@ -308,6 +323,7 @@ export default {
                 let params = {
                     name: this.nameUpdate,
                     slug: this.slugUpdate,
+                    avatar: this.avatar,
                 }
                 KTApp.blockPage({
                     overlayColor: "#000000",
@@ -319,6 +335,7 @@ export default {
                     let key = this.categories.findIndex(item => item.id == this.idUpdate)
                     this.categories[key].name = this.nameUpdate
                     this.categories[key].slug = this.slugUpdate
+                    this.categories[key].avatar = this.avatar
                     $('#exampleModalLongUpdate').modal('hide')
                     toastr.success("Cập nhật thành công!")
                     this.$refs['errorupdate'].reset();
