@@ -1,6 +1,9 @@
-<style scoped>
+<style>
 .background-position-center {
     background-position: center
+}
+.tab-pane {
+    overflow: hidden;
 }
 </style>
 
@@ -15,20 +18,20 @@
                         <ul class="nav nav-tabs nav-bold nav-tabs-line">
                             <li class="nav-item">
                                 <a class="nav-link active" data-toggle="tab" href="#kt_tab_pane_1_4">
-                                    <span class="nav-icon"><i class="flaticon2-chat-1"></i></span>
+                                    <span class="nav-icon"><i class="flaticon2-gear"></i></span>
                                     <h3 class="card-title">Thông tin chung</h3>
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" data-toggle="tab" href="#kt_tab_pane_2_4">
-                                    <span class="nav-icon"><i class="flaticon2-drop"></i></span>
-                                    <h3 class="card-title">Giá</h3>
+                                <a class="nav-link" data-toggle="tab" href="#kt_tab_pane_2_6">
+                                    <span class="nav-icon"><i class="flaticon2-pen"></i></span>
+                                    <h3 class="card-title">Nội dung</h3>
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" data-toggle="tab" href="#kt_tab_pane_2_6">
-                                    <span class="nav-icon"><i class="flaticon2-drop"></i></span>
-                                    <h3 class="card-title">Nội dung</h3>
+                                <a class="nav-link" data-toggle="tab" href="#kt_tab_pane_2_4">
+                                    <span class="nav-icon"><i class="flaticon2-layers"></i></span>
+                                    <h3 class="card-title">Chi tiết sản phẩm</h3>
                                 </a>
                             </li>
                             <li class="nav-item">
@@ -78,6 +81,24 @@
                                         </div>
                                     </div>
                                     <div class="form-group row">
+                                        <label for="price" class="col-2 col-form-label">Giá bán</label>
+                                        <div class="col-10">
+                                            <validation-provider rules="required|length:0,255" v-slot="{ errors }">
+                                                <input v-model="price" class="form-control" type="number" placeholder="Giá bán" />
+                                                <div v-if="errors[0]" class="invalid-feedback d-block" v-text="errors[0]"></div>
+                                            </validation-provider>
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label for="discount" class="col-2 col-form-label">Giá gốc</label>
+                                        <div class="col-10">
+                                            <validation-provider rules="required|length:0,255" v-slot="{ errors }">
+                                                <input v-model="discount" class="form-control" type="number" placeholder="Giá gốc" />
+                                                <div v-if="errors[0]" class="invalid-feedback d-block" v-text="errors[0]"></div>
+                                            </validation-provider>
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
                                         <label class="col-2 col-form-label">Ảnh Sản phẩm</label>
                                         <div class="col-10">
                                             <div class="row">
@@ -105,31 +126,53 @@
                                     </div>
                                 </div>
                                 <div class="tab-pane fade" id="kt_tab_pane_2_4" role="tabpanel" aria-labelledby="kt_tab_pane_2_4">
-                                    <div class="form-group row">
-                                        <label for="price" class="col-2 col-form-label">Giá bán</label>
+                                    <div class="form-group row pb-5" v-for="(items, i) in attributes" :key="i"  style="border-bottom: 1px solid #e4e6ef;">
+                                        <label for="video" class="col-2 col-form-label">Tiêu đề {{i + 1}}</label>
                                         <div class="col-10">
-                                            <validation-provider rules="required|length:0,255" v-slot="{ errors }">
-                                                <input v-model="price" class="form-control" type="number" placeholder="Giá bán" />
-                                                <div v-if="errors[0]" class="invalid-feedback d-block" v-text="errors[0]"></div>
-                                            </validation-provider>
+                                            <div class="row">
+                                                <div class="col-12 mt-3">
+                                                    <input v-model="items.title" placeholder="Tiêu đề" class="form-control" type="text" />
+                                                </div>
+                                                <div class="col-12">
+                                                    <template v-for="(item, key) in items.options">
+                                                        <div class="row mt-5" :key="key">
+                                                            <div class="col-5">
+                                                                <input v-model="item.key" placeholder="key" class="form-control" type="text" />
+                                                            </div>
+                                                            <div class="col-5">
+                                                                <input v-model="item.val" placeholder="value" class="form-control" type="text" />
+                                                            </div>
+                                                            <div class="col-2">
+                                                                <button type="button" @click="items.options.length == 1 ? attributes.splice(i, 1) : items.options.splice(key, 1)" class="btn btn-block btn-warning">Loại bỏ</button>
+                                                            </div>
+                                                        </div>
+                                                    </template>
+                                                </div>
+                                                <div class="col-10 mt-5">
+                                                    <button @click="items.options.push({key: '', val: ''})" type="button" class="btn btn-block btn-outline-secondary">Thêm</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <button @click="attributes.push({title: '',options: [{ key: '', val: '', }] })" type="button" class="btn btn-block btn-outline-secondary">Thêm</button>
+                                </div>
+                                <div class="tab-pane fade" id="kt_tab_pane_2_6" role="tabpanel" aria-labelledby="kt_tab_pane_2_6">
+                                    <div class="form-group row">
+                                        <label for="video" class="col-10 col-form-label">Video</label>
+                                        <div class="col-10">
+                                            <input v-model="video" class="form-control" type="text" placeholder='Nhập đường link... vd: "https://youtu.be/l8v0hzD3llI"' />
                                         </div>
                                     </div>
                                     <div class="form-group row">
-                                        <label for="discount" class="col-2 col-form-label">Giá gốc</label>
+                                        <label for="description" class="col-10 col-form-label">Mô tả</label>
                                         <div class="col-10">
-                                            <validation-provider rules="required|length:0,255" v-slot="{ errors }">
-                                                <input v-model="discount" class="form-control" type="number" placeholder="Giá gốc" />
-                                                <div v-if="errors[0]" class="invalid-feedback d-block" v-text="errors[0]"></div>
-                                            </validation-provider>
+                                            <textarea v-model="description" class="form-control" rows="9" id="description"></textarea>
                                         </div>
                                     </div>
                                     <div class="form-group row">
-                                        <label for="video" class="col-2 col-form-label">Video</label>
+                                        <label for="kt_summernote_1" class="col-10 col-form-label">Nội dung</label>
                                         <div class="col-10">
-                                            <validation-provider rules="required|length:0,255" v-slot="{ errors }">
-                                                <input v-model="video" class="form-control" type="text" placeholder='Nhập đường link... vd: "https://youtu.be/l8v0hzD3llI"' />
-                                                <div v-if="errors[0]" class="invalid-feedback d-block" v-text="errors[0]"></div>
-                                            </validation-provider>
+                                            <div class="summernote" id="kt_summernote_1"></div>
                                         </div>
                                     </div>
                                 </div>
@@ -137,46 +180,19 @@
                                     <div class="form-group row">
                                         <label for="seo_title" class="col-2 col-form-label">Seo Title</label>
                                         <div class="col-10">
-                                            <validation-provider rules="required|length:0,255" v-slot="{ errors }">
-                                                <input v-model="seo_title" class="form-control" type="text" />
-                                                <div v-if="errors[0]" class="invalid-feedback d-block" v-text="errors[0]"></div>
-                                            </validation-provider>
+                                            <input v-model="seo_title" class="form-control" type="text" />
                                         </div>
                                     </div>
                                     <div class="form-group row">
                                         <label for="name" class="col-2 col-form-label">Seo Description</label>
                                         <div class="col-10">
-                                            <validation-provider rules="required|length:0,255" v-slot="{ errors }">
-                                                <textarea v-model="seo_description" class="form-control" rows="9" id="description"></textarea>
-                                                <div v-if="errors[0]" class="invalid-feedback d-block" v-text="errors[0]"></div>
-                                            </validation-provider>
+                                            <textarea v-model="seo_description" class="form-control" rows="9" id="description"></textarea>
                                         </div>
                                     </div>
                                     <div class="form-group row">
                                         <label for="seo_keyword" class="col-2 col-form-label">Seo Keyword</label>
                                         <div class="col-10">
-                                            <validation-provider rules="required|length:0,255" v-slot="{ errors }">
-                                                <textarea v-model="seo_keyword" class="form-control" rows="9" id="description"></textarea>
-                                                <div v-if="errors[0]" class="invalid-feedback d-block" v-text="errors[0]"></div>
-                                            </validation-provider>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="tab-pane fade" id="kt_tab_pane_2_6" role="tabpanel" aria-labelledby="kt_tab_pane_2_6">
-                                    <div class="form-group row">
-                                        <label for="description" class="col-2 col-form-label">Mô tả</label>
-                                        <div class="col-12">
-                                            <validation-provider rules="required|length:0,65535" v-slot="{ errors }">
-                                                <textarea v-model="description" class="form-control" rows="9" id="description"></textarea>
-                                                <div v-if="errors[0]" class="invalid-feedback d-block" v-text="errors[0]"></div>
-                                            </validation-provider>
-                                        </div>
-                                    </div>
-                                    <div class="form-group row">
-                                        <label for="kt_summernote_1" class="col-2 col-form-label">Nội dung</label>
-                                        <div class="col-12">
-                                            <div class="summernote" id="kt_summernote_1"></div>
-                                            <div v-if="errorContent" class="invalid-feedback d-block">Không được để trống</div>
+                                            <textarea v-model="seo_keyword" class="form-control" rows="9" id="description"></textarea>
                                         </div>
                                     </div>
                                 </div>
@@ -256,6 +272,17 @@ export default {
                     text: 'Danh Sách',
                 }
             },
+            attributes: [
+                {
+                    title: '',
+                    options: [
+                        {
+                            key: '',
+                            val: '',
+                        }
+                    ]
+                }
+            ],
             images: [],
             modal: false,
             name: '',
@@ -349,7 +376,7 @@ export default {
             }
         },
         async submit(status) {
-            if (await this.errors() && await this.checkFromExtend()) {
+            if (await this.errors()) {
                 let params = {
                     owner_id: 1,
                     name: this.name,
@@ -363,6 +390,7 @@ export default {
                     category_id: this.category,
                     avatar: this.images[0].url,
                     images: JSON.stringify(this.images),
+                    attributes: JSON.stringify(this.attributes),
                     description: this.description,
                     content: this.content,
                     status: String(status)
@@ -385,24 +413,7 @@ export default {
                 })
             }
         },
-        async checkFromExtend() {
-            let check = 0;
-            let content = $('.summernote').summernote('isEmpty') ? '' : $(".summernote").summernote('code');
-            if (content) {
-                this.content = content;
-                this.errorContent = false;
-            } else {
-                check++
-                this.errorContent = true;
-            }
-            if (check == 0) {
-                return true
-            } else {
-                return false
-            }
-        },
         async errors() {
-            this.checkFromExtend()
             return await this.$refs['errors'].validate();
         },
     },

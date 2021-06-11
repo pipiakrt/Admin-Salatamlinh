@@ -24,6 +24,8 @@
                             <table class="table table-head-custom table-head-bg table-borderless table-vertical-center">
                                 <thead>
                                     <tr class="text-uppercase">
+                                        <th style="width: 50px">ID</th>
+                                        <th style="width: 250px">Ảnh</th>
                                         <th style="min-width: 100px">Tên</th>
                                         <th style="min-width: 120px">URL</th>
                                         <th class="text-center">EXT</th>
@@ -31,6 +33,14 @@
                                 </thead>
                                 <tbody>
                                     <tr v-for="item in categories" :key="'row' + item.id">
+                                        <td>
+                                            <span class="text-dark-75 font-weight-bolder d-block font-size-lg" v-text="item.id"></span>
+                                        </td>
+                                        <td>
+                                            <span class="text-dark-75 font-weight-bolder d-block font-size-lg">
+                                                <img class="w-100" :src="item.avatar">
+                                            </span>
+                                        </td>
                                         <td>
                                             <span class="text-dark-75 font-weight-bolder d-block font-size-lg" v-text="item.name"></span>
                                         </td>
@@ -83,10 +93,10 @@
                     </button>
                 </div>
                 <div class="modal-body">
-                        <div class="card card-custom gutter-b example example-compact">
-                            <form>
-                                <ValidationObserver ref="errors">
-                                    <div class="card-body">
+                    <div class="card card-custom gutter-b example example-compact">
+                        <form>
+                            <ValidationObserver ref="errors">
+                                <div class="card-body">
                                     <div class="form-group row">
                                         <label for="name" class="col-2 col-form-label">Tên</label>
                                         <div class="col-10">
@@ -105,10 +115,24 @@
                                             </validation-provider>
                                         </div>
                                     </div>
+                                    <div class="form-group row">
+                                        <label for="slug" class="col-2 col-form-label">Ảnh</label>
+                                        <div class="col-10">
+                                            <div class="image-input image-input-empty image-input-outline background-position-center" :style="'background-image: url(' + (avatar ? avatar : '/img/avatar.png') + ')'">
+                                                <div class="image-input-wrapper" :style="avatar ? 'width: 325px' : ''"></div>
+                                                <label @click="modal = true" data-toggle="modal" data-target="#filemanager" class="btn btn-xs btn-icon btn-circle btn-white btn-hover-text-primary btn-shadow" data-action="change">
+                                                    <i class="fa fa-pen icon-sm text-muted"></i>
+                                                </label>
+                                                <span v-if="avatar" @click="avatar = ''" class="btn btn-xs btn-icon btn-circle btn-white btn-hover-text-primary btn-shadow d-flex" data-action="remove">
+                                                    <i class="ki ki-bold-close icon-xs text-muted"></i>
+                                                </span>
+                                            </div>
+                                        </div>
                                     </div>
-                                </ValidationObserver>
-                            </form>
-                        </div>
+                                </div>
+                            </ValidationObserver>
+                        </form>
+                    </div>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-light-primary font-weight-bold" data-dismiss="modal">Đóng</button>
@@ -163,11 +187,22 @@
             </div>
         </div>
     </div>
+    
+    <div v-if="modal" class="modal fade" id="filemanager">
+        <div class="modal-dialog modal-full min-vh-100">
+            <div class="modal-content min-vh-100">
+                <div class="modal-body">
+                    <FileManage :getUrl="true" @url="setUrl($event)" />
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
 </template>
 
 <script>
 import Extends from '../../extend';
+import FileManage from '../../components/FileManager/index'
 import Breadcrumb from '../../components/breadcrumb/index'
 import { ValidationObserver, ValidationProvider, extend } from 'vee-validate';
 import { required } from 'vee-validate/dist/rules';
@@ -183,9 +218,9 @@ extend('length', {
     params: ['min', 'max'],
     message: 'Độ dài không hợp lệ'
 });
-
+var typeimage = 'create';
 export default {
-    components: { Breadcrumb, ValidationProvider, ValidationObserver },
+    components: { Breadcrumb, FileManage, ValidationProvider, ValidationObserver },
     data() {
         return {
             subHeader: {
@@ -206,7 +241,9 @@ export default {
             idUpdate: '',
             nameUpdate: '',
             slugUpdate: '',
-            categories: []
+            categories: [],
+            avatar: '',
+            modal: false
         }
     },
     watch: {
@@ -227,11 +264,21 @@ export default {
         })
     },
     methods: {
+        setUrl(path) {
+            $('#filemanager').modal('hide');
+            if (typeimage == 'create') {
+                this.avatar = path
+            } 
+            else {
+                this.images[typeimage].url = path
+            }
+        },
         async submit() {
             if (await this.errors()) {
                 let params = {
                     name: this.name,
                     slug: this.slug,
+                    avatar: this.avatar,
                 }
                 KTApp.blockPage({
                     overlayColor: "#000000",

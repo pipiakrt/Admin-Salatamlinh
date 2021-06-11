@@ -17,6 +17,7 @@ class CreateCategoriesTable extends Migration
             $table->id('_id');
             $table->string('name')->index();
             $table->string('slug')->index();
+            $table->string('avatar')->nullable();
             $table->integer('parent_id')->index()->default(0);
         });
     }

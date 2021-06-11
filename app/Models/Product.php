@@ -26,9 +26,12 @@ class Product extends MySQL
         'status',
         'category_id',
         'owner_id',
+        'attributes',
     ];
 
     protected $casts = [
         'status' => 'boolean',
+        'images' => 'array',
+        'attributes' => 'array',
     ];
 }

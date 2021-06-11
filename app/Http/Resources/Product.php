@@ -26,6 +26,8 @@ class Product extends JsonResource
             'seo_description' => $this->seo_description,
             'seo_keyword' => $this->seo_keyword,
             'description' => $this->description,
+            'images' => $this->images,
+            'attributes' => $this->attributes,
             'content' => $this->content,
             'status' => $this->status,
             'created_at' => $this->created_at,
