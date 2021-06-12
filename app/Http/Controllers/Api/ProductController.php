@@ -28,7 +28,7 @@ class ProductController extends Controller
      */
     public function index(Request $request)
     {
-        return Resources::collection(Model::orderBy('_id', 'desc')->paginate(10));
+        return Resources::collection(Model::paginateFilter($request));
     }
 
     /**

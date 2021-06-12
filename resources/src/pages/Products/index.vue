@@ -32,23 +32,65 @@
                 </div>
                 <div class="card-body pt-0 pb-3">
                     <div class="table-responsive">
+                        <div class="row mb-5">
+                            <div class="col-2">
+                                <input type="text" placeholder="Tìm sản phẩm" class="form-control form-control-sm form-filter datatable-input"/>
+                            </div>
+                            <div class="col-2">
+                                <select class="form-control form-control-sm form-filter datatable-input">
+                                    <option value="">Giá</option>
+                                    <option value="Brazil">Lớn dần</option>
+                                    <option value="China">Giảm dần</option>
+                                </select>
+                            </div>
+                            <div class="col-3">
+                                <div class="row">
+                                    <div class="col-6">
+                                        <input type="text" class="form-control form-control-sm datatable-input" placeholder="Từ" />
+                                    </div>
+                                    <div class="col-6">
+                                        <input type="text" class="form-control form-control-sm datatable-input" placeholder="Đến"/>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-2">
+                                <select class="form-control form-control-sm form-filter datatable-input" title="Select" data-col-index="6">
+                                    <option value="">Chọn</option>
+                                    <option value="1">Mới đến cũ</option>
+                                    <option value="6">Cũ đến mới</option>
+                                </select>
+                            </div>
+                            <div class="col-2">
+                                <select class="form-control form-control-sm form-filter datatable-input" title="Chọn" data-col-index="7">
+                                    <option value="">Chọn</option>
+                                    <option value="1">Hoạt Động</option>
+                                    <option value="2">Tạm Ẩn</option>
+                                </select>
+                            </div>
+                            <div class="col-1">
+                                <button class="btn btn-primary kt-btn btn-sm kt-btn--icon d-block">
+                                    <span>
+                                        <span>Tìm kiếm</span>
+                                    </span>
+                                </button>
+                            </div>
+                        </div>
                         <table class="table table-head-custom table-head-bg table-borderless table-vertical-center">
                             <thead>
                                 <tr class="text-uppercase">
-                                    <th style="min-width: 50px;">
+                                    <th style="min-width: 50px;"> 
                                         <label class="checkbox">
                                             <input v-model="checkAll" type="checkbox" />
                                             <span></span>
                                         </label>
                                     </th>
-                                    <th style="min-width: 300px" class="pl-0">
+                                    <th style="min-width: 300px">
                                         <span class="text-dark-75">Sản phẩm</span>
                                     </th>
-                                    <th style="min-width: 100px">Mô tả</th>
-                                    <th style="min-width: 120px">Giá</th>
+                                    <th style="min-width: 100px">Giá</th>
+                                    <th style="min-width: 120px">Khoảng Giá</th>
                                     <th style="min-width: 120px">Ngày tạo</th>
-                                    <th style="min-width: 120px">cập nhật</th>
-                                    <th style="min-width: 100px">Trạng thái</th>
+                                    <th class="text-center" style="min-width: 100px">Trạng thái</th>
                                     <th class="text-center">EXT</th>
                                 </tr>
                             </thead>
@@ -75,16 +117,12 @@
                                         <span class="text-dark-75 font-weight-bolder d-block font-size-lg" v-text="Text(item.description, 250)"></span>
                                     </td>
                                     <td>
-                                        <span class="text-dark-75 font-weight-bolder d-block font-size-lg" v-text="formatTime(item.price)"></span>
-                                        <span class="text-muted font-weight-bold" v-text="formatHuors(item.discount)"></span>
+                                        <span class="text-dark-75 font-weight-bolder d-block font-size-lg" v-text="item.price"></span>
+                                        <span class="text-muted font-weight-bold" v-text="item.discount"></span>
                                     </td>
                                     <td>
                                         <span class="text-dark-75 font-weight-bolder d-block font-size-lg" v-text="formatTime(item.created_at)"></span>
                                         <span class="text-muted font-weight-bold" v-text="formatHuors(item.created_at)"></span>
-                                    </td>
-                                    <td>
-                                        <span class="text-dark-75 font-weight-bolder d-block font-size-lg" v-text="formatTime(item.updated_at)"></span>
-                                        <span class="text-muted font-weight-bold" v-text="formatHuors(item.updated_at)"></span>
                                     </td>
                                     <td>
                                         <span class="switch switch-primary justify-content-center">

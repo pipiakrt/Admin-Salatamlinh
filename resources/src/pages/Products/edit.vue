@@ -275,6 +275,7 @@ export default {
             },
             modal: false,
             categories: [],
+            id: '',
             name: '',
             slug: '',
             category: '',
@@ -302,6 +303,7 @@ export default {
             this.categories = res.data.data
         })
         axios('/api/products/' + this.$route.params.id).then(res => {
+            this.id = res.data.data.id
             this.name = res.data.data.name
             this.slug = res.data.data.slug
             this.category = res.data.data.category_id
@@ -405,7 +407,7 @@ export default {
                     state: "primary",
                     message: "Đợi Xíu...",
                 })
-                axios.post('/api/products', params).then((res) => {
+                axios.put('/api/products/' + this.id, params).then((res) => {
                     KTApp.unblockPage();
                     toastr.success("Tạo Sản phẩm thành công!")
                     this.$router.push('/san-pham/danh-sach');
