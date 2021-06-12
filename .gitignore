@@ -21,3 +21,4 @@ node_modules
 /public/mix-manifest.json
 .rnd
 web.config
+composer.lock
