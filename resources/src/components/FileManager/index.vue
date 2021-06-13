@@ -204,7 +204,7 @@ export default {
     props: ["getUrl"],
     data() {
         return {
-            domain: 'https://cdn.salagroup.vn/',
+            domain: 'https://cdn.sieuthitamlinhsala.vn/',
             images: [],
             prevDir: '',
             showfolder: false,

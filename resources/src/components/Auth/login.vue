@@ -1,5 +1,5 @@
 <template>
-<div class="row justify-content-center align-content-center h-100" style="background-image: url(https://www.salagroup.vn/img/sala_back.jpg); background-size: cover;">
+<div class="row justify-content-center align-content-center h-100" style="background-image: url(https://www.sieuthitamlinhsala.vn/img/sala_back.jpg); background-size: cover;">
     <div class="col-3">
         <div class="login-form login-signin">
             <ValidationObserver ref="errors">
