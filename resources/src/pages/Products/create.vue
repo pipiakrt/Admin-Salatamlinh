@@ -393,9 +393,9 @@ export default {
                     category_id: this.category,
                     avatar: this.images[0].url,
                     images: this.images,
-                    attributes: this.attributes,
+                    attributes: this.attributes,    
                     description: this.description,
-                    content: this.content,
+                    content: $('.summernote').summernote('code'),
                     status: String(status)
                 }
                 KTApp.blockPage({

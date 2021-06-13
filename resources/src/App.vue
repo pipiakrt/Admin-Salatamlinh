@@ -20,14 +20,6 @@
 </template>
 
 <script>
-import './assets/css/fonts/googleFonts/fonts.css';
-import './assets/css/login.css';
-import './assets/css/plugins.bundle.css';
-import './assets/css/style.bundle.css';
-import './assets/css/aside-light.css';
-import './assets/css/base-light.css';
-import './assets/css/brand-light.css';
-import './assets/css/menu-light.css';
 
 import Login from "./components/Auth/login";
 import Header from "./layout/Header";

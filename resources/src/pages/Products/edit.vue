@@ -203,7 +203,7 @@
                 </div>
                 <div class="card-footer text-center">
                     <router-link to="/san-pham/danh-sach" type="reset" class="btn btn-light-primary mr-1 font-weight-bolder"><i class="icon-sm ki ki-long-arrow-back"></i> Quay Lại</router-link>
-                    <button type="reset" @click="submit(1)" class="btn btn-primary mr-1"><i class="icon-sm ki ki-bold-check-1   "></i> Lưu Sản phẩm</button>
+                    <button type="reset" @click="submit(1)" class="btn btn-primary mr-1"><i class="icon-sm ki ki-bold-check-1"></i> Lưu Sản phẩm</button>
                     <button type="reset" @click="submit(0)" class="btn btn-primary mr-1"><i class="icon-sm ki ki-info"></i> Lưu Ẩn</button>
                 </div>
             </div>
@@ -357,6 +357,7 @@ export default {
                         },
                     },
                 });
+                $('.summernote').summernote('code', res.data.data.content)
             });
             KTApp.unblockPage();
         })
@@ -399,7 +400,7 @@ export default {
                     images: this.images,
                     attributes: this.attributes,
                     description: this.description,
-                    content: this.content,
+                    content: $('.summernote').summernote('code'),
                     status: String(status)
                 }
                 KTApp.blockPage({

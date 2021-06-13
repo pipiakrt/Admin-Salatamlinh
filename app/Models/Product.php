@@ -43,35 +43,33 @@ class Product extends MySQL
         '_id',
     ];
 
+    public function filterOrder(EloquentBuilder $query, $value)
+    {
+        $query->orderBy('_id', $value);
+        return $query;
+    }
+
     public function filterStatus(EloquentBuilder $query, $value)
     {
-        $query->orderBy('_id', 'desc');
-        return $query;
-    }
-
-    public function filterDesc(EloquentBuilder $query, $value)
-    {
-        $query->orderBy('_id', 'desc');
-        return $query;
-    }
-
-    public function filterAsc(EloquentBuilder $query, $value)
-    {
-        $query->orderBy('_id', 'asc');
+        $query->where('status', $value);
         return $query;
     }
 
     public function filterCategory(EloquentBuilder $query, $value)
     {
-        $query->whereHas('categories', function($q) use ($value){
-            $q->where('_id', $value);
-        });
+        $query->where('category_id', $value);
         return $query;
     }
 
     public function filterName(EloquentBuilder $query, $value)
     {
         $query->where('name', 'like', '%' . $value . '%');
+        return $query;
+    }
+
+    public function filterPrice(EloquentBuilder $query, $value)
+    {
+        $query->orderBy('price', $value);
         return $query;
     }
 

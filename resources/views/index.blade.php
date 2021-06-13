@@ -5,6 +5,14 @@
         <title>Salagroup</title>
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
         <link rel="shortcut icon" href="/favicon.ico" />
+        <link rel="stylesheet" href="/css/fonts/googleFonts/fonts.css">
+        <link rel="stylesheet" href="/css/login.css">
+        <link rel="stylesheet" href="/css/plugins.bundle.css">
+        <link rel="stylesheet" href="/css/style.bundle.css">
+        <link rel="stylesheet" href="/css/aside-light.css">
+        <link rel="stylesheet" href="/css/base-light.css">
+        <link rel="stylesheet" href="/css/brand-light.css">
+        <link rel="stylesheet" href="/css/menu-light.css">
         <script defer src="{{ asset('/js/app.js') }}"></script>
         <script src="{{ asset('/js/scripts.bundle.js') }}"></script>
     </head>

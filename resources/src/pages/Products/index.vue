@@ -31,50 +31,58 @@
                     </div>
                 </div>
                 <div class="card-body pt-0 pb-3">
-                    <div class="table-responsive">
-                        <div class="row mb-5">
-                            <div class="col-2">
-                                <input type="text" placeholder="Tìm sản phẩm" class="form-control form-control-sm form-filter datatable-input"/>
-                            </div>
-                            <div class="col-2">
-                                <select class="form-control form-control-sm form-filter datatable-input">
-                                    <option value="">Giá</option>
-                                    <option value="Brazil">Lớn dần</option>
-                                    <option value="China">Giảm dần</option>
-                                </select>
-                            </div>
-                            <div class="col-3">
-                                <div class="row">
-                                    <div class="col-6">
-                                        <input type="text" class="form-control form-control-sm datatable-input" placeholder="Từ" />
-                                    </div>
-                                    <div class="col-6">
-                                        <input type="text" class="form-control form-control-sm datatable-input" placeholder="Đến"/>
-                                    </div>
+                    <div class="row mb-5">
+                        <div class="col-2">
+                            <input v-model="filterName" type="text" placeholder="Tên sản phẩm" class="form-control form-control-sm form-filter datatable-input"/>
+                        </div>
+                        <div class="col-6">
+                            <div class="row">
+                                <div class="col-3">
+                                    <select v-model="filterCategory" class="form-control form-control-sm form-filter datatable-input">
+                                        <option value="">Danh mục</option>
+                                        <template v-for="item in categories">
+                                            <option :key="item.id" v-if="item.parent_id > 0" :value="item.id" v-text="item.name"></option>
+                                        </template>
+                                    </select>
+                                </div>
+                                <div class="col-3">
+                                    <select v-model="filterPrice" class="form-control form-control-sm form-filter datatable-input">
+                                        <option value="">Giá</option>
+                                        <option value="DESC">Lớn dần</option>
+                                        <option value="ASC">Giảm dần</option>
+                                    </select>
+                                </div>
+                                <div class="col-3">
+                                    <input v-model="filterPriceUp" type="number" class="form-control form-control-sm datatable-input" placeholder="Giá Từ" />
+                                </div>
+                                <div class="col-3">
+                                    <input v-model="filterPriceDown" type="number" class="form-control form-control-sm datatable-input" placeholder="Đến"/>
                                 </div>
                             </div>
-                            <div class="col-2">
-                                <select class="form-control form-control-sm form-filter datatable-input" title="Select" data-col-index="6">
-                                    <option value="">Chọn</option>
-                                    <option value="1">Mới đến cũ</option>
-                                    <option value="6">Cũ đến mới</option>
-                                </select>
-                            </div>
-                            <div class="col-2">
-                                <select class="form-control form-control-sm form-filter datatable-input" title="Chọn" data-col-index="7">
-                                    <option value="">Chọn</option>
-                                    <option value="1">Hoạt Động</option>
-                                    <option value="2">Tạm Ẩn</option>
-                                </select>
-                            </div>
-                            <div class="col-1">
-                                <button class="btn btn-primary kt-btn btn-sm kt-btn--icon d-block">
-                                    <span>
-                                        <span>Tìm kiếm</span>
-                                    </span>
-                                </button>
+                        </div>
+                        <div class="col-3">
+                            <div class="row">
+                                <div class="col-6">
+                                    <select v-model="filterOrder" class="form-control form-control-sm form-filter datatable-input" title="Select" data-col-index="6">
+                                        <option value="">Sắp xếp</option>
+                                        <option value="DESC">Mới nhất</option>
+                                        <option value="ASC">Cũ nhất</option>
+                                    </select>
+                                </div>
+                                <div class="col-6">
+                                    <select v-model="filterStatus" class="form-control form-control-sm form-filter datatable-input" title="Chọn" data-col-index="7">
+                                        <option value="">Trạng thái</option>
+                                        <option value="1">Hoạt Động</option>
+                                        <option value="0">Tạm Ẩn</option>
+                                    </select>
+                                </div>
                             </div>
                         </div>
+                        <div class="col-1">
+                            <button @click="getApi()" class="btn btn-block btn-primary kt-btn btn-sm kt-btn--icon d-block">Lọc SP</button>
+                        </div>
+                    </div>
+                    <div class="table-responsive">
                         <table class="table table-head-custom table-head-bg table-borderless table-vertical-center">
                             <thead>
                                 <tr class="text-uppercase">
@@ -87,8 +95,8 @@
                                     <th style="min-width: 300px">
                                         <span class="text-dark-75">Sản phẩm</span>
                                     </th>
-                                    <th style="min-width: 100px">Giá</th>
-                                    <th style="min-width: 120px">Khoảng Giá</th>
+                                    <th style="min-width: 100px">Mô tả</th>
+                                    <th style="min-width: 120px">Giá</th>
                                     <th style="min-width: 120px">Ngày tạo</th>
                                     <th class="text-center" style="min-width: 100px">Trạng thái</th>
                                     <th class="text-center">EXT</th>
@@ -222,6 +230,15 @@ export default {
                     text: 'Thêm Mới',
                 },
             },
+            categories: [],
+            filterName: '',
+            filterCategory: '',
+            filterOrder: '',
+            filterPrice: '',
+            filterStatus: '',
+            filterPriceUp: '',
+            filterPriceDown: '',
+            page: 1,
             checkAll: false,
             checkbox: [],
             allID: [],
@@ -237,21 +254,35 @@ export default {
                 this.checkbox = []
             }
         },
+        filterOrder() {
+            this.filterPrice = ''
+        },
+        filterPrice() {
+            this.filterOrder = ''
+        }
     },
     created() {
-        Extends.LoadPage()
-        axios('/api/products').then(res => {
-            KTApp.unblockPage();
-            this.products = res.data
-            res.data.data.forEach(item => {
-                this.allID.push(item.id)
-            });
+        this.getApi()
+        axios('/api/categories').then(res => {
+            this.categories = res.data.data
         })
     },
     methods: {
         async toPage(page = 1) {
+            this.page = page
+        },
+        async getApi() {
             Extends.LoadPage()
-            let products = await axios("/api/products?page=" + page);
+            let query = {
+                name: this.filterName,
+                category: this.filterCategory,
+                order: this.filterOrder,
+                price: this.filterPrice,
+                status: this.filterStatus,
+                PriceUp: this.filterPriceUp,
+                PriceDown: this.filterPriceDown,
+            }
+            let products = await axios("/api/products", { params: query });
             this.products = products.data
             this.allID = [];
             products.data.data.forEach(item => {

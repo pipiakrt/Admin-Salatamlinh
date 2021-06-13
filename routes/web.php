@@ -14,4 +14,14 @@ use Illuminate\Support\Facades\Artisan;
 |
 */
 
+
+Route::get('optimize', function () {
+    Artisan::call('cache:clear');
+    Artisan::call('optimize');
+    Artisan::call('view:cache');
+    Artisan::call('route:cache');
+    Artisan::call('config:cache');
+    return 'ok';
+});
+
 Route::view('/{any}', 'index')->where('any', '.*');
