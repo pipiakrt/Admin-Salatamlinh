@@ -13,7 +13,7 @@ return [
     |
     */
 
-    'default' => 'local',
+    'default' => env('FILESYSTEM_DRIVER'),
 
     /*
     |--------------------------------------------------------------------------
@@ -42,6 +42,21 @@ return [
             'root' => storage_path('app/public'),
             'url' => env('APP_URL').'/uploads',
             'visibility' => 'public',
+        ],
+
+        'ftp' => [
+            'driver' => 'ftp',
+            'host' => env('FTP_HOST'),
+            'username' => env('FTP_USERNAME'),
+            'password' => env('FTP_PASSWORD'),
+            'url' => env('FTP_DOMAIN'),
+        
+            // Optional FTP Settings...
+            'port' => 21,
+            'root' => 'public_html',
+            'passive' => true,
+            'ssl' => true,
+            'timeout' => 60,
         ],
 
         's3' => [

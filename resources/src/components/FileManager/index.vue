@@ -129,7 +129,7 @@
                                             </a>
                                         </li>
                                         <li class="navi-item">
-                                            <a :href="'/uploads/' + image.path" target="_blank" class="navi-link">
+                                            <a :href="domain + image.path" target="_blank" class="navi-link">
                                                 <span class="navi-icon">
                                                     <i class="fas fa-external-link-alt"></i>
                                                 </span>
@@ -137,7 +137,7 @@
                                             </a>
                                         </li>
                                         <li class="navi-item">
-                                            <a @click="Clipboard('/uploads/' + image.path)" class="navi-link">
+                                            <a @click="Clipboard(domain + image.path)" class="navi-link">
                                                 <span class="navi-icon">
                                                     <i class="fas fa-link"></i>
                                                 </span>
@@ -170,7 +170,7 @@
                             <span @click="toDirectory(image.path)" v-if="image.type == 'dir'">
                                 <i class="fa far text-warning fa-folder icon-5x"></i>
                             </span>
-                            <img v-else class="max-h-65px" :src="'/uploads/' + image.path" />
+                            <img v-else class="max-h-65px" :src="domain + image.path" />
                             <a href="#" class="text-dark-75 font-weight-bold mt-15 font-size-lg" v-text="image.basename"></a>
                         </div>
                     </div>
@@ -204,6 +204,7 @@ export default {
     props: ["getUrl"],
     data() {
         return {
+            domain: 'https://cdn.salagroup.vn/',
             images: [],
             prevDir: '',
             showfolder: false,
@@ -260,7 +261,7 @@ export default {
         },
         returnUrl(path = false) {
             if (path) {
-                this.$emit("url", '/uploads/' + path);
+                this.$emit("url", this.domain + path);
             }
             else {
                 this.$emit("url", '');
