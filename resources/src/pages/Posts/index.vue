@@ -234,6 +234,9 @@ export default {
                 this.checkbox = []
             }
         },
+        page () {
+            this.getApi()
+        }
     },
     created() {
         Extends.LoadPage()
@@ -250,6 +253,7 @@ export default {
                 category: this.filterCategory,
                 order: this.filterOrder,
                 status: this.filterStatus,
+                page: this.page,
             }
             let posts = await axios("/api/posts", { params: query });
             this.allID = [];

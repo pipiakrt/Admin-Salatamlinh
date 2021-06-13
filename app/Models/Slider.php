@@ -14,6 +14,7 @@ class Slider extends MySQL
     
     protected $fillable = [
         'path',
+        'link',
     ];
     
     public $timestamps = false;

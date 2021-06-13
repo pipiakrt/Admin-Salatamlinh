@@ -259,6 +259,9 @@ export default {
         },
         filterPrice() {
             this.filterOrder = ''
+        },
+        page () {
+            this.getApi()
         }
     },
     created() {
@@ -268,12 +271,13 @@ export default {
         })
     },
     methods: {
-        async toPage(page = 1) {
+        toPage(page = 1) {
             this.page = page
         },
         async getApi() {
             Extends.LoadPage()
             let query = {
+                page: this.page,
                 name: this.filterName,
                 category: this.filterCategory,
                 order: this.filterOrder,

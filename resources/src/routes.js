@@ -20,10 +20,8 @@ import EditPost from './pages/Posts/edit'
 import CategoryPost from './pages/Posts/category'
 // Banner
 import Banner from './pages/Banner/index'
-import CreateBanner from './pages/Banner/create'
 // Slider
 import Slider from './pages/Slider/index'
-import CreateSlider from './pages/Slider/create'
 // Account
 import Account from './pages/Account/index'
 import Profile from './pages/Account/profile'
@@ -121,20 +119,10 @@ const routes = [
         component: Banner,
         name: 'Banner',
     },
-    {
-        path: '/anh-bia/them-moi',
-        component: CreateBanner,
-        name: 'Banner',
-    },
     // Slider
     {
         path: '/thanh-truot/danh-sach',
         component: Slider,
-        name: 'Slider',
-    },
-    {
-        path: '/thanh-truot/them-moi',
-        component: CreateSlider,
         name: 'Slider',
     },
     // Account

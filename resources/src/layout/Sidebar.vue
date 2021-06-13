@@ -234,17 +234,7 @@ export default {
                         </span>
 
                     `,
-                    type: 3,
-                    sub: [
-                        {
-                            name: 'Danh sách',
-                            url: '/thanh-truot/danh-sach'
-                        },
-                        {
-                            name: 'Thêm mới',
-                            url: '/thanh-truot/them-moi'
-                        },
-                    ]
+                    type: 2,
                 },
                 {
                     name: 'Ảnh Phụ',
@@ -263,17 +253,7 @@ export default {
                             </svg>
                         </span>
                     `,
-                    type: 3,
-                    sub: [
-                        {
-                            name: 'Danh sách',
-                            url: '/anh-bia/danh-sach'
-                        },
-                        {
-                            name: 'Thêm mới',
-                            url: '/anh-bia/them-moi'
-                        },
-                    ]
+                    type: 2,
                 },
                 {
                     name: 'Quản Lý',
