@@ -14,7 +14,7 @@
                                 <div class="card-toolbar">
                                     <div class="dropdown dropdown-inline">
                                         <button data-toggle="modal" data-target="#exampleModalLong" class="btn btn-primary mr-2" aria-haspopup="true" aria-expanded="false">
-                                            <i class="icon-sm ki ki-plus"></i> Thêm Mới 
+                                            <i class="icon-sm ki ki-plus"></i> Thêm Mới
                                         </button>
                                     </div>
                                 </div>
@@ -24,27 +24,29 @@
                             <table class="table table-head-custom table-head-bg table-borderless table-vertical-center">
                                 <thead>
                                     <tr class="text-uppercase">
-                                        <th>Id</th>
+                                        <th style="width: 50px">ID</th>
+                                        <th style="width: 100px">Ảnh</th>
                                         <th style="min-width: 100px">Tên</th>
                                         <th style="min-width: 120px">URL</th>
-                                        <th style="min-width: 120px">Danh mục cha</th>
                                         <th class="text-center">EXT</th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     <template v-for="item in categories">
-                                        <tr v-if="item.parent_id > 0" :key="'row' + item.id">
+                                        <tr v-if="item.type == 'product'" :key="'row' + item.id">
                                             <td>
                                                 <span class="text-dark-75 font-weight-bolder d-block font-size-lg" v-text="item.id"></span>
+                                            </td>
+                                            <td>
+                                                <span class="text-dark-75 font-weight-bolder d-block font-size-lg">
+                                                    <img class="w-100" :src="item.avatar">
+                                                </span>
                                             </td>
                                             <td>
                                                 <span class="text-dark-75 font-weight-bolder d-block font-size-lg" v-text="item.name"></span>
                                             </td>
                                             <td>
                                                 <span class="text-dark-75 font-weight-bolder d-block font-size-lg" v-text="item.slug"></span>
-                                            </td>
-                                            <td>
-                                                <span class="text-dark-75 font-weight-bolder d-block font-size-lg" v-text="filterName(item)"></span>
                                             </td>
                                             <td class="text-center">
                                                 <div class="dropdown dropdown-inline">
@@ -54,7 +56,7 @@
                                                     <div class="dropdown-menu dropdown-menu-sm dropdown-menu-right">
                                                         <ul class="navi navi-hover">
                                                             <li class="navi-item">
-                                                                <a @click="nameUpdate = item.name, idUpdate = item.id, category_idUpdate = item.parent_id" class="navi-link" data-toggle="modal" data-target="#exampleModalLongUpdate">
+                                                                <a @click="nameUpdate = item.name, category_idUpdate = item.parent_id, idUpdate = item.id, avatar = item.avatar" class="navi-link" data-toggle="modal" data-target="#exampleModalLongUpdate">
                                                                     <span class="navi-icon">
                                                                         <i class="fa fas fa-edit"></i>
                                                                     </span>
@@ -93,46 +95,60 @@
                     </button>
                 </div>
                 <div class="modal-body">
-                        <div class="card card-custom gutter-b example example-compact">
-                            <form>
-                                <ValidationObserver ref="errors">
-                                    <div class="card-body">
-                                        <div class="form-group row">
-                                            <label for="name" class="col-2 col-form-label">Tên</label>
-                                            <div class="col-10">
-                                                <validation-provider rules="required|length:0,255" v-slot="{ errors }">
-                                                    <input v-model="name" class="form-control" type="text" placeholder="Tên danh mục" />
-                                                    <div v-if="errors[0]" class="invalid-feedback d-block" v-text="errors[0]"></div>
-                                                </validation-provider>
-                                            </div>
+                    <div class="card card-custom gutter-b example example-compact">
+                        <form>
+                            <ValidationObserver ref="errors">
+                                <div class="card-body">
+                                    <div class="form-group row">
+                                        <label for="name" class="col-2 col-form-label">Tên</label>
+                                        <div class="col-10">
+                                            <validation-provider rules="required|length:0,255" v-slot="{ errors }">
+                                                <input v-model="name" class="form-control" type="text" placeholder="Tên danh mục" />
+                                                <div v-if="errors[0]" class="invalid-feedback d-block" v-text="errors[0]"></div>
+                                            </validation-provider>
                                         </div>
-                                        <div class="form-group row">
-                                            <label for="slug" class="col-2 col-form-label">URL</label>
-                                            <div class="col-10">
-                                                <validation-provider rules="required|length:0,255" v-slot="{ errors }">
-                                                    <input v-model="slug" class="form-control" type="search" placeholder="Đường dấn" />
-                                                    <div v-if="errors[0]" class="invalid-feedback d-block" v-text="errors[0]"></div>
-                                                </validation-provider>
-                                            </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label for="slug" class="col-2 col-form-label">URL</label>
+                                        <div class="col-10">
+                                            <validation-provider rules="required|length:0,255" v-slot="{ errors }">
+                                                <input v-model="slug" class="form-control" type="search" placeholder="Đường dấn" />
+                                                <div v-if="errors[0]" class="invalid-feedback d-block" v-text="errors[0]"></div>
+                                            </validation-provider>
                                         </div>
-                                        <div class="form-group row">
-                                            <label for="slug" class="col-2 col-form-label">Cha</label>
-                                            <div class="col-10">
-                                                <validation-provider rules="required" v-slot="{ errors }">
-                                                    <select v-model="category_id" class="form-control">
-                                                        <option value="" selected>Chọn danh mục cha</option>
-                                                        <template v-for="item in categories">
-                                                            <option :key="item.id" v-if="item.parent_id == 0" :value="item.id" v-text="item.name"></option>
-                                                        </template>
-                                                    </select>
-                                                    <div v-if="errors[0]" class="invalid-feedback d-block" v-text="errors[0]"></div>
-                                                </validation-provider>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label for="slug" class="col-2 col-form-label">Ảnh</label>
+                                        <div class="col-10">
+                                            <div class="image-input image-input-empty image-input-outline background-position-center" :style="'background-image: url(' + (avatar ? avatar : '/img/avatar.png') + ')'">
+                                                <div class="image-input-wrapper" :style="avatar ? 'width: 325px' : ''"></div>
+                                                <label @click="modal = true" data-toggle="modal" data-target="#filemanager" class="btn btn-xs btn-icon btn-circle btn-white btn-hover-text-primary btn-shadow" data-action="change">
+                                                    <i class="fa fa-pen icon-sm text-muted"></i>
+                                                </label>
+                                                <span v-if="avatar" @click="avatar = ''" class="btn btn-xs btn-icon btn-circle btn-white btn-hover-text-primary btn-shadow d-flex" data-action="remove">
+                                                    <i class="ki ki-bold-close icon-xs text-muted"></i>
+                                                </span>
                                             </div>
                                         </div>
                                     </div>
-                                </ValidationObserver>
-                            </form>
-                        </div>
+                                    <div class="form-group row">
+                                        <label for="slug" class="col-2 col-form-label">Cha</label>
+                                        <div class="col-10">
+                                            <validation-provider rules="required" v-slot="{ errors }">
+                                                <select v-model="category_id" class="form-control">
+                                                    <option value="" selected>Chọn danh mục cha</option>
+                                                    <template v-for="item in categories">
+                                                        <option :key="item.id" v-if="item.parent_id == 0" :value="item.id" v-text="item.name"></option>
+                                                    </template>
+                                                </select>
+                                                <div v-if="errors[0]" class="invalid-feedback d-block" v-text="errors[0]"></div>
+                                            </validation-provider>
+                                        </div>
+                                    </div>
+                                </div>
+                            </ValidationObserver>
+                        </form>
+                    </div>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-light-primary font-weight-bold" data-dismiss="modal">Đóng</button>
@@ -153,49 +169,73 @@
                     </button>
                 </div>
                 <div class="modal-body">
-                        <div class="card card-custom gutter-b example example-compact">
-                            <form>
-                                <ValidationObserver ref="errorUpdate">
-                                    <div class="card-body">
-                                        <div class="form-group row">
-                                            <label for="name" class="col-2 col-form-label">Tên</label>
-                                            <div class="col-10">
-                                                <validation-provider rules="required|length:0,255" v-slot="{ errors }">
-                                                    <input v-model="nameUpdate" class="form-control" type="text" placeholder="Tên danh mục" />
-                                                    <div v-if="errors[0]" class="invalid-feedback d-block" v-text="errors[0]"></div>
-                                                </validation-provider>
-                                            </div>
+                    <div class="card card-custom gutter-b example example-compact">
+                        <form>
+                            <ValidationObserver ref="errorUpdate">
+                                <div class="card-body">
+                                    <div class="form-group row">
+                                        <label for="name" class="col-2 col-form-label">Tên</label>
+                                        <div class="col-10">
+                                            <validation-provider rules="required|length:0,255" v-slot="{ errors }">
+                                                <input v-model="nameUpdate" class="form-control" type="text" placeholder="Tên danh mục" />
+                                                <div v-if="errors[0]" class="invalid-feedback d-block" v-text="errors[0]"></div>
+                                            </validation-provider>
                                         </div>
-                                        <div class="form-group row">
-                                            <label for="slug" class="col-2 col-form-label">URL</label>
-                                            <div class="col-10">
-                                                <validation-provider rules="required|length:0,255" v-slot="{ errors }">
-                                                    <input v-model="slugUpdate" class="form-control" type="search" placeholder="Đường dấn" />
-                                                    <div v-if="errors[0]" class="invalid-feedback d-block" v-text="errors[0]"></div>
-                                                </validation-provider>
-                                            </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label for="slug" class="col-2 col-form-label">URL</label>
+                                        <div class="col-10">
+                                            <validation-provider rules="required|length:0,255" v-slot="{ errors }">
+                                                <input v-model="slugUpdate" class="form-control" type="search" placeholder="Đường dấn" />
+                                                <div v-if="errors[0]" class="invalid-feedback d-block" v-text="errors[0]"></div>
+                                            </validation-provider>
                                         </div>
-                                        <div class="form-group row">
-                                            <label for="slug" class="col-2 col-form-label">Cha</label>
-                                            <div class="col-10">
-                                                <validation-provider rules="required" v-slot="{ errors }">
-                                                    <select v-model="category_idUpdate" class="form-control">
-                                                        <template v-for="item in categories">
-                                                            <option :key="item.id" v-if="item.parent_id == 0" :value="item.id" v-text="item.name"></option>
-                                                        </template>
-                                                    </select>
-                                                    <div v-if="errors[0]" class="invalid-feedback d-block" v-text="errors[0]"></div>
-                                                </validation-provider>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label for="slug" class="col-2 col-form-label">Ảnh</label>
+                                        <div class="col-10">
+                                            <div class="image-input image-input-empty image-input-outline background-position-center" :style="'background-image: url(' + (avatar ? avatar : '/img/avatar.png') + ')'">
+                                                <div class="image-input-wrapper" :style="avatar ? 'width: 325px' : ''"></div>
+                                                <label @click="modal = true" data-toggle="modal" data-target="#filemanager" class="btn btn-xs btn-icon btn-circle btn-white btn-hover-text-primary btn-shadow" data-action="change">
+                                                    <i class="fa fa-pen icon-sm text-muted"></i>
+                                                </label>
+                                                <span v-if="avatar" @click="avatar = ''" class="btn btn-xs btn-icon btn-circle btn-white btn-hover-text-primary btn-shadow d-flex" data-action="remove">
+                                                    <i class="ki ki-bold-close icon-xs text-muted"></i>
+                                                </span>
                                             </div>
                                         </div>
                                     </div>
-                                </ValidationObserver>
-                            </form>
-                        </div>
+                                    <div class="form-group row">
+                                        <label for="slug" class="col-2 col-form-label">Cha</label>
+                                        <div class="col-10">
+                                            <validation-provider rules="required" v-slot="{ errors }">
+                                                <select v-model="category_idUpdate" class="form-control">
+                                                    <template v-for="item in categories">
+                                                        <option :key="item.id" v-if="item.parent_id == 0" :value="item.id" v-text="item.name"></option>
+                                                    </template>
+                                                </select>
+                                                <div v-if="errors[0]" class="invalid-feedback d-block" v-text="errors[0]"></div>
+                                            </validation-provider>
+                                        </div>
+                                    </div>
+                                </div>
+                            </ValidationObserver>
+                        </form>
+                    </div>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-light-primary font-weight-bold" data-dismiss="modal">Đóng</button>
                     <button type="button" @click="update()" class="btn btn-primary font-weight-bold">Cập nhật</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div v-if="modal" class="modal fade" id="filemanager">
+        <div class="modal-dialog modal-full min-vh-100">
+            <div class="modal-content min-vh-100">
+                <div class="modal-body">
+                    <FileManage :getUrl="true" @url="setUrl($event)" />
                 </div>
             </div>
         </div>
@@ -205,33 +245,49 @@
 
 <script>
 import Extends from '../../extend';
+import FileManage from '../../components/FileManager/index'
 import Breadcrumb from '../../components/breadcrumb/index'
-import { ValidationObserver, ValidationProvider, extend } from 'vee-validate';
-import { required } from 'vee-validate/dist/rules';
-toastr.options = { "progressBar": true, "positionClass": "toast-top-right" };
+import {
+    ValidationObserver,
+    ValidationProvider,
+    extend
+} from 'vee-validate';
+import {
+    required
+} from 'vee-validate/dist/rules';
+toastr.options = {
+    "progressBar": true,
+    "positionClass": "toast-top-right"
+};
 extend('required', {
     ...required,
     message: 'Không được để trống'
 });
 extend('length', {
-    validate(value, { min, max }) {
+    validate(value, {
+        min,
+        max
+    }) {
         return value.length >= min && value.length <= max;
     },
     params: ['min', 'max'],
     message: 'Độ dài không hợp lệ'
 });
-
+var typeimage = 'create';
 export default {
-    components: { Breadcrumb, ValidationProvider, ValidationObserver },
+    components: {
+        Breadcrumb,
+        FileManage,
+        ValidationProvider,
+        ValidationObserver
+    },
     data() {
         return {
             subHeader: {
-                links: [
-                    {
-                        name: 'Danh mục',
-                        url: '/tin-tuc/danh-muc',
-                    },
-                ],
+                links: [{
+                    name: 'Danh mục',
+                    url: '/tin-tuc/danh-muc',
+                }, ],
                 action: {
                     url: '/',
                     icon: 'icon-sm ki ki-long-arrow-back',
@@ -243,9 +299,11 @@ export default {
             idUpdate: '',
             nameUpdate: '',
             slugUpdate: '',
+            categories: [],
+            avatar: '',
             category_id: '',
             category_idUpdate: '',
-            categories: []
+            modal: false
         }
     },
     watch: {
@@ -266,15 +324,22 @@ export default {
         })
     },
     methods: {
-        filterName (item) {
-            return this.categories.find(category => category.id == item.parent_id).name
+        setUrl(path) {
+            $('#filemanager').modal('hide');
+            if (typeimage == 'create') {
+                this.avatar = path
+            } else {
+                this.images[typeimage].url = path
+            }
         },
         async submit() {
             if (await this.errors()) {
                 let params = {
+                    type: 'product',
                     name: this.name,
                     slug: this.slug,
-                    parent_id: this.category_id
+                    parent_id: this.category_id,
+                    avatar: this.avatar,
                 }
                 KTApp.blockPage({
                     overlayColor: "#000000",
@@ -285,6 +350,7 @@ export default {
                     KTApp.unblockPage();
                     if (res.status == 201) {
                         this.name = ''
+                        this.avatar = ''
                         params.id = res.data._id
                         this.categories.push(params)
                         this.$refs['errors'].reset();
@@ -304,7 +370,8 @@ export default {
                 let params = {
                     name: this.nameUpdate,
                     slug: this.slugUpdate,
-                    parent_id: this.category_idUpdate
+                    parent_id: this.category_id,
+                    avatar: this.avatar,
                 }
                 KTApp.blockPage({
                     overlayColor: "#000000",
@@ -316,7 +383,8 @@ export default {
                     let key = this.categories.findIndex(item => item.id == this.idUpdate)
                     this.categories[key].name = this.nameUpdate
                     this.categories[key].slug = this.slugUpdate
-                    this.categories[key].parent_id = this.category_idUpdate
+                    this.categories[key].avatar = this.avatar
+                    this.avatar = ''
                     $('#exampleModalLongUpdate').modal('hide')
                     toastr.success("Cập nhật thành công!")
                     this.$refs['errorupdate'].reset();

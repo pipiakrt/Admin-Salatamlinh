@@ -161,7 +161,7 @@ export default {
     },
     async created() {
         Extends.LoadPage()
-        await axios('/api/categories').then(res => {
+        await axios('/api/categories?type=post').then(res => {
             this.categories = res.data.data
         })
         await axios('/api/posts/' + this.$route.params.id).then(res => {

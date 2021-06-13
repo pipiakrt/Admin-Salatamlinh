@@ -203,7 +203,7 @@ export default {
     },
     mounted() {
         Extends.LoadPage()
-        axios('/api/categories').then(res => {
+        axios('/api/categories?type=post').then(res => {
             this.categories = res.data.data
             KTApp.unblockPage();
             KTUtil.ready(function () {

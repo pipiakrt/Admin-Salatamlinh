@@ -24,9 +24,9 @@ class CategoryController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        return Resources::collection(Model::all());
+        return Resources::collection(Model::paginateFilter($request));
     }
 
     /**

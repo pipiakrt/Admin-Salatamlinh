@@ -299,7 +299,7 @@ export default {
     },
     created() {
         Extends.LoadPage()
-        axios('/api/categories').then(res => {
+        axios('/api/categories?type=product').then(res => {
             this.categories = res.data.data
         })
         axios('/api/products/' + this.$route.params.id).then(res => {
