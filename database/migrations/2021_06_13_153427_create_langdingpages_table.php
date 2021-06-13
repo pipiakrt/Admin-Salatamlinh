@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateCategoriesTable extends Migration
+class CreateLangdingpagesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,13 +13,12 @@ class CreateCategoriesTable extends Migration
      */
     public function up()
     {
-        Schema::create('categories', function (Blueprint $table) {
+        Schema::create('langdingpages', function (Blueprint $table) {
             $table->id('_id');
             $table->string('name')->index();
             $table->string('slug')->index();
-            $table->string('type')->nullable();
             $table->string('avatar')->nullable();
-            $table->integer('parent_id')->index()->default(0);
+            $table->longText('code')->nullable();
         });
     }
 
@@ -30,6 +29,6 @@ class CreateCategoriesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('categories');
+        Schema::dropIfExists('langdingpages');
     }
 }

@@ -5,19 +5,19 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class ProductTop extends Model
+class CategoryHightlight extends Model
 {
     use HasFactory;
 
     protected $fillable = [
-        'product_id',
+        'category_id',
     ];
     
     protected $primaryKey = '_id';
     public $timestamps = false;
 
-    public function Product()
+    public function Category()
     {
-        return $this->hasOne(Product::class, '_id', 'product_id');
+        return $this->hasOne(Category::class, '_id', 'category_id');
     }
 }

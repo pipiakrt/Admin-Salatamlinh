@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateSearchHightlughtsTable extends Migration
+class CreateCategoryHightlightsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,9 +13,9 @@ class CreateSearchHightlughtsTable extends Migration
      */
     public function up()
     {
-        Schema::create('search_hightlughts', function (Blueprint $table) {
-            $table->id();
-            $table->timestamps();
+        Schema::create('category_hightlights', function (Blueprint $table) {
+            $table->id('_id');
+            $table->integer('category_id')->index();
         });
     }
 
@@ -26,6 +26,6 @@ class CreateSearchHightlughtsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('search_hightlughts');
+        Schema::dropIfExists('category_hightlights');
     }
 }

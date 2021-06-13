@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateProductHightlughtsTable extends Migration
+class CreateProductHotsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,9 +13,9 @@ class CreateProductHightlughtsTable extends Migration
      */
     public function up()
     {
-        Schema::create('product_hightlughts', function (Blueprint $table) {
-            $table->id();
-            $table->timestamps();
+        Schema::create('product_hots', function (Blueprint $table) {
+            $table->id('_id');
+            $table->integer('product_id')->index();
         });
     }
 
@@ -26,6 +26,6 @@ class CreateProductHightlughtsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('product_hightlughts');
+        Schema::dropIfExists('product_hots');
     }
 }

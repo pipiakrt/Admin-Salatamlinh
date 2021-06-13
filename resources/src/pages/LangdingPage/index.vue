@@ -8,7 +8,7 @@
                     <div class="card card-custom">
                         <div class="card-header flex-wrap border-0 pb-0">
                             <div class="card-title">
-                                <h3 class="card-label">Danh mục</h3>
+                                <h3 class="card-label">Langding Page</h3>
                             </div>
                             <div class="symbol-group symbol-hover py-2">
                                 <div class="card-toolbar">
@@ -32,8 +32,8 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <template v-for="item in categories">
-                                        <tr v-if="item.parent_id == 0" :key="'row' + item.id">
+                                    <template v-for="item in langdingpages">
+                                        <tr :key="'row' + item.id">
                                             <td>
                                                 <span class="text-dark-75 font-weight-bolder d-block font-size-lg" v-text="item.id"></span>
                                             </td>
@@ -56,7 +56,13 @@
                                                     <div class="dropdown-menu dropdown-menu-sm dropdown-menu-right">
                                                         <ul class="navi navi-hover">
                                                             <li class="navi-item">
-                                                                <a @click="nameUpdate = item.name, idUpdate = item.id, avatar = item.avatar" class="navi-link" data-toggle="modal" data-target="#exampleModalLongUpdate">
+                                                                <a :href="'https://langding.sieuthitamlinhsala.vn/' + item.slug" target="_blank" class="navi-link">
+                                                                    <span class="navi-icon">
+                                                                        <i class="fas fa-external-link-alt"></i>
+                                                                    </span>
+                                                                    <span class="navi-text">Tiến tới trang</span>
+                                                                </a>
+                                                                <a @click="nameUpdate = item.name, code = item.code, idUpdate = item.id, avatar = item.avatar" class="navi-link" data-toggle="modal" data-target="#exampleModalLongUpdate">
                                                                     <span class="navi-icon">
                                                                         <i class="fa fas fa-edit"></i>
                                                                     </span>
@@ -66,7 +72,7 @@
                                                                     <span class="navi-icon">
                                                                         <i class="flaticon2 flaticon2-trash"></i>
                                                                     </span>
-                                                                    <span class="navi-text">Xóa danh mục</span>
+                                                                    <span class="navi-text">Xóa Langding Page</span>
                                                                 </a>
                                                             </li>
                                                         </ul>
@@ -86,7 +92,7 @@
 
     <!-- Modal-->
     <div class="modal fade" id="exampleModalLong" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="staticBackdrop" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-dialog modal-xl modal-dialog-centered" role="document">
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title" id="exampleModalLabel">Thêm Mới</h5>
@@ -103,7 +109,7 @@
                                         <label for="name" class="col-2 col-form-label">Tên</label>
                                         <div class="col-10">
                                             <validation-provider rules="required|length:0,255" v-slot="{ errors }">
-                                                <input v-model="name" class="form-control" type="text" placeholder="Tên danh mục" />
+                                                <input v-model="name" class="form-control" type="text" placeholder="Tên Langding Page" />
                                                 <div v-if="errors[0]" class="invalid-feedback d-block" v-text="errors[0]"></div>
                                             </validation-provider>
                                         </div>
@@ -131,6 +137,12 @@
                                             </div>
                                         </div>
                                     </div>
+                                    <div class="form-group row">
+                                        <label for="code" class="col-10 col-form-label">Mã code</label>
+                                        <div class="col-12">
+                                            <textarea v-model="code" class="form-control" rows="15" id="code"></textarea>
+                                        </div>
+                                    </div>
                                 </div>
                             </ValidationObserver>
                         </form>
@@ -146,11 +158,11 @@
 
     <!-- Modal-->
     <div class="modal fade" id="exampleModalLongUpdate" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="staticBackdrop" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-dialog modal-xl modal-dialog-centered" role="document">
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title" id="exampleModalLabel">Cập Nhật</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <button @click="code = ''" type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <i aria-hidden="true" class="ki ki-close"></i>
                     </button>
                 </div>
@@ -163,16 +175,7 @@
                                         <label for="name" class="col-2 col-form-label">Tên</label>
                                         <div class="col-10">
                                             <validation-provider rules="required|length:0,255" v-slot="{ errors }">
-                                                <input v-model="nameUpdate" class="form-control" type="text" placeholder="Tên danh mục" />
-                                                <div v-if="errors[0]" class="invalid-feedback d-block" v-text="errors[0]"></div>
-                                            </validation-provider>
-                                        </div>
-                                    </div>
-                                    <div class="form-group row">
-                                        <label for="slug" class="col-2 col-form-label">URL</label>
-                                        <div class="col-10">
-                                            <validation-provider rules="required|length:0,255" v-slot="{ errors }">
-                                                <input v-model="slugUpdate" class="form-control" type="search" placeholder="Đường dấn" />
+                                                <input v-model="nameUpdate" class="form-control" type="text" placeholder="Tên Langding Page" />
                                                 <div v-if="errors[0]" class="invalid-feedback d-block" v-text="errors[0]"></div>
                                             </validation-provider>
                                         </div>
@@ -189,6 +192,12 @@
                                                     <i class="ki ki-bold-close icon-xs text-muted"></i>
                                                 </span>
                                             </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label for="code" class="col-10 col-form-label">Mã code</label>
+                                        <div class="col-12">
+                                            <textarea v-model="code" class="form-control" rows="15" id="code"></textarea>
                                         </div>
                                     </div>
                                 </div>
@@ -258,7 +267,7 @@ export default {
         return {
             subHeader: {
                 links: [{
-                    name: 'Danh mục',
+                    name: 'Langding Page',
                     url: '/tin-tuc/danh-muc',
                 }, ],
                 action: {
@@ -272,8 +281,9 @@ export default {
             idUpdate: '',
             nameUpdate: '',
             slugUpdate: '',
-            categories: [],
+            langdingpages: [],
             avatar: '',
+            code: '',
             modal: false
         }
     },
@@ -289,9 +299,9 @@ export default {
         KTApp.block('#loadTag', {
             message: 'Đợi chút...'
         });
-        axios('/api/categories').then(res => {
+        axios('/api/langdingpages').then(res => {
             KTApp.unblock('#loadTag');
-            this.categories = res.data.data
+            this.langdingpages = res.data.data
         })
     },
     methods: {
@@ -309,22 +319,23 @@ export default {
                     name: this.name,
                     slug: this.slug,
                     avatar: this.avatar,
+                    code: this.code,
                 }
                 KTApp.blockPage({
                     overlayColor: "#000000",
                     state: "primary",
                     message: "Đợi Xíu...",
                 })
-                axios.post('/api/categories', params).then((res) => {
+                axios.post('/api/langdingpages', params).then((res) => {
                     KTApp.unblockPage();
                     if (res.status == 201) {
                         this.name = ''
                         this.avatar = ''
+                        this.code = ''
                         params.id = res.data._id
-                        params.parent_id = 0
-                        this.categories.push(params)
+                        this.langdingpages.push(params)
                         this.$refs['errors'].reset();
-                        toastr.success("Tạo danh mục thành công!")
+                        toastr.success("Tạo Langding Page thành công!")
                         $('#exampleModalLong').modal('hide')
                     } else {
                         if (res.data.name) {
@@ -340,19 +351,22 @@ export default {
                     name: this.nameUpdate,
                     slug: this.slugUpdate,
                     avatar: this.avatar,
+                    code: this.code,
                 }
                 KTApp.blockPage({
                     overlayColor: "#000000",
                     state: "primary",
                     message: "Đợi Xíu...",
                 })
-                axios.patch('/api/categories/' + this.idUpdate, params).then((res) => {
+                axios.patch('/api/langdingpages/' + this.idUpdate, params).then((res) => {
                     KTApp.unblockPage();
-                    let key = this.categories.findIndex(item => item.id == this.idUpdate)
-                    this.categories[key].name = this.nameUpdate
-                    this.categories[key].slug = this.slugUpdate
-                    this.categories[key].avatar = this.avatar
+                    let key = this.langdingpages.findIndex(item => item.id == this.idUpdate)
+                    this.langdingpages[key].name = this.nameUpdate
+                    this.langdingpages[key].slug = this.slugUpdate
+                    this.langdingpages[key].avatar = this.avatar
+                    this.langdingpages[key].code = this.code
                     this.avatar = ''
+                    this.code = ''
                     $('#exampleModalLongUpdate').modal('hide')
                     toastr.success("Cập nhật thành công!")
                     this.$refs['errorupdate'].reset();
@@ -366,13 +380,13 @@ export default {
             return await this.$refs['errorUpdate'].validate();
         },
         destroy(id) {
-            axios.delete('/api/categories/' + id).then(res => {
+            axios.delete('/api/langdingpages/' + id).then(res => {
                 Swal.fire(
                     "Thành Công!",
-                    "Danh mục đã bị xóa hoàn toàn.",
+                    "Langding Page đã bị xóa hoàn toàn.",
                     "success"
                 )
-                this.categories = this.categories.filter(item => item.id !== id)
+                this.langdingpages = this.langdingpages.filter(item => item.id !== id)
             })
         },
     },

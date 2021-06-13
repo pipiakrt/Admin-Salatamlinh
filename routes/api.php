@@ -9,6 +9,12 @@ use App\Http\Controllers\Api\SliderController;
 use App\Http\Controllers\Api\BannerController;
 use App\Http\Controllers\Api\AccountController;
 use App\Http\Controllers\Api\CategoryController;
+use App\Http\Controllers\Api\CategoryHightlightController;
+use App\Http\Controllers\Api\LangdingpageController;
+use App\Http\Controllers\Api\PostController;
+use App\Http\Controllers\Api\ProductHightlightController;
+use App\Http\Controllers\Api\ProductHotController;
+use App\Http\Controllers\Api\ProductTopController;
 
 /*
 |--------------------------------------------------------------------------
@@ -24,7 +30,13 @@ use App\Http\Controllers\Api\CategoryController;
 Route::resources([
     'auth' => AuthController::class,
     'categories' => CategoryController::class,
+    'posts' => PostController::class,
+    'langdingpages' => LangdingpageController::class,
+    'categoryhightlights' => CategoryHightlightController::class,
     'products' => ProductController::class,
+    'producthightlights' => ProductHightlightController::class,
+    'producthots' => ProductHotController::class,
+    'producttops' => ProductTopController::class,
     'images' => ImageController::class,
     'banners' => BannerController::class,
     'sliders' => SliderController::class,
