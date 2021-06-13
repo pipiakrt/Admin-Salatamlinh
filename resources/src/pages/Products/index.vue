@@ -263,7 +263,7 @@ export default {
     },
     created() {
         this.getApi()
-        axios('/api/categories').then(res => {
+        axios('/api/categories?type=product').then(res => {
             this.categories = res.data.data
         })
     },

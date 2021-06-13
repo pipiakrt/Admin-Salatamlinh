@@ -218,6 +218,7 @@ export default {
             filterName: '',
             filterCategory: '',
             filterOrder: '',
+            categories: [],
             filterStatus: '',
             allID: [],
             page: 0,
@@ -236,12 +237,9 @@ export default {
     },
     created() {
         Extends.LoadPage()
-        axios('/api/posts').then(res => {
-            KTApp.unblockPage();
-            this.posts = res.data
-            res.data.data.forEach(item => {
-                this.allID.push(item.id)
-            });
+        this.getApi()
+        axios('/api/categories?type=post').then(res => {
+            this.categories = res.data.data
         })
     },
     methods: {

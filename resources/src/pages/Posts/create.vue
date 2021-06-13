@@ -274,7 +274,7 @@ export default {
                     seo_description: this.seo_description,
                     seo_keyword: this.seo_keyword,
                     description: this.description,
-                    content: this.content,
+                    content: $('.summernote').summernote('code'),
                     status: String(status),
                 }
                 KTApp.blockPage({

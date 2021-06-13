@@ -33,7 +33,7 @@
                                 </thead>
                                 <tbody>
                                     <template v-for="item in categoryhightlight">
-                                        <tr v-if="item.category.parent_id == 0" :key="'row' + item.category.id">
+                                        <tr :key="'row' + item.category.id">
                                             <td>
                                                 <span class="text-dark-75 font-weight-bolder d-block font-size-lg" v-text="item.category.id"></span>
                                             </td>
@@ -100,7 +100,7 @@
                                                 <select v-model="category_id" class="form-control">
                                                     <option value="" selected>Chọn danh mục</option>
                                                     <template v-for="item in categories">
-                                                        <option v-if="item.parent_id == 0" :key="item.id" :value="item.id" v-text="item.name"></option>
+                                                        <option :key="item.id" :value="item.id" v-text="item.name"></option>
                                                     </template>
                                                 </select>
                                                 <div v-if="errors[0]" class="invalid-feedback d-block" v-text="errors[0]"></div>
