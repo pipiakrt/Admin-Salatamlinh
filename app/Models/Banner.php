@@ -13,6 +13,7 @@ class Banner extends MySQL
     protected $primaryKey = '_id';
     
     protected $fillable = [
+        'name',
         'path',
         'link',
     ];

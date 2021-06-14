@@ -26,6 +26,7 @@
                                     <tr class="text-uppercase">
                                         <th style="width: 50px">ID</th>
                                         <th style="width: 100px">Ảnh</th>
+                                        <th style="min-width: 120px">Tên</th>
                                         <th style="min-width: 120px">link</th>
                                         <th class="text-center">EXT</th>
                                     </tr>
@@ -40,6 +41,9 @@
                                                 <span class="text-dark-75 font-weight-bolder d-block font-size-lg">
                                                     <img class="w-100" :src="item.url">
                                                 </span>
+                                            </td>
+                                            <td>
+                                                <span class="text-dark-75 font-weight-bolder d-block font-size-lg" v-text="item.name"></span>
                                             </td>
                                             <td>
                                                 <span class="text-dark-75 font-weight-bolder d-block font-size-lg" v-text="item.link"></span>
@@ -89,6 +93,15 @@
                         <form>
                             <ValidationObserver ref="errors">
                                 <div class="card-body">
+                                    <div class="form-group row">
+                                        <label for="name" class="col-2 col-form-label">Tên</label>
+                                        <div class="col-10">
+                                            <validation-provider rules="required|length:0,255" v-slot="{ errors }">
+                                                <input v-model="name" class="form-control" type="text" placeholder="Địa chỉ liên kết" />
+                                                <div v-if="errors[0]" class="invalid-feedback d-block" v-text="errors[0]"></div>
+                                            </validation-provider>
+                                        </div>
+                                    </div>
                                     <div class="form-group row">
                                         <label for="name" class="col-2 col-form-label">Link</label>
                                         <div class="col-10">
@@ -187,6 +200,7 @@ export default {
                     text: 'Dashboard',
                 }
             },
+            name: '',
             link: '',
             banners: [],
             avatar: '',
@@ -215,6 +229,7 @@ export default {
             if (await this.errors()) {
                 let params = {
                     link: this.link,
+                    name: this.name,
                     path: this.avatar,
                 }
                 KTApp.blockPage({
@@ -226,6 +241,7 @@ export default {
                     KTApp.unblockPage();
                     if (res.status == 201) {
                         this.link = ''
+                        this.name = ''
                         this.avatar = ''
                         params.id = res.data._id
                         params.url = params.path

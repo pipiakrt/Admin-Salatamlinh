@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\File;
+use Illuminate\Support\Str;
 
 class ImageController extends Controller
 {
@@ -61,7 +62,7 @@ class ImageController extends Controller
             foreach ($files as $file) {
                 $name = $file->getClientOriginalName();
                 $data = File::get($file);
-                Storage::put($request->dir . '/' . $name, $data);
+                Storage::put($request->dir . '/' . $slug = Str::slug($name, '-'), $data);
             }
         }
     }

@@ -104,7 +104,7 @@
                                             <div class="row">
                                                 <div class="col-2 mb-5" v-for="(item, key) in images" :key="key">
                                                     <div class="image-input image-input-outline" style="background-position: center; background-image: url(/img/no-image.png);">
-                                                        <div class="image-input-wrapper background-position-center" :style="item.url ? { 'background-image': 'url(' + item.url + ')' } : ''"></div>
+                                                        <div class="image-input-wrapper background-position-center" :style="item.url ? { 'background-image': `url('${item.url}')` } : ''"></div>
                                                         <label @click="setTypeGetImg(key), modal = true" data-toggle="modal" data-target="#filemanager" class="btn btn-xs btn-icon btn-circle btn-white btn-hover-text-primary btn-shadow" data-action="change">
                                                             <i class="fa fa-pen icon-sm text-muted"></i>
                                                         </label>
@@ -370,6 +370,7 @@ export default {
                 typeimage = status
         },
         setUrl(path) {
+                console.log(path)
             this.notImage = false
             $('#filemanager').modal('hide');
             if (typeimage == 'summernote') {

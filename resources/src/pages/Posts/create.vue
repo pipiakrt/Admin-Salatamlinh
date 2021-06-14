@@ -70,7 +70,7 @@
                                         <div class="col-10">
                                             <validation-provider rules="required|length:0,255" v-slot="{ errors }">
                                                 <div class="image-input image-input-outline" id="kt_image_4" style="background-position: center; background-image: url(/img/blank.png);">
-                                                    <div class="image-input-wrapper" :style="preview ? { 'background-image': 'url(' + preview + ')' } : ''"></div>
+                                                    <div class="image-input-wrapper" :style="preview ? { 'background-image': `url('${item.url}')` } : ''"></div>
                                                     <label @click="setTypeGetImg(), modal = true" data-toggle="modal" data-target="#filemanager" class="btn btn-xs btn-icon btn-circle btn-white btn-hover-text-primary btn-shadow" data-action="change">
                                                         <i class="fa fa-pen icon-sm text-muted"></i>
                                                     </label>
