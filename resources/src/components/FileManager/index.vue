@@ -193,7 +193,7 @@ export default {
     props: ["getUrl"],
     data() {
         return {
-            domain: '/uploads/',
+            domain: 'https://cdn.sieuthitamlinhsala.vn/',
             images: [],
             dir: '',
             foldel: '',
@@ -245,6 +245,7 @@ export default {
             });
             axios.post('/api/images', formData).then(res => {
                 this.getApi()
+                this.$refs.file.value=null;
             })
         },
         async getApi() {
