@@ -120,7 +120,7 @@
                                     <div class="form-group row">
                                         <label for="slug" class="col-2 col-form-label">Ảnh</label>
                                         <div class="col-10">
-                                            <div class="image-input image-input-empty image-input-outline background-position-center" :style="'background-image: url(' + (avatar ? avatar : '/img/avatar.png') + ')'">
+                                            <div class="image-input image-input-empty image-input-outline background-position-center" :style="`background-image: url('${avatar ? avatar : '/img/avatar.png'}')`">
                                                 <div class="image-input-wrapper" :style="avatar ? 'width: 325px' : ''"></div>
                                                 <label @click="modal = true" data-toggle="modal" data-target="#filemanager" class="btn btn-xs btn-icon btn-circle btn-white btn-hover-text-primary btn-shadow" data-action="change">
                                                     <i class="fa fa-pen icon-sm text-muted"></i>
@@ -194,7 +194,7 @@
                                     <div class="form-group row">
                                         <label for="slug" class="col-2 col-form-label">Ảnh</label>
                                         <div class="col-10">
-                                            <div class="image-input image-input-empty image-input-outline background-position-center" :style="'background-image: url(' + (avatar ? avatar : '/img/avatar.png') + ')'">
+                                            <div class="image-input image-input-empty image-input-outline background-position-center" :style="`background-image: url('${avatar ? avatar : '/img/avatar.png'}`">
                                                 <div class="image-input-wrapper" :style="avatar ? 'width: 325px' : ''"></div>
                                                 <label @click="modal = true" data-toggle="modal" data-target="#filemanager" class="btn btn-xs btn-icon btn-circle btn-white btn-hover-text-primary btn-shadow" data-action="change">
                                                     <i class="fa fa-pen icon-sm text-muted"></i>

@@ -32,7 +32,7 @@
                                             <div class="form-group row">
                                                 <label class="col-form-label col-3 text-lg-right text-left">Ảnh đại diện</label>
                                                 <div class="col-9">
-                                                    <div class="image-input image-input-empty image-input-outline" :style="'background-image: url(' + (preview ? preview : '/img/avatar.png') + ')'">
+                                                    <div class="image-input image-input-empty image-input-outline background-position-center" :style="`background-image: url('${preview ? preview : '/img/avatar.png'}')`">
                                                         <div class="image-input-wrapper"></div>
                                                         <label @click="model = true" data-toggle="modal" data-target="#filemanager" class="btn btn-xs btn-icon btn-circle btn-white btn-hover-text-primary btn-shadow" data-action="change">
                                                             <i class="fa fa-pen icon-sm text-muted"></i>
