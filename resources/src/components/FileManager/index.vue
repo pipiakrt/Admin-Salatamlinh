@@ -13,7 +13,7 @@
                 <div class="d-flex align-items-center mr-2 py-2">
                     <h3 v-if="!dir" class="font-weight-bold mb-0 mr-10">Tệp Tin</h3>
                     <a v-else v-for="(action, i) in test" @click="dir = action.url" :key="i" class="btn btn-light font-weight-bolder btn-sm mr-2">
-                        <i class="icon-sm ki ki-long-arrow-back"></i>
+                        <i v-if="action.name" class="icon-sm ki ki-long-arrow-back"></i>
                         {{ action.name }}
                     </a>
                 </div>
@@ -41,10 +41,10 @@
                                         </a>
                                     </li>
                                     <li class="navi-item">
-                                        <a data-toggle="modal" data-target="#exampleModalLongUpdload" class="navi-link">
+                                        <label for="upload-file" class="navi-link">
                                             <i class="fa far text-warning fa-file-image mr-6"></i>
                                             <span class="navi-text">Thêm tệp tin</span>
-                                        </a>
+                                        </label>
                                     </li>
                                 </ul>
                             </div>
@@ -82,43 +82,6 @@
                         <div class="card-footer">
                             <button @click="createFolder()" type="reset" class="btn btn-sm btn-primary mr-2">Thêm Fooder</button>
                             <button @click="hideModal()" class="btn btn-sm btn-secondary">Đóng</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <!-- Modal-->
-        <div class="modal fade" id="exampleModalLongUpdload" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="staticBackdrop" aria-hidden="true">
-            <div class="modal-dialog modal-xl modal-dialog-centered" role="document">
-                <div class="modal-content">
-                    <div class="card card-custom gutter-b example example-compact">
-                        <div class="card-header">
-                            <h3 class="card-title">Thêm Tệp Tin</h3>
-                            <button @click="hideModal()" type="button" class="close">
-                                <i aria-hidden="true" class="ki ki-close"></i>
-                            </button>
-                        </div>
-                        <div class="form-upload">
-                            <div class="card-body">
-                                <div class="form-group row">
-                                    <label class="col-form-label col-lg-3 col-sm-12 text-lg-right">Uploads tệp tin</label>
-                                    <div class="col-lg-6 col-md-9 col-sm-12">
-                                        <label class="w-100" for="upload-file">
-                                            <div class="dropzone dropzone-default dropzone-primary">
-                                                <div class="dropzone-msg dz-message needsclick">
-                                                    <h3 class="dropzone-msg-title">Kéo Thả tệp tin của bạn vào đây.</h3>
-                                                    <span class="dropzone-msg-desc">Hoặc nhấp vào để tải lên!</span>
-                                                </div>
-                                            </div>
-                                            <input hidden type="file" ref="file" id="upload-file" multiple="multiple" accept="image/png, image/jpeg">
-                                        </label>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="card-footer">
-                            <button @click="upLoads()" id="submit-all" type="reset" class="btn btn-primary mr-2">Đăng tải</button>
-                            <button @click="hideModal()" class="btn btn-secondary">Đóng</button>
                         </div>
                     </div>
                 </div>
@@ -203,6 +166,7 @@
                 </div>
             </div>
         </div>
+        <input @change="upLoads()" hidden type="file" ref="file" id="upload-file" multiple="multiple" accept="image/png, image/jpeg">
     </div>
 </div>
 </template>
@@ -265,7 +229,6 @@ export default {
                 combinedArr.push(item)
             }
             this.test = combinedArr.splice(0, combinedArr.length-1);
-            console.log(this.test)
         }
     },
     created() {
@@ -273,10 +236,16 @@ export default {
     },
     methods: {
         upLoads() {
-            console.log(this.$refs.file.files)
-        },
-        log(item) {
-            console.log(item)
+            Extends.LoadPage()
+            let files = this.$refs.file.files
+            const formData = new FormData();
+            formData.append('dir', this.dir);
+            files.forEach((item) => {
+                formData.append('file[]', item);
+            });
+            axios.post('/api/images', formData).then(res => {
+                this.getApi()
+            })
         },
         async getApi() {
             Extends.LoadPage()
