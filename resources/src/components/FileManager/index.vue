@@ -1,11 +1,18 @@
+<style scoped>
+    .form-upload {
+        display: flex;
+        min-height: 400px;
+        align-items: center;
+    }
+</style>
 <template>
 <div class="flex-row-fluid d-flex flex-column ml-lg-12">
     <div class="d-flex flex-column flex-grow-1">
         <div class="card card-custom gutter-b">
             <div class="card-body d-flex align-items-center justify-content-between flex-wrap py-3">
                 <div class="d-flex align-items-center mr-2 py-2">
-                    <h3 v-if="!prevDir" class="font-weight-bold mb-0 mr-10">Tệp Tin</h3>
-                    <a v-else v-for="(action, i) in detacheDirectory()" :key="i" @click="toDirectory(action.url)" class="btn btn-light font-weight-bolder btn-sm mr-2">
+                    <h3 v-if="!dir" class="font-weight-bold mb-0 mr-10">Tệp Tin</h3>
+                    <a v-else v-for="(action, i) in test" @click="dir = action.url" :key="i" class="btn btn-light font-weight-bolder btn-sm mr-2">
                         <i class="icon-sm ki ki-long-arrow-back"></i>
                         {{ action.name }}
                     </a>
@@ -28,13 +35,13 @@
                                     </li>
                                     <li class="navi-separator mb-3 opacity-70"></li>
                                     <li class="navi-item">
-                                        <a @click="showfolder = true" class="navi-link">
+                                        <a data-toggle="modal" data-target="#exampleModalLong1" class="navi-link">
                                             <i class="fa far text-warning fa-folder mr-5"></i>
                                             <span class="navi-text">Thêm folder</span>
                                         </a>
                                     </li>
                                     <li class="navi-item">
-                                        <a @click="showDropzone = true" class="navi-link">
+                                        <a data-toggle="modal" data-target="#exampleModalLongUpdload" class="navi-link">
                                             <i class="fa far text-warning fa-file-image mr-6"></i>
                                             <span class="navi-text">Thêm tệp tin</span>
                                         </a>
@@ -45,59 +52,78 @@
                     </div>
                 </div>
             </div>
-            </div>
-        <transition name="bounce">
-            <div v-if="showfolder" class="card card-custom gutter-b example example-compact">
-                <div class="card-header">
-                    <h3 class="card-title">Thêm Folder</h3>
-                </div>
-                <form>
-                    <ValidationObserver ref="errors">
-                        <div class="card-body">
-                            <div class="form-group row">
-                                <label for="name" class="col-2 col-form-label">Tên folder</label>
-                                <div class="col-10">
-                                    <validation-provider rules="required|length:0,255" v-slot="{ errors }">
-                                        <input v-model="foldel" class="form-control" type="text" placeholder="Tên folder" id="name" />
-                                        <div v-if="errors[0]" class="invalid-feedback d-block" v-text="errors[0]"></div>
-                                    </validation-provider>
-                                </div>
-                            </div>
+        </div>
+        <!-- Modal-->
+        <div class="modal fade" id="exampleModalLong1" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="staticBackdrop" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content">
+                    <div class="card card-custom gutter-b example example-compact">
+                        <div class="card-header">
+                            <h3 class="card-title">Thêm Folder</h3>
+                            <button @click="hideModal()" type="button" class="close">
+                                <i aria-hidden="true" class="ki ki-close"></i>
+                            </button>
                         </div>
-                    </ValidationObserver>
-                </form>
-                <div class="card-footer">
-                    <button @click="createFolder()" type="reset" class="btn btn-primary mr-2">Thêm Fooder</button>
-                    <button @click="showfolder = false" type="reset" class="btn btn-secondary">Đóng</button>
-                </div>
-            </div>
-        </transition>
-        <transition name="bounce">
-            <div v-show="showDropzone" class="card card-custom gutter-b example example-compact">
-                <div class="card-header">
-                    <h3 class="card-title">Thêm Tệp Tin</h3>
-                </div>
-                <form>
-                <div class="card-body">
-                    <div class="form-group row">
-                        <label class="col-form-label col-lg-3 col-sm-12 text-lg-right">Uploads tệp tin</label>
-                        <div class="col-lg-6 col-md-9 col-sm-12">
-                            <div class="dropzone dropzone-default dropzone-primary" id="kt_dropzone_2">
-                                <div class="dropzone-msg dz-message needsclick">
-                                    <h3 class="dropzone-msg-title">Kéo Thả tệp tin của bạn vào đây.</h3>
-                                    <span class="dropzone-msg-desc">Hoặc nhấp vào để tải lên!</span>
+                        <form>
+                            <ValidationObserver ref="errors">
+                                <div class="card-body">
+                                    <div class="form-group row">
+                                        <label for="name" class="col-3 col-form-label">Tên</label>
+                                        <div class="col-9">
+                                            <validation-provider rules="required" v-slot="{ errors }">
+                                                <input v-model="foldel" class="form-control" type="text" placeholder="Tên folder" id="name" />
+                                                <div v-if="errors[0]" class="invalid-feedback d-block" v-text="errors[0]"></div>
+                                            </validation-provider>
+                                        </div>
+                                    </div>
                                 </div>
-                            </div>
+                            </ValidationObserver>
+                        </form>
+                        <div class="card-footer">
+                            <button @click="createFolder()" type="reset" class="btn btn-sm btn-primary mr-2">Thêm Fooder</button>
+                            <button @click="hideModal()" class="btn btn-sm btn-secondary">Đóng</button>
                         </div>
                     </div>
                 </div>
-                </form>
-                <div class="card-footer">
-                    <button @click="listenQueue()" id="submit-all" type="reset" class="btn btn-primary mr-2">Đăng tải</button>
-                    <button @click="showDropzone = false" type="reset" class="btn btn-secondary">Đóng</button>
+            </div>
+        </div>
+        <!-- Modal-->
+        <div class="modal fade" id="exampleModalLongUpdload" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="staticBackdrop" aria-hidden="true">
+            <div class="modal-dialog modal-xl modal-dialog-centered" role="document">
+                <div class="modal-content">
+                    <div class="card card-custom gutter-b example example-compact">
+                        <div class="card-header">
+                            <h3 class="card-title">Thêm Tệp Tin</h3>
+                            <button @click="hideModal()" type="button" class="close">
+                                <i aria-hidden="true" class="ki ki-close"></i>
+                            </button>
+                        </div>
+                        <div class="form-upload">
+                            <div class="card-body">
+                                <div class="form-group row">
+                                    <label class="col-form-label col-lg-3 col-sm-12 text-lg-right">Uploads tệp tin</label>
+                                    <div class="col-lg-6 col-md-9 col-sm-12">
+                                        <label class="w-100" for="upload-file">
+                                            <div class="dropzone dropzone-default dropzone-primary">
+                                                <div class="dropzone-msg dz-message needsclick">
+                                                    <h3 class="dropzone-msg-title">Kéo Thả tệp tin của bạn vào đây.</h3>
+                                                    <span class="dropzone-msg-desc">Hoặc nhấp vào để tải lên!</span>
+                                                </div>
+                                            </div>
+                                            <input hidden type="file" ref="file" id="upload-file" multiple="multiple" accept="image/png, image/jpeg">
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-footer">
+                            <button @click="upLoads()" id="submit-all" type="reset" class="btn btn-primary mr-2">Đăng tải</button>
+                            <button @click="hideModal()" class="btn btn-secondary">Đóng</button>
+                        </div>
+                    </div>
                 </div>
             </div>
-        </transition>
+        </div>
         <div class="row">
             <div v-for="(image, i) in images" :key="i" class="col-xl-2 col-lg-3 col-md-4 col-sm-6">
                 <div class="card card-custom gutter-b card-stretch">
@@ -167,7 +193,7 @@
                     </div>
                     <div class="card-body">
                         <div class="d-flex flex-column align-items-center overflow-hidden">
-                            <span @click="toDirectory(image.path)" v-if="image.type == 'dir'">
+                            <span @click="dir = image.path" v-if="image.type == 'dir'">
                                 <i class="fa far text-warning fa-folder icon-5x"></i>
                             </span>
                             <img v-else class="max-h-65px" :src="domain + image.path" />
@@ -183,91 +209,36 @@
 
 <script>
 import Extends from '../../extend';
-import { ValidationObserver, ValidationProvider, extend } from 'vee-validate';
-import { required } from 'vee-validate/dist/rules';
-// // toastr.options = { "progressBar": true, "positionClass": "toast-top-right" };
+import {
+    ValidationObserver,
+    ValidationProvider,
+    extend
+} from 'vee-validate';
+import {
+    required
+} from 'vee-validate/dist/rules';
 extend('required', {
     ...required,
     message: 'Không được để trống'
 });
-extend('length', {
-    validate(value, { min, max }) {
-        return value.length >= min && value.length <= max;
-    },
-    params: ['min', 'max'],
-    message: 'Độ dài không hợp lệ'
-});
-var queue = [];
-var directory = '';
 export default {
-    components: { ValidationProvider, ValidationObserver },
+    components: {
+        ValidationProvider,
+        ValidationObserver
+    },
     props: ["getUrl"],
     data() {
         return {
-            domain: 'https://cdn.sieuthitamlinhsala.vn/',
+            domain: '/uploads/',
             images: [],
-            prevDir: '',
-            showfolder: false,
-            showDropzone: false,
-            foldel: ''
+            dir: '',
+            foldel: '',
+            test: []
         }
     },
-    mounted() {
-        Extends.LoadPage()
-        axios('/api/images').then(res => {
-            this.images = res.data
-            KTApp.unblockPage();
-            KTUtil.ready(function () {
-                $("#kt_dropzone_2").dropzone({
-                    url: "/api/images",
-                    autoProcessQueue: false,
-                    parallelUploads: 100,
-                    uploadMultiple: true,
-                    headers:{"Authorization":'Bearer ' + localStorage.getItem('token')},  
-                    init: function() {
-                        var myDropzone = this;
-                        $("#submit-all").click(function (e) {
-                            myDropzone.processQueue();
-                        }); 
-                        this.on("sending", function(file, xhr, formData) {
-                            formData.append("dir", directory);
-                        });
-                        this.on("success", function(file) {
-                            let image = {
-                                type: 'file',
-                                path: directory.substring(1) + '/' + file.name,
-                                timestamp: Math.floor(Date.now() / 1000),
-                                basename: file.name,
-                                filename: file.name,
-                            }
-                            queue.push(image)
-                        });
-                    }
-                });
-            });
-        })
-    },
-    methods: {
-        listenQueue() {
-            if (queue != '') {
-                this.images = [...this.images, ...queue];
-                // toastr.success("Upload file thành công!")
-            }
-            else {
-                setTimeout(() => {
-                    this.listenQueue()
-                }, 1000);
-            }
-        },
-        returnUrl(path = false) {
-            if (path) {
-                this.$emit("url", this.domain + path);
-            }
-            else {
-                this.$emit("url", '');
-            }
-        },
-        detacheDirectory () {
+    watch: {
+        dir() {
+            this.getApi()
             let combinedArr = [
                 {
                     name: 'Quay lại',
@@ -276,7 +247,7 @@ export default {
             ];
             let listAction = [];
             let temp = '';
-            let action = this.prevDir.split('/');
+            let action = this.dir.split('/');
             action.forEach(url => {
                 if (temp) {
                     temp = temp + '/' + url
@@ -293,46 +264,56 @@ export default {
                 }
                 combinedArr.push(item)
             }
-            return combinedArr.splice(0, combinedArr.length-1);
+            this.test = combinedArr.splice(0, combinedArr.length-1);
+            console.log(this.test)
+        }
+    },
+    created() {
+        this.getApi()
+    },
+    methods: {
+        upLoads() {
+            console.log(this.$refs.file.files)
         },
-        toDirectory(dir) {
+        log(item) {
+            console.log(item)
+        },
+        async getApi() {
             Extends.LoadPage()
-            axios('/api/images?dir=' + dir).then(res => {
+            await axios('/api/images?dir=' + this.dir).then(res => {
                 this.images = res.data
-                this.prevDir = dir
-                directory = this.prevDir
-                console.log(this.prevDir)
                 KTApp.unblockPage();
             })
         },
-        async createFolder()  {
-            if (await this.errors()) {
-                let params = {
-                    directory: this.prevDir + '/' + this.foldel
+        hideModal() {
+            $('#exampleModalLong1').modal('hide')
+            $('#exampleModalLongUpdload').modal('hide')
+        },
+        returnUrl(path = false) {
+            if (path) {
+                this.$emit("url", this.domain + path);
+            } else {
+                this.$emit("url", '');
+            }
+        },
+        createFolder() {
+            if (this.errors()) {
+                Extends.LoadPage()
+                if (this.foldel[0] == ' ') {
+                    this.foldel = ''.concat('_', this.foldel);
                 }
-                KTApp.blockPage({
-                    overlayColor: "#000000",
-                    state: "primary",
-                    message: "Đợi Xíu...",
-                })
+                let params = {
+                    directory: this.dir + '/' + this.foldel
+                }
                 axios.post('/api/images', params).then((res) => {
-                    KTApp.unblockPage();
                     if (res.status == 200) {
-                        // toastr.success("Tạo folder thành công!")
-                        this.$refs['errors'].reset();
-                        this.showfolder = false;
-                        let folder = {
-                            type: 'dir',
-                            path: params.directory,
-                            timestamp: Math.floor(Date.now() / 1000),
-                            dirname: this.prevDir,
-                            basename: this.foldel,
-                            filename: this.foldel,
-                        }
+                        this.getApi()
+                        this.hideModal()
                         this.foldel = ''
-                        this.images.push(folder)
-                    }
-                    else {
+                        this.$refs['errors'].reset();
+                    } 
+                    else 
+                    {
                         Swal.fire("Rất Tiếc!", "Đã có sự cố đã sảy ra, vui lòng thử lại sau!", "error");
                     }
                 })
@@ -343,47 +324,30 @@ export default {
                 path: path
             }
             Extends.LoadPage()
-            axios.delete('/api/images/destroy', { params: request }).then(res => {
+            axios.delete('/api/images/destroy', {
+                params: request
+            }).then(res => {
                 this.images = this.images.filter(image => image.path != path);
                 KTApp.unblockPage();
-                // toastr.success("Đã Xóa")
+                toastr.success("Đã Xóa")
             })
         },
         destroyDirectory(dir) {
-            let request = {
-                dir: dir
-            }
             Extends.LoadPage()
+            let request = { dir: dir }
             axios.delete('/api/images/destroy', { params: request }).then(res => {
                 this.images = this.images.filter(image => image.path != dir);
                 KTApp.unblockPage();
-                // toastr.success("Đã Xóa Thư Mục")
+                toastr.success("Đã Xóa Thư Mục")
             })
         },
         Clipboard(path) {
             Extends.Clipboard_CopyTo(path)
-            // toastr.success("Đã Coppy đường dẫn")
+            toastr.success("Đã Coppy đường dẫn")
         },
-        async errors() {
-            return await this.$refs['errors'].validate();
+        errors() {
+            return this.$refs['errors'].validate();
         },
     },
 }
 </script>
-
-<style>
-.bounce-enter-active {
-  animation: bounce-in .5s;
-}
-.bounce-leave-active {
-  animation: bounce-in .1s reverse;
-}
-@keyframes bounce-in {
-  0% {
-    transform: scale(0);
-  }
-  100% {
-    transform: scale(1);
-  }
-}
-</style>
