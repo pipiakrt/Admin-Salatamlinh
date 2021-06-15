@@ -1,3 +1,12 @@
+<style scoped>
+    .modal-dialog{
+        overflow-y: initial !important
+    }
+    .modal-body{
+        max-height: calc(100vh - 200px);
+        overflow-y: auto;
+    }
+</style>
 <template>
 <div class="content d-flex flex-column flex-column-fluid" id="kt_content">
     <Breadcrumb :data="subHeader" />
