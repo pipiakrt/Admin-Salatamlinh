@@ -5,7 +5,7 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\Menu as Resources;
 use Illuminate\Http\Request;
-use App\Models\Menu;
+use App\Models\Menu as Model;
 
 class MenuController extends Controller
 {
@@ -14,7 +14,7 @@ class MenuController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
         return Resources::collection(Model::paginateFilter($request, 100));
     }
@@ -34,18 +34,18 @@ class MenuController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Menu  $menu
+     * @param  \App\Models\Model  $menu
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Menu $menu)
+    public function update(Request $request, Model $menu)
     {
-        return $Menu->update($request->all());
+        return $menu->update($request->all());
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\Menu  $menu
+     * @param  \App\Models\Model  $menu
      * @return \Illuminate\Http\Response
      */
     public function destroy($id)
