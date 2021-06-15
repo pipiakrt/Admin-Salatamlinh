@@ -5,6 +5,9 @@ import LangdingPage from './pages/LangdingPage'
 // Categories
 import Categories from './pages/Categories/index'
 import CategoryHightLight from './pages/Categories/hightlight'
+// Menu
+import MenuSearch from './pages/Menu/search'
+import MenuCategory from './pages/Menu/category'
 // Products
 import Products from './pages/Products/index'
 import CreateProduct from './pages/Products/create'
@@ -112,6 +115,17 @@ const routes = [
         path: '/bai-viet/danh-muc',
         component: CategoryPost,
         name: 'Posts',
+    },
+    // Menu
+    {
+        path: '/menu/tim-kiem',
+        component: MenuSearch,
+        name: 'Menu',
+    },
+    {
+        path: '/menu/danh-muc',
+        component: MenuCategory,
+        name: 'Menu',
     },
     // Banner
     {

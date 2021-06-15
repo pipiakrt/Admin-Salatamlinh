@@ -11,6 +11,7 @@ use App\Http\Controllers\Api\AccountController;
 use App\Http\Controllers\Api\CategoryController;
 use App\Http\Controllers\Api\CategoryHightlightController;
 use App\Http\Controllers\Api\LangdingpageController;
+use App\Http\Controllers\Api\MenuController;
 use App\Http\Controllers\Api\PostController;
 use App\Http\Controllers\Api\ProductHightlightController;
 use App\Http\Controllers\Api\ProductHotController;
@@ -30,6 +31,7 @@ use App\Http\Controllers\Api\ProductTopController;
 Route::resources([
     'auth' => AuthController::class,
     'categories' => CategoryController::class,
+    'menus' => MenuController::class,
     'posts' => PostController::class,
     'langdingpages' => LangdingpageController::class,
     'categoryhightlights' => CategoryHightlightController::class,
