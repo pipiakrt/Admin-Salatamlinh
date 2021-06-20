@@ -15,8 +15,22 @@ class Cart extends Model
 
     protected $fillable = [
         'user_id',
-        'product_id',
         'number',
+        'name',
+        'slug',
+        'avatar',
+        'images',
+        'video',
+        'price',
+        'discount',
+        'description',
+        'content',
+        'category_id',
+        'owner_id',
+        'seo_title',
+        'seo_description',
+        'seo_keyword',
+        'attributes',
     ];
 
     public function filterType(EloquentBuilder $query, $value)
