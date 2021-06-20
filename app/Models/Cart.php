@@ -14,23 +14,14 @@ class Cart extends Model
     public $timestamps = false;
 
     protected $fillable = [
+        'product_id',
         'user_id',
         'number',
         'name',
         'slug',
         'avatar',
-        'images',
-        'video',
         'price',
-        'discount',
-        'description',
-        'content',
-        'category_id',
-        'owner_id',
-        'seo_title',
-        'seo_description',
-        'seo_keyword',
-        'attributes',
+        'discount'
     ];
 
     public function filterType(EloquentBuilder $query, $value)
