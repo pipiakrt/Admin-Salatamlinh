@@ -12,8 +12,8 @@
         <link rel="stylesheet" href="/css/base-light.css">
         <link rel="stylesheet" href="/css/brand-light.css">
         <link rel="stylesheet" href="/css/menu-light.css">
-        <script defer src="{{ asset('/js/app.js') }}"></script>
-        <script src="{{ asset('/js/scripts.bundle.js') }}"></script>
+        <script defer src="/js/app.js"></script>
+        <script src="/js/scripts.bundle.js"></script>
     </head>
 
     <body id="kt_body" class="header-fixed footer-fixed header-mobile-fixed subheader-enabled subheader-fixed aside-enabled aside-fixed aside-minimize-hoverable page-loading">
