@@ -2,12 +2,14 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
+use App\Traits\Filterable;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Builder as EloquentBuilder;
 
 class OrderDetail extends Model
 {
-    use Filterable;
+    use HasFactory, Filterable;
 
     protected $primaryKey = '_id';
     public $timestamps = false;
@@ -15,6 +17,7 @@ class OrderDetail extends Model
     protected $fillable = [
         'order_id',
         'product_id',
+        'category_id',
         'number',
         'total_money',
         'name',
@@ -24,9 +27,15 @@ class OrderDetail extends Model
         'discount',
     ];
 
-    public function filterType(EloquentBuilder $query, $value)
+    public function filterCategory(EloquentBuilder $query, $value)
     {
-        $query->where('type', $value);
+        $query->where('category_id', $value);
+        return $query;
+    }
+
+    public function filterName(EloquentBuilder $query, $value)
+    {
+        $query->where('name', 'like', '%' . $value . '%');
         return $query;
     }
 }

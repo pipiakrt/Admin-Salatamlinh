@@ -5,6 +5,17 @@ import LangdingPage from './pages/LangdingPage'
 // Categories
 import Categories from './pages/Categories/index'
 import CategoryHightLight from './pages/Categories/hightlight'
+// Orders
+import OrderPending from './pages/Orders/pending'
+import OrderProcess from './pages/Orders/process'
+import OrderSuccess from './pages/Orders/success'
+import OrderCancel from './pages/Orders/cancel'
+// Notifications
+import Notifications from './pages/Notifications/index'
+// Users
+import Users from './pages/Users/index'
+// Reports
+import Reports from './pages/Reports/index'
 // Menu
 import MenuSearch from './pages/Menu/search'
 import MenuCategory from './pages/Menu/category'
@@ -58,6 +69,45 @@ const routes = [
         path: '/danh-muc/danh-muc-noi-bat',
         component: CategoryHightLight,
         name: 'Categories',
+    },
+    // Orders
+    {
+        path: '/don-hang/cho-xac-nhan',
+        component: OrderPending,
+        name: 'Orders',
+    },
+    {
+        path: '/don-hang/dang-giao',
+        component: OrderProcess,
+        name: 'Orders',
+    },
+    {
+        path: '/don-hang/hoan-thanh',
+        component: OrderSuccess,
+        name: 'Orders',
+    },
+    {
+        path: '/don-hang/don-huy',
+        component: OrderCancel,
+        name: 'Orders',
+    },
+    // Users
+    {
+        path: '/nguoi-dung/danh-sach',
+        component: Users,
+        name: 'Users',
+    },
+    // Notifications
+    {
+        path: '/nguoi-dung/thong-bao',
+        component: Notifications,
+        name: 'Notifications',
+    },
+    // Reports
+    {
+        path: '/nguoi-dung/phan-hoi',
+        component: Reports,
+        name: 'Reports',
     },
     // Products
     {
