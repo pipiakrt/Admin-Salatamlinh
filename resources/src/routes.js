@@ -101,13 +101,13 @@ const routes = [
     {
         path: '/nguoi-dung/thong-bao',
         component: Notifications,
-        name: 'Notifications',
+        name: 'Users',
     },
     // Reports
     {
         path: '/nguoi-dung/phan-hoi',
         component: Reports,
-        name: 'Reports',
+        name: 'Users',
     },
     // Products
     {
