@@ -17,6 +17,7 @@ class CreateCartsTable extends Migration
             $table->id('_id');
             $table->integer('user_id')->index(); 
             $table->integer('product_id')->index(); 
+            $table->integer('category_id')->index();
             $table->string('name')->index();
             $table->string('slug')->index();
             $table->string('avatar')->nullable();
