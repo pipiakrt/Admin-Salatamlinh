@@ -17,7 +17,7 @@ class CreateOrdersTable extends Migration
             $table->id('_id');
             $table->integer('user_id')->index(); 
             $table->string('code')->nullable();
-            $table->integer('total_money')->index();
+            $table->integer('total_money')->default(0)->index();
             $table->boolean('status')->default(0)->index();
             $table->timestamps();
         });
