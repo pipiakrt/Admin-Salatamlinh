@@ -5,6 +5,10 @@ import LangdingPage from './pages/LangdingPage'
 // Categories
 import Categories from './pages/Categories/index'
 import CategoryHightLight from './pages/Categories/hightlight'
+// Promotions
+import Promotions from './pages/Promotion/index'
+import CreatePromotion from './pages/Promotion/create'
+import EditPromotion from './pages/Promotion/edit'
 // Orders
 import OrderPending from './pages/Orders/pending'
 import OrderProcess from './pages/Orders/process'
@@ -69,6 +73,22 @@ const routes = [
         path: '/danh-muc/danh-muc-noi-bat',
         component: CategoryHightLight,
         name: 'Categories',
+    },
+    // Promotions
+    {
+        path: '/khuyen-mai/danh-sach',
+        component: Promotions,
+        name: 'Promotions',
+    },
+    {
+        path: '/khuyen-mai/them-moi',
+        component: CreatePromotion,
+        name: 'Promotions',
+    },
+    {
+        path: '/khuyen-mai/:id/chinh-sua',
+        component: EditPromotion,
+        name: 'Promotions',
     },
     // Orders
     {

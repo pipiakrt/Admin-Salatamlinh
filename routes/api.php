@@ -18,6 +18,7 @@ use App\Http\Controllers\Api\PostController;
 use App\Http\Controllers\Api\ProductHightlightController;
 use App\Http\Controllers\Api\ProductHotController;
 use App\Http\Controllers\Api\ProductTopController;
+use App\Http\Controllers\Api\PromotionController;
 use App\Http\Controllers\Api\ReportController;
 
 /*
@@ -34,6 +35,7 @@ use App\Http\Controllers\Api\ReportController;
 Route::resources([
     'auth' => AuthController::class,
     'categories' => CategoryController::class,
+    'promotions' => PromotionController::class,
     'menus' => MenuController::class,
     'posts' => PostController::class,
     'orders' => OrderController::class,
