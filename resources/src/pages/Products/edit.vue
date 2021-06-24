@@ -99,6 +99,15 @@
                                         </div>
                                     </div>
                                     <div class="form-group row">
+                                        <label for="number" class="col-2 col-form-label">Số lượng kho</label>
+                                        <div class="col-10">
+                                            <validation-provider rules="required" v-slot="{ errors }">
+                                                <input v-model="number" class="form-control" type="number" placeholder="Số lượng" />
+                                                <div v-if="errors[0]" class="invalid-feedback d-block" v-text="errors[0]"></div>
+                                            </validation-provider>
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
                                         <label class="col-2 col-form-label">Ảnh Sản phẩm</label>
                                         <div class="col-10">
                                             <div class="row">
@@ -278,6 +287,7 @@ export default {
             id: '',
             name: '',
             slug: '',
+            number: '',
             category: '',
             video: '',
             images: [],
@@ -306,6 +316,7 @@ export default {
             this.id = res.data.data.id
             this.name = res.data.data.name
             this.slug = res.data.data.slug
+            this.number = res.data.data.number
             this.category = res.data.data.category_id
             this.video = res.data.data.video
             this.images = res.data.data.images
@@ -392,6 +403,7 @@ export default {
                     slug: this.slug,
                     price: this.price,
                     discount: this.discount,
+                    number: this.number,
                     video: this.video,
                     seo_title: this.seo_title,
                     seo_description: this.seo_description,

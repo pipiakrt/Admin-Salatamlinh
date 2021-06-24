@@ -19,6 +19,7 @@ class CreateAccountsTable extends Migration
             $table->string('name')->index();
             $table->string('phone')->nullable()->index();
             $table->string('email')->unique()->index();
+            $table->integer('address_default')->nullable();
             $table->string('password');
             $table->rememberToken();
             $table->timestamps();

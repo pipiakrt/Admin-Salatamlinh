@@ -16,6 +16,7 @@ class CreateProductsTable extends Migration
         Schema::create('products', function (Blueprint $table) {
             $table->id('_id');
             $table->integer('category_id')->index();
+            $table->integer('number')->nullable()->index();
             $table->string('owner_id')->index();
             $table->string('name')->index();
             $table->string('slug')->index();

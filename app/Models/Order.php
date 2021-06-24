@@ -18,6 +18,7 @@ class Order extends Model
         'code',
         'total_money',
         'status',
+        'payment'
     ];
 
     public function User() {

@@ -19,6 +19,7 @@ class Order extends JsonResource
         return [
             'id' => $this->_id,
             'user_id' => $this->user_id,
+            'payment' => $this->payment,
             'code' => $this->code,
             'total_money' => $this->total_money,
             'created_at' => $this->created_at,

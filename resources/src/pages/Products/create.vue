@@ -99,6 +99,15 @@
                                         </div>
                                     </div>
                                     <div class="form-group row">
+                                        <label for="number" class="col-2 col-form-label">Số lượng kho</label>
+                                        <div class="col-10">
+                                            <validation-provider rules="required" v-slot="{ errors }">
+                                                <input v-model="number" class="form-control" type="number" placeholder="Số lượng" />
+                                                <div v-if="errors[0]" class="invalid-feedback d-block" v-text="errors[0]"></div>
+                                            </validation-provider>
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
                                         <label class="col-2 col-form-label">Ảnh Sản phẩm</label>
                                         <div class="col-10">
                                             <div class="row">
@@ -289,6 +298,7 @@ export default {
             modal: false,
             name: '',
             file: '',
+            number: '',
             slug: '',
             video: '',
             seo_title: '',
@@ -384,6 +394,7 @@ export default {
                     owner_id: 1,
                     name: this.name,
                     slug: this.slug,
+                    number: this.number,
                     price: this.price,
                     discount: this.discount,
                     video: this.video,

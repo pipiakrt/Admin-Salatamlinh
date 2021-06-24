@@ -23,6 +23,7 @@ class Product extends JsonResource
             'discount' => $this->discount,
             'video' => $this->video,
             'seo_title' => $this->seo_title,
+            'number' => $this->number,
             'seo_description' => $this->seo_description,
             'seo_keyword' => $this->seo_keyword,
             'description' => $this->description,
