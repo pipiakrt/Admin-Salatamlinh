@@ -25,9 +25,9 @@
                                         <label for="description" class="col-2 col-form-label">Mã code</label>
                                         <div class="col-10">
                                             <validation-provider rules="required" v-slot="{ errors }">
-                                                <div class="input-group">
-                                                    <input v-model="code" class="form-control" type="text" placeholder="Mã code" />
-                                                    <div @click="generate()" class="input-group-append m-0">
+                                                <div class="input-group" @click="generate()">
+                                                    <input disabled v-model="code" class="form-control" type="text" placeholder="Mã code" />
+                                                    <div class="input-group-append m-0">
                                                         <span class="input-group-text">
                                                             <i class="flaticon2-refresh-1"></i>
                                                         </span>

@@ -15,7 +15,8 @@ class CreateProductsTable extends Migration
     {
         Schema::create('products', function (Blueprint $table) {
             $table->id('_id');
-            $table->integer('category_id')->index();
+            $table->integer('promotion_id')->default(0)->index();
+            $table->integer('category_id')->default(0)->index();
             $table->integer('number')->nullable()->index();
             $table->string('name')->index();
             $table->string('slug')->index();
@@ -26,10 +27,10 @@ class CreateProductsTable extends Migration
             $table->json('attributes')->nullable();
             $table->string('avatar')->nullable();
             $table->string('video')->nullable();
-            $table->integer('price')->index();
+            $table->integer('price')->nullable()->index();
             $table->text('description')->nullable();
             $table->longText('content')->nullable();
-            $table->boolean('status')->index();
+            $table->boolean('status')->nullable()->index();
             $table->timestamps();
         });
     }

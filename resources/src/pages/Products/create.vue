@@ -552,7 +552,7 @@ export default {
         async submit(status) {
             if (await this.errors() && this.checkImage()) {
                 let params = {
-                    promotion_id: this.promotion_id,
+                    promotion_id: this.promotion_id ? this.promotion_id : 0,
                     name: this.name,
                     slug: this.slug,
                     number: this.number,

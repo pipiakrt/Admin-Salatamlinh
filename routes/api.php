@@ -13,6 +13,7 @@ use App\Http\Controllers\Api\CategoryHightlightController;
 use App\Http\Controllers\Api\LangdingpageController;
 use App\Http\Controllers\Api\MemberController;
 use App\Http\Controllers\Api\MenuController;
+use App\Http\Controllers\Api\NotificationController;
 use App\Http\Controllers\Api\OrderController;
 use App\Http\Controllers\Api\PostController;
 use App\Http\Controllers\Api\ProductHightlightController;
@@ -35,6 +36,7 @@ use App\Http\Controllers\Api\ReportController;
 Route::resources([
     'auth' => AuthController::class,
     'categories' => CategoryController::class,
+    'notifications' => NotificationController::class,
     'promotions' => PromotionController::class,
     'menus' => MenuController::class,
     'posts' => PostController::class,

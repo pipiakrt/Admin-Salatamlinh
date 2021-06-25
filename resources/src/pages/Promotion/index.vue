@@ -56,6 +56,9 @@
                                             <span></span>
                                         </label>
                                     </th>
+                                    <th style="min-width: 60px">
+                                        <span class="text-dark-75">Mã KM</span>
+                                    </th>
                                     <th style="min-width: 150px">
                                         <span class="text-dark-75">Tên</span>
                                     </th>
@@ -74,6 +77,9 @@
                                             <input v-model="checkbox" :value="item.id" type="checkbox"/>
                                             <span></span>
                                         </label>
+                                    </td>
+                                    <td>
+                                        <span class="text-dark-75 font-weight-bolder d-block font-size-lg" v-text="'#' + item.code"></span>
                                     </td>
                                     <td>
                                         <router-link :to="'/khuyen-mai/' + item.id + '/chinh-sua'" class="text-dark-75 font-weight-bolder text-hover-primary mb-1 font-size-lg" v-text="item.title"></router-link>

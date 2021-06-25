@@ -4,18 +4,29 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Models\Notification as Model;
+use App\Http\Resources\Notification as Resources;
 use Illuminate\Http\Request;
 
 class NotificationController extends Controller
 {
     /**
+     * Create a new AuthController instance.
+     *
+     * @return void
+     */
+    public function __construct()
+    {
+        $this->middleware('auth:api');
+    }
+
+    /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        //
+        return Resources::collection(Model::paginateFilter($request));
     }
 
     /**
@@ -26,29 +37,28 @@ class NotificationController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        return $notification = Model::create($request->all());
     }
 
     /**
-     * Update the specified resource in storage.
+     * Display the specified resource.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Notification  $notification
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Notification $notification)
+    public function show(Model $notification)
     {
-        //
+        return new Resources($notification);
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\Notification  $notification
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Notification $notification)
+    public function destroy(Request $request)
     {
-        //
+        return Model::destroy($request->id);
     }
 }

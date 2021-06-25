@@ -33,6 +33,8 @@ class Product extends JsonResource
             'created_at' => $this->created_at,
             'updated_at' => $this->updated_at,
             'category_id' => $this->category_id,
+            'promotion_id' => $this->promotion_id,
+            'promotion' => $this->Promotion ? $this->Promotion->title : ''
         ];
     }
 }

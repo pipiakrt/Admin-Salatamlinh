@@ -15,7 +15,8 @@ import OrderProcess from './pages/Orders/process'
 import OrderSuccess from './pages/Orders/success'
 import OrderCancel from './pages/Orders/cancel'
 // Notifications
-import Notifications from './pages/Notifications/index'
+import Notifications from './pages/Notification/index'
+import CreateNotification from './pages/Notification/create'
 // Users
 import Users from './pages/Users/index'
 // Reports
@@ -119,9 +120,14 @@ const routes = [
     },
     // Notifications
     {
-        path: '/nguoi-dung/thong-bao',
+        path: '/thong-bao/danh-sach',
         component: Notifications,
-        name: 'Users',
+        name: 'Notifications',
+    },
+    {
+        path: '/thong-bao/them-moi',
+        component: CreateNotification,
+        name: 'Notifications',
     },
     // Reports
     {

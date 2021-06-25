@@ -29,6 +29,7 @@ class Product extends MySQL
         'seo_description',
         'seo_keyword',
         'attributes',
+        'promotion_id',
     ];
 
     protected $casts = [
@@ -40,6 +41,10 @@ class Product extends MySQL
     public $filterable = [
         '_id',
     ];
+
+    public function Promotion() {
+        return $this->hasOne(Promotion::class, '_id', 'promotion_id');
+    }
 
     public function filterOrder(EloquentBuilder $query, $value)
     {
