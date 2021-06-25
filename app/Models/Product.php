@@ -25,7 +25,6 @@ class Product extends MySQL
         'content',
         'status',
         'category_id',
-        'owner_id',
         'seo_title',
         'seo_description',
         'seo_keyword',

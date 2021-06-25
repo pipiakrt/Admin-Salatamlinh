@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Traits\Filterable;
+use Illuminate\Database\Eloquent\Builder as EloquentBuilder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
@@ -35,7 +36,7 @@ class Promotion extends Model
 
     public function filterName(EloquentBuilder $query, $value)
     {
-        $query->where('name', 'like', '%' . $value . '%');
+        $query->where('title', 'like', '%' . $value . '%');
         return $query;
     }
 }

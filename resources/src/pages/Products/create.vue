@@ -40,6 +40,12 @@
                                     <h3 class="card-title">Seo</h3>
                                 </a>
                             </li>
+                            <li class="nav-item">
+                                <a class="nav-link" data-toggle="tab" href="#kt_tab_pane_2_7">
+                                    <span class="nav-icon"><i class="flaticon2-drop"></i></span>
+                                    <h3 class="card-title">Khuyễn mãi</h3>
+                                </a>
+                            </li>
                         </ul>
                     </div>
                 </div>
@@ -197,6 +203,63 @@
                                         </div>
                                     </div>
                                 </div>
+                                <div class="tab-pane fade" id="kt_tab_pane_2_7" role="tabpanel" aria-labelledby="kt_tab_pane_2_7">
+                                    <div class="form-group row">
+                                        <label class="col-2">
+                                            <button type="button" data-toggle="modal" data-target="#exampleModalLong" class="btn btn-primary mr-2" aria-haspopup="true" aria-expanded="false">
+                                                <i class="icon-sm ki ki-plus"></i>Chọn khuyễn mãi
+                                            </button>
+                                        </label>
+                                        <div v-if="promotion_id" class="col-10">
+                                            <div class="card card-custom">
+                                                <div class="card-body py-4">
+                                                    <div class="form-group row my-2">
+                                                        <label class="col-4 col-form-label">Mã KM:</label>
+                                                        <div class="col-8">
+                                                            <span class="form-control-plaintext font-weight-bolder">{{ promotion.title }}</span>
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group row my-2">
+                                                        <label class="col-4 col-form-label">Tên KM:</label>
+                                                        <div class="col-8">
+                                                            <span class="form-control-plaintext font-weight-bolder">{{ promotion.title }}</span>
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group row my-2">
+                                                        <label class="col-4 col-form-label">Mô tả:</label>
+                                                        <div class="col-8">
+                                                            <span class="form-control-plaintext font-weight-bolder">{{ promotion.description }}</span>
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group row my-2">
+                                                        <label class="col-4 col-form-label">Loại:</label>
+                                                        <div class="col-8">
+                                                            <span class="form-control-plaintext font-weight-bolder">{{ (!promotion.type ? 'Theo phần trăm' : 'Theo giá') }}</span>
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group row my-2">
+                                                        <label class="col-4 col-form-label">Mức giảm:</label>
+                                                        <div class="col-8">
+                                                            <span class="form-control-plaintext font-weight-bolder">{{ (promotion.type ? promotion.number + 'VNĐ' : promotion.number + '%') }}</span>
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group row my-2">
+                                                        <label class="col-4 col-form-label">Ngày bắt đầu:</label>
+                                                        <div class="col-8">
+                                                            <span class="form-control-plaintext font-weight-bolder">{{ formatTime(promotion.start) }}</span>
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group row my-2">
+                                                        <label class="col-4 col-form-label">Ngày kết thúc:</label>
+                                                        <div class="col-8">
+                                                            <span class="form-control-plaintext font-weight-bolder">{{ formatTime(promotion.end) }}</span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                         </ValidationObserver>
                     </form>
@@ -205,6 +268,82 @@
                     <router-link to="/san-pham/danh-sach" type="reset" class="btn btn-light-primary mr-1 font-weight-bolder"><i class="icon-sm ki ki-long-arrow-back"></i> Quay Lại</router-link>
                     <button type="reset" @click="submit(1)" class="btn btn-primary mr-1"><i class="icon-sm ki ki-bold-check-1   "></i> Lưu Sản phẩm</button>
                     <button type="reset" @click="submit(0)" class="btn btn-primary mr-1"><i class="icon-sm ki ki-info"></i> Lưu Ẩn</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Modal-->
+    <div class="modal fade" id="exampleModalLong" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="staticBackdrop" aria-hidden="true">
+        <div class="modal-dialog modal-xl modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Chọn khuyễn mãi</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <i aria-hidden="true" class="ki ki-close"></i>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="card card-custom gutter-b example example-compact">
+                        <div>
+                            <ValidationObserver ref="errors">
+                                <div class="card-body">
+                                    <div class="row mb-5">
+                                        <div class="col-11">
+                                            <input v-model="filterName" type="text" placeholder="Tìm kiếm" class="form-control form-control-sm form-filter datatable-input"/>
+                                        </div>
+                                        <div class="col-1">
+                                            <button @click="getApiKM()" type="button" class="btn btn-block btn-primary kt-btn btn-sm kt-btn--icon d-block">Lọc</button>
+                                        </div>
+                                    </div>
+                                    <div class="table-responsive">
+                                        <table class="table table-head-custom table-head-bg table-borderless table-vertical-center">
+                                            <thead>
+                                                <tr class="text-uppercase">
+                                                    <th style="min-width: 150px">
+                                                        <span class="text-dark-75">Tên</span>
+                                                    </th>
+                                                    <th style="min-width: 60px">Loại</th>
+                                                    <th style="min-width: 60px">Mức giảm</th>
+                                                    <th style="min-width: 60px">Ngày bắt đầu</th>
+                                                    <th style="min-width: 60px">Ngày kết thúc</th>
+                                                    <th style="min-width: 60px">Trạng thái</th>
+                                                    <th class="text-center">Chọn</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr v-for="item in promotions" :key="'row' + item.id">
+                                                    <td>
+                                                        <span class="text-dark-75 font-weight-bolder text-hover-primary mb-1 font-size-lg" v-text="item.title"></span>
+                                                        <span class="text-muted d-block" v-text="item.description"></span>
+                                                    </td>
+                                                    <td>
+                                                        <span class="text-dark-75 font-weight-bolder d-block font-size-lg" v-text="!item.type ? 'Theo phần trăm' : 'Theo giá'"></span>
+                                                    </td>
+                                                    <td>
+                                                        <span class="text-dark-75 font-weight-bolder d-block font-size-lg" v-text="(item.type ? item.number + 'VNĐ' : item.number + '%')"></span>
+                                                    </td>
+                                                    <td>
+                                                        <span class="text-dark-75 font-weight-bolder d-block font-size-lg" v-text="formatTime(item.start)"></span>
+                                                        <span class="text-muted font-weight-bold" v-text="formatHuors(item.start)"></span>
+                                                    </td>
+                                                    <td>
+                                                        <span class="text-dark-75 font-weight-bolder d-block font-size-lg" v-text="formatTime(item.end)"></span>
+                                                        <span class="text-muted font-weight-bold" v-text="formatHuors(item.end)"></span>
+                                                    </td>
+                                                    <td>
+                                                        <span class="text-dark-75 font-weight-bolder d-block font-size-lg">{{ checkTime(item.end) ? 'Hết hạn' : 'Hoạt động' }}</span>
+                                                    </td>
+                                                    <td class="text-center">
+                                                        <button type="button" @click="setPromotion(item.id)" class="btn btn-primary btn-sm" data-dismiss="modal" aria-label="Close">Chọn</button>
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </ValidationObserver>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -225,6 +364,7 @@
 import Extends from '../../extend';
 import Breadcrumb from '../../components/breadcrumb/index'
 import FileManage from '../../components/FileManager/index'
+import moment from 'moment'
 import {
     ValidationObserver,
     ValidationProvider,
@@ -301,7 +441,11 @@ export default {
             category: '',
             content: '',
             errorCategories: false,
-            errorContent: false
+            errorContent: false,
+            promotions: [],
+            filterName: '',
+            promotion_id: '',
+            promotion: ''
         }
     },
     watch: {
@@ -310,10 +454,9 @@ export default {
         },
     },
     mounted() {
-        Extends.LoadPage()
+        this.getApiKM()
         axios('/api/categories?type=product').then(res => {
             this.categories = res.data.data
-            KTApp.unblockPage();
             KTUtil.ready(function () {
                 var HelloButton = function (context) {
                     var ui = $.summernote.ui;
@@ -358,6 +501,34 @@ export default {
         })
     },
     methods: {
+        setPromotion(id) {
+            let temp = this.promotions.find(item => item.id == id)
+            if (!this.checkTime(temp.end)) {
+                this.promotion_id = id
+                this.promotion = temp
+            }
+            else {
+                toastr.success("Khuyễn mãi hết hạn!")
+            }
+        },
+        getApiKM() {
+            Extends.LoadPage()
+            axios('/api/promotions?name=' + this.filterName).then(res => {
+                KTApp.unblockPage();
+                this.promotions = res.data.data
+            })
+        },
+        checkTime(param) {
+            let date = moment(param).format('YYYY-MM-DD hh:mm:ss');
+            let date1 = moment().format('YYYY-MM-DD hh:mm:ss')
+            return moment(date).isBefore(date1);
+        },
+        formatTime(time) {
+            return moment(time).format('DD/MM/YYYY');
+        },
+        formatHuors(time) {
+            return moment(time).format('hh:mm:ss');
+        },
         setTypeGetImg(status) {
             if (status === '')
                 typeimage = 'avatar'
@@ -381,7 +552,7 @@ export default {
         async submit(status) {
             if (await this.errors() && this.checkImage()) {
                 let params = {
-                    owner_id: 1,
+                    promotion_id: this.promotion_id,
                     name: this.name,
                     slug: this.slug,
                     number: this.number,

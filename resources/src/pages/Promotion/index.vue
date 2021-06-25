@@ -94,7 +94,7 @@
                                         <span class="text-muted font-weight-bold" v-text="formatHuors(item.end)"></span>
                                     </td>
                                     <td>
-                                        <span class="text-dark-75 font-weight-bolder d-block font-size-lg">Hết hạn</span>
+                                        <span class="text-dark-75 font-weight-bolder d-block font-size-lg">{{ checkTime(item.end) ? 'Hết hạn' : 'Hoạt động' }}</span>
                                     </td>
                                     <td class="text-center">
                                         <div class="dropdown dropdown-inline">
@@ -215,6 +215,11 @@ export default {
         this.getApi()
     },
     methods: {
+        checkTime(param) {
+            let date = moment(param).format('YYYY-MM-DD hh:mm:ss');
+            let date1 = moment().format('YYYY-MM-DD hh:mm:ss')
+            return moment(date).isBefore(date1);
+        },
         async getApi() {
             Extends.LoadPage()
             let query = {
@@ -259,7 +264,7 @@ export default {
             else {
                 Swal.fire({
                 title: 'Chưa chọn khuyến mãi',
-                showClass: {
+                    showClass: {
                         popup: 'animate__animated animate__fadeInDown'
                     },
                     hideClass: {

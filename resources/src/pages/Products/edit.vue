@@ -387,7 +387,6 @@ export default {
         async submit(status) {
             if (await this.errors() && this.checkImage()) {
                 let params = {
-                    owner_id: 1,
                     name: this.name,
                     slug: this.slug,
                     price: this.price,

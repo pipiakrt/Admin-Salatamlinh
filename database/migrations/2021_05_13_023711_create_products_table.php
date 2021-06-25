@@ -17,7 +17,6 @@ class CreateProductsTable extends Migration
             $table->id('_id');
             $table->integer('category_id')->index();
             $table->integer('number')->nullable()->index();
-            $table->string('owner_id')->index();
             $table->string('name')->index();
             $table->string('slug')->index();
             $table->string('seo_title')->nullable();
