@@ -23,6 +23,10 @@ class Promotion extends Model
         'end',
     ];
 
+    protected $casts = [
+        'type' => 'boolean',
+    ];
+
     public function filterOrder(EloquentBuilder $query, $value)
     {
         $query->orderBy('_id', $value);

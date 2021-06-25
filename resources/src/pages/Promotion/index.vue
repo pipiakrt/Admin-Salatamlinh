@@ -32,34 +32,15 @@
                 </div>
                 <div class="card-body pt-0 pb-3">
                     <div class="row mb-5">
-                        <div class="col-3">
+                        <div class="col-2">
                             <input v-model="filterName" type="text" placeholder="Tên khuyễn mãi" class="form-control form-control-sm form-filter datatable-input"/>
                         </div>
-                        <div class="col-3">
-                            <select v-model="filterCategory" class="form-control form-control-sm form-filter datatable-input">
-                                <option value="">Danh mục</option>
-                                <template v-for="item in categories">
-                                    <option :key="item.id" v-if="item.parent_id > 0" :value="item.id" v-text="item.name"></option>
-                                </template>
+                        <div class="col-2">
+                            <select v-model="filterOrder" class="form-control form-control-sm form-filter datatable-input" title="Select" data-col-index="6">
+                                <option value="">Sắp xếp</option>
+                                <option value="DESC">Mới nhất</option>
+                                <option value="ASC">Cũ nhất</option>
                             </select>
-                        </div>
-                        <div class="col-5">
-                            <div class="row">
-                                <div class="col-6">
-                                    <select v-model="filterOrder" class="form-control form-control-sm form-filter datatable-input" title="Select" data-col-index="6">
-                                        <option value="">Sắp xếp</option>
-                                        <option value="DESC">Mới nhất</option>
-                                        <option value="ASC">Cũ nhất</option>
-                                    </select>
-                                </div>
-                                <div class="col-6">
-                                    <select v-model="filterStatus" class="form-control form-control-sm form-filter datatable-input" title="Chọn" data-col-index="7">
-                                        <option value="">Trạng thái</option>
-                                        <option value="1">Hoạt Động</option>
-                                        <option value="0">Tạm Ẩn</option>
-                                    </select>
-                                </div>
-                            </div>
                         </div>
                         <div class="col-1">
                             <button @click="getApi()" class="btn btn-block btn-primary kt-btn btn-sm kt-btn--icon d-block">Lọc SP</button>
@@ -75,12 +56,14 @@
                                             <span></span>
                                         </label>
                                     </th>
-                                    <th style="min-width: 300px" class="pl-0">
-                                        <span class="text-dark-75">khuyến mãi</span>
+                                    <th style="min-width: 150px">
+                                        <span class="text-dark-75">Tên</span>
                                     </th>
-                                    <th style="min-width: 100px">Mô tả</th>
-                                    <th style="min-width: 120px">Ngày tạo</th>
-                                    <th style="min-width: 120px">cập nhật</th>
+                                    <th style="min-width: 60px">Loại</th>
+                                    <th style="min-width: 60px">Mức giảm</th>
+                                    <th style="min-width: 60px">Ngày bắt đầu</th>
+                                    <th style="min-width: 60px">Ngày kết thúc</th>
+                                    <th style="min-width: 60px">Trạng thái</th>
                                     <th class="text-center">EXT</th>
                                 </tr>
                             </thead>
@@ -92,27 +75,26 @@
                                             <span></span>
                                         </label>
                                     </td>
-                                    <td class="pl-0 py-8">
-                                        <div class="d-flex align-items-center">
-                                            <div class="symbol symbol-50 flex-shrink-0 mr-4">
-                                                <div class="symbol-label" :style="'background-image: url(' + item.url + ')'"></div>
-                                            </div>
-                                            <div>
-                                                <router-link :to="'/khuyen-mai/' + item.id + '/chinh-sua'" class="text-dark-75 font-weight-bolder text-hover-primary mb-1 font-size-lg" v-text="Text(item.name, 50)"></router-link>
-                                                <span class="text-muted d-block" v-text="Text(item.slug, 50)"></span>
-                                            </div>
-                                        </div>
+                                    <td>
+                                        <router-link :to="'/khuyen-mai/' + item.id + '/chinh-sua'" class="text-dark-75 font-weight-bolder text-hover-primary mb-1 font-size-lg" v-text="item.title"></router-link>
+                                        <span class="text-muted d-block" v-text="item.description"></span>
                                     </td>
                                     <td>
-                                        <span class="text-dark-75 font-weight-bolder d-block font-size-lg" v-text="Text(item.description, 250)"></span>
+                                        <span class="text-dark-75 font-weight-bolder d-block font-size-lg" v-text="!item.type ? 'Theo phần trăm' : 'Theo giá'"></span>
                                     </td>
                                     <td>
-                                        <span class="text-dark-75 font-weight-bolder d-block font-size-lg" v-text="formatTime(item.created_at)"></span>
-                                        <span class="text-muted font-weight-bold" v-text="formatHuors(item.created_at)"></span>
+                                        <span class="text-dark-75 font-weight-bolder d-block font-size-lg" v-text="(item.type ? item.number + 'VNĐ' : item.number + '%')"></span>
                                     </td>
                                     <td>
-                                        <span class="text-dark-75 font-weight-bolder d-block font-size-lg" v-text="formatTime(item.updated_at)"></span>
-                                        <span class="text-muted font-weight-bold" v-text="formatHuors(item.updated_at)"></span>
+                                        <span class="text-dark-75 font-weight-bolder d-block font-size-lg" v-text="formatTime(item.start)"></span>
+                                        <span class="text-muted font-weight-bold" v-text="formatHuors(item.start)"></span>
+                                    </td>
+                                    <td>
+                                        <span class="text-dark-75 font-weight-bolder d-block font-size-lg" v-text="formatTime(item.end)"></span>
+                                        <span class="text-muted font-weight-bold" v-text="formatHuors(item.end)"></span>
+                                    </td>
+                                    <td>
+                                        <span class="text-dark-75 font-weight-bolder d-block font-size-lg">Hết hạn</span>
                                     </td>
                                     <td class="text-center">
                                         <div class="dropdown dropdown-inline">

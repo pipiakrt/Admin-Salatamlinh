@@ -126,7 +126,7 @@
                                     </td>
                                     <td>
                                         <span class="text-dark-75 font-weight-bolder d-block font-size-lg" v-text="item.price"></span>
-                                        <span class="text-muted font-weight-bold" v-text="item.discount"></span>
+                                        <span class="text-muted font-weight-bold" v-text="item.price"></span>
                                     </td>
                                     <td>
                                         <span class="text-dark-75 font-weight-bolder d-block font-size-lg" v-text="formatTime(item.created_at)"></span>

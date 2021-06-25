@@ -90,15 +90,6 @@
                                         </div>
                                     </div>
                                     <div class="form-group row">
-                                        <label for="discount" class="col-2 col-form-label">Giá gốc</label>
-                                        <div class="col-10">
-                                            <validation-provider rules="required" v-slot="{ errors }">
-                                                <input v-model="discount" class="form-control" type="number" placeholder="Giá gốc" />
-                                                <div v-if="errors[0]" class="invalid-feedback d-block" v-text="errors[0]"></div>
-                                            </validation-provider>
-                                        </div>
-                                    </div>
-                                    <div class="form-group row">
                                         <label for="number" class="col-2 col-form-label">Số lượng kho</label>
                                         <div class="col-10">
                                             <validation-provider rules="required" v-slot="{ errors }">
@@ -292,7 +283,6 @@ export default {
             video: '',
             images: [],
             price: '',
-            discount: '',
             description: '',
             content: '',
             attributes: [],
@@ -321,7 +311,6 @@ export default {
             this.video = res.data.data.video
             this.images = res.data.data.images
             this.price = res.data.data.price
-            this.discount = res.data.data.discount
             this.description = res.data.data.description
             this.content = res.data.data.content
             this.attributes = res.data.data.attributes
@@ -402,7 +391,6 @@ export default {
                     name: this.name,
                     slug: this.slug,
                     price: this.price,
-                    discount: this.discount,
                     number: this.number,
                     video: this.video,
                     seo_title: this.seo_title,

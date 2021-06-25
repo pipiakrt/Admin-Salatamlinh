@@ -68,19 +68,15 @@
                                     <div class="form-group row">
                                         <label for="avatar" class="col-2 col-form-label">Ảnh bài viết</label>
                                         <div class="col-10">
-                                            <validation-provider rules="required|length:0,255" v-slot="{ errors }">
-                                                <div class="image-input image-input-outline" id="kt_image_4" style="background-position: center; background-image: url(/img/blank.png);">
-                                                    <div class="image-input-wrapper" :style="preview ? { 'background-image': `url('${item.url}')` } : ''"></div>
-                                                    <label @click="setTypeGetImg(), modal = true" data-toggle="modal" data-target="#filemanager" class="btn btn-xs btn-icon btn-circle btn-white btn-hover-text-primary btn-shadow" data-action="change">
-                                                        <i class="fa fa-pen icon-sm text-muted"></i>
-                                                    </label>
-                                                    <input v-model="preview" type="text" hidden>
-                                                    <span v-if="preview" @click="preview = ''" class="btn btn-xs btn-icon btn-circle btn-white btn-hover-text-primary btn-shadow" data-action="remove">
-                                                        <i class="ki ki-bold-close icon-xs text-muted"></i>
-                                                    </span>
-                                                </div>
-                                                <div v-if="errors[0]" class="invalid-feedback d-block" v-text="errors[0]"></div>
-                                            </validation-provider>
+                                            <div class="image-input image-input-empty image-input-outline background-position-center" :style="`background-image: url('${preview ? preview : '/img/avatar.png'}')`">
+                                                <div class="image-input-wrapper"></div>
+                                                <label @click="modal = true" data-toggle="modal" data-target="#filemanager" class="btn btn-xs btn-icon btn-circle btn-white btn-hover-text-primary btn-shadow" data-action="change">
+                                                    <i class="fa fa-pen icon-sm text-muted"></i>
+                                                </label>
+                                                <span v-if="avatar" @click="avatar = ''" class="btn btn-xs btn-icon btn-circle btn-white btn-hover-text-primary btn-shadow d-flex" data-action="remove">
+                                                    <i class="ki ki-bold-close icon-xs text-muted"></i>
+                                                </span>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
@@ -184,6 +180,7 @@ export default {
             name: '',
             file: '',
             preview: '',
+            id: '',
             slug: '',
             description: '',
             categories: [],
@@ -207,6 +204,8 @@ export default {
             this.categories = res.data.data
         })
         await axios('/api/posts/' + this.$route.params.id).then(res => {
+            console.log(res)
+            this.id = res.data.data.id
             this.post = res.data.data
             this.name = this.post.name
             this.slug = this.post.slug
@@ -295,7 +294,7 @@ export default {
                     state: "primary",
                     message: "Đợi Xíu...",
                 })
-                axios.post('/api/posts', params).then((res) => {
+                axios.put('/api/posts/' + this.id, params).then((res) => {
                     KTApp.unblockPage();
                     toastr.success("Tạo Bài viết thành công!")
                     this.$router.push('/bai-viet/danh-sach');

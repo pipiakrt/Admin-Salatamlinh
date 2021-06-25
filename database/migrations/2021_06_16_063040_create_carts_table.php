@@ -22,7 +22,6 @@ class CreateCartsTable extends Migration
             $table->string('slug')->index();
             $table->string('avatar')->nullable();
             $table->integer('price')->index();
-            $table->integer('discount')->index();
             $table->integer('number')->index(); 
             $table->boolean('checked')->default(0);
             $table->timestamps();

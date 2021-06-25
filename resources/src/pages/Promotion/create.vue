@@ -22,12 +22,28 @@
                             <div class="tab-content">
                                 <div class="tab-pane fade show active" id="kt_tab_pane_1_4" role="tabpanel" aria-labelledby="kt_tab_pane_1_4">
                                     <div class="form-group row">
+                                        <label for="description" class="col-2 col-form-label">Mã code</label>
+                                        <div class="col-10">
+                                            <validation-provider rules="required" v-slot="{ errors }">
+                                                <div class="input-group">
+                                                    <input v-model="code" class="form-control" type="text" placeholder="Mã code" />
+                                                    <div @click="generate()" class="input-group-append m-0">
+                                                        <span class="input-group-text">
+                                                            <i class="flaticon2-refresh-1"></i>
+                                                        </span>
+                                                    </div>
+                                                </div>
+                                                <div v-if="errors[0]" class="invalid-feedback d-block" v-text="errors[0]"></div>
+                                            </validation-provider>
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
                                         <label for="description" class="col-2 col-form-label">Thời gian</label>
                                         <div class="col-10">
                                             <div class="row">
                                                 <div class="col-6">
                                                     <div class="input-group date" id="kt_datetimepicker_1" data-target-input="nearest">
-                                                        <input type="text" class="form-control datetimepicker-input" placeholder="Thời gian bắt đầu" data-target="#kt_datetimepicker_1" />
+                                                        <input type="text" id="datetimepicker_1" class="form-control datetimepicker-input" placeholder="Thời gian bắt đầu" data-target="#kt_datetimepicker_1" />
                                                         <div class="input-group-append" data-target="#kt_datetimepicker_1" data-toggle="datetimepicker">
                                                             <span class="input-group-text">
                                                                 <i class="ki ki-calendar"></i>
@@ -37,7 +53,7 @@
                                                 </div>
                                                 <div class="col-6">
                                                     <div class="input-group date" id="kt_datetimepicker_2" data-target-input="nearest">
-                                                        <input type="text" class="form-control datetimepicker-input" placeholder="Thời gian kết thúc" data-target="#kt_datetimepicker_2" />
+                                                        <input type="text" id="datetimepicker_2" class="form-control datetimepicker-input" placeholder="Thời gian kết thúc" data-target="#kt_datetimepicker_2" />
                                                         <div class="input-group-append" data-target="#kt_datetimepicker_2" data-toggle="datetimepicker">
                                                             <span class="input-group-text">
                                                                 <i class="ki ki-calendar"></i>
@@ -51,7 +67,7 @@
                                     <div class="form-group row">
                                         <label for="name" class="col-2 col-form-label">Tên</label>
                                         <div class="col-10">
-                                            <validation-provider rules="required|length:0,255" v-slot="{ errors }">
+                                            <validation-provider rules="required" v-slot="{ errors }">
                                                 <input v-model="name" class="form-control" type="text" placeholder="Tên khuyến mãi" />
                                                 <div v-if="errors[0]" class="invalid-feedback d-block" v-text="errors[0]"></div>
                                             </validation-provider>
@@ -60,7 +76,7 @@
                                     <div class="form-group row">
                                         <label for="description" class="col-2 col-form-label">Mô tả</label>
                                         <div class="col-10">
-                                            <validation-provider rules="required|length:0,255" v-slot="{ errors }">
+                                            <validation-provider rules="required" v-slot="{ errors }">
                                                 <textarea v-model="description" class="form-control" rows="9" id="description"></textarea>
                                                 <div v-if="errors[0]" class="invalid-feedback d-block" v-text="errors[0]"></div>
                                             </validation-provider>
@@ -79,24 +95,14 @@
                                         </div>
                                     </div>
                                     <div class="form-group row">
-                                        <label for="description" class="col-2 col-form-label">Số tiền</label>
+                                        <label for="description" class="col-2 col-form-label" v-text="(type == 0 ? 'Phần trăm' : 'Số tiền')"></label>
                                         <div class="col-10">
-                                            <validation-provider rules="required|length:0,255" v-slot="{ errors }">
-                                                <input v-model="description" class="form-control" type="search" placeholder="Số tiền" />
+                                            <validation-provider rules="required" v-slot="{ errors }">
+                                                <input v-model="number" class="form-control" type="number" :placeholder="(type == 0 ? 'Phần trăm' : 'Số tiền')" />
                                                 <div v-if="errors[0]" class="invalid-feedback d-block" v-text="errors[0]"></div>
                                             </validation-provider>
                                         </div>
                                     </div>
-                                    <div class="form-group row">
-                                        <label for="description" class="col-2 col-form-label">Mã code</label>
-                                        <div class="col-10">
-                                            <validation-provider rules="required|length:0,255" v-slot="{ errors }">
-                                                <input v-model="description" class="form-control" type="search" placeholder="Số tiền" />
-                                                <div v-if="errors[0]" class="invalid-feedback d-block" v-text="errors[0]"></div>
-                                            </validation-provider>
-                                        </div>
-                                    </div>
-
                                 </div>
                             </div>
                         </ValidationObserver>
@@ -104,16 +110,7 @@
                 </div>
                 <div class="card-footer text-center">
                     <router-link to="/san-pham/danh-sach" type="reset" class="btn btn-light-primary mr-1 font-weight-bolder"><i class="icon-sm ki ki-long-arrow-back"></i> Quay Lại</router-link>
-                    <button type="reset" @click="submit(1)" class="btn btn-primary mr-1"><i class="icon-sm ki ki-bold-check-1"></i> Lưu khuyễn mãi</button>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div v-if="modal" class="modal fade" id="filemanager">
-        <div class="modal-dialog modal-full min-vh-100">
-            <div class="modal-content min-vh-100">
-                <div class="modal-body">
-                    <FileManage :getUrl="true" @url="setUrl($event)" />
+                    <button type="reset" @click="submit()" class="btn btn-primary mr-1"><i class="icon-sm ki ki-bold-check-1"></i> Lưu khuyễn mãi</button>
                 </div>
             </div>
         </div>
@@ -122,8 +119,8 @@
 </template>
 
 <script>
+import Extends from '../../extend';
 import Breadcrumb from '../../components/breadcrumb/index'
-import FileManage from '../../components/FileManager/index'
 import {
     ValidationObserver,
     ValidationProvider,
@@ -148,7 +145,6 @@ extend('length', {
 });
 export default {
     components: {
-        FileManage,
         Breadcrumb,
         ValidationProvider,
         ValidationObserver
@@ -171,22 +167,30 @@ export default {
                     text: 'Danh Sách',
                 }
             },
-            modal: false,
             name: '',
-            type: '0',
+            type: 0,
+            code: '',
+            number: '',
             description: '',
         }
     },
     mounted() {
-        $('#kt_datetimepicker_1').datetimepicker();
-        $('#kt_datetimepicker_2').datetimepicker();
+        KTUtil.ready(function () {
+            $('#kt_datetimepicker_1').datetimepicker();
+            $('#kt_datetimepicker_2').datetimepicker();
+        });
     },
     methods: {
         async submit() {
             if (await this.errors()) {
                 let params = {
-                    name: this.name,
+                    code: this.code,
+                    start: $('#datetimepicker_1').val(),
+                    end: $('#datetimepicker_2').val(),
+                    title: this.name,
                     description: this.description,
+                    type: this.type,
+                    number: this.number,
                 }
                 KTApp.blockPage({
                     overlayColor: "#000000",
@@ -199,6 +203,9 @@ export default {
                     this.$router.push('/khuyen-mai/danh-sach');
                 })
             }
+        },
+        generate() {
+            this.code = Extends.generate()
         },
         async errors() {
             return await this.$refs['errors'].validate();

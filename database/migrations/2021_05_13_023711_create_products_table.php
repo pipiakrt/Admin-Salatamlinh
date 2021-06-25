@@ -28,7 +28,6 @@ class CreateProductsTable extends Migration
             $table->string('avatar')->nullable();
             $table->string('video')->nullable();
             $table->integer('price')->index();
-            $table->integer('discount')->index();
             $table->text('description')->nullable();
             $table->longText('content')->nullable();
             $table->boolean('status')->index();

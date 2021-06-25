@@ -22,7 +22,6 @@ class Cart extends Model
         'slug',
         'avatar',
         'price',
-        'discount'
     ];
 
     public function filterType(EloquentBuilder $query, $value)

@@ -37,7 +37,7 @@ class PromotionController extends Controller
      */
     public function store(Request $request)
     {
-        return $product = Model::create($request->all());
+        return $promotion = Model::create($request->all());
     }
 
     /**
@@ -46,9 +46,9 @@ class PromotionController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show(Model $product)
+    public function show(Model $promotion)
     {
-        return new Resources($product);
+        return new Resources($promotion);
     }
 
     /**
@@ -58,9 +58,9 @@ class PromotionController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Model $product)
+    public function update(Request $request, Model $promotion)
     {
-        return $product->update($request->all());
+        return $promotion->update($request->all());
     }
 
     /**

@@ -21,7 +21,6 @@ class Product extends MySQL
         'video',
         'price',
         'number',
-        'discount',
         'description',
         'content',
         'status',

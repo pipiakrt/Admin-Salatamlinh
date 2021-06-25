@@ -24,7 +24,6 @@ class OrderDetail extends Model
         'slug',
         'avatar',
         'price',
-        'discount',
     ];
 
     public function filterCategory(EloquentBuilder $query, $value)

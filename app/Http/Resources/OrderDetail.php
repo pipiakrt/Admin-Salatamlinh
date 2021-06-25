@@ -24,7 +24,6 @@ class OrderDetail extends JsonResource
             'slug' => $this->slug,
             'avatar' => $this->avatar,
             'price' => $this->price,
-            'discount' => $this->discount,
             'total_money' => $this->total_money,
         ];
     }

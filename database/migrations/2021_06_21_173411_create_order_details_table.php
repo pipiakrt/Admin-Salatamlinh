@@ -22,7 +22,6 @@ class CreateOrderDetailsTable extends Migration
             $table->string('slug')->index();
             $table->string('avatar')->nullable();
             $table->integer('price')->index();
-            $table->integer('discount')->index();
             $table->integer('number')->index();
             $table->integer('total_money')->index();
         });

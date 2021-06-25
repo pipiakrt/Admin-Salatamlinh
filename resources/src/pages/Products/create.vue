@@ -90,15 +90,6 @@
                                         </div>
                                     </div>
                                     <div class="form-group row">
-                                        <label for="discount" class="col-2 col-form-label">Giá gốc</label>
-                                        <div class="col-10">
-                                            <validation-provider rules="required" v-slot="{ errors }">
-                                                <input v-model="discount" class="form-control" type="number" placeholder="Giá gốc" />
-                                                <div v-if="errors[0]" class="invalid-feedback d-block" v-text="errors[0]"></div>
-                                            </validation-provider>
-                                        </div>
-                                    </div>
-                                    <div class="form-group row">
                                         <label for="number" class="col-2 col-form-label">Số lượng kho</label>
                                         <div class="col-10">
                                             <validation-provider rules="required" v-slot="{ errors }">
@@ -305,7 +296,6 @@ export default {
             seo_description: '',
             seo_keyword: '',
             price: '',
-            discount: '',
             description: '',
             categories: [],
             category: '',
@@ -396,7 +386,6 @@ export default {
                     slug: this.slug,
                     number: this.number,
                     price: this.price,
-                    discount: this.discount,
                     video: this.video,
                     seo_title: this.seo_title,
                     seo_description: this.seo_description,
