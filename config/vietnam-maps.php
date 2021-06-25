@@ -1,4 +1,5 @@
 <?php
+// php artisan vietnam-map:download
 
 return [
     'tables' => [
