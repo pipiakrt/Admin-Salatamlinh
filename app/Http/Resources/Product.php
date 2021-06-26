@@ -34,7 +34,8 @@ class Product extends JsonResource
             'updated_at' => $this->updated_at,
             'category_id' => $this->category_id,
             'promotion_id' => $this->promotion_id,
-            'promotion' => $this->Promotion ? $this->Promotion->title : ''
+            'promotion' => $this->Promotion ? $this->Promotion->title : '',
+            'suggestion' => Suggestion::collection($this->Suggestion)
         ];
     }
 }

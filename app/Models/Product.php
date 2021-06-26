@@ -46,6 +46,10 @@ class Product extends MySQL
         return $this->hasOne(Promotion::class, '_id', 'promotion_id');
     }
 
+    public function Suggestion() {
+        return $this->hasMany(Suggestion::class, 'product_id');
+    }
+
     public function filterOrder(EloquentBuilder $query, $value)
     {
         $query->orderBy('_id', $value);
