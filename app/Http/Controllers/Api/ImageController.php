@@ -62,7 +62,7 @@ class ImageController extends Controller
             foreach ($files as $file) {
                 $name = $file->getClientOriginalName();
                 $data = File::get($file);
-                Storage::put($request->dir . '/' . $slug = Str::slug($name, '-'), $data);
+                Storage::put($request->dir . '/' . $name, $data);
             }
         }
     }
