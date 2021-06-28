@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Http\Resources\Product as Resources;
 use App\Http\Requests\Api\Product\Store;
 use App\Models\Product as Model;
+use App\Models\Suggestion;
 use App\Models\Product as Category;
 
 class ProductController extends Controller
@@ -39,9 +40,12 @@ class ProductController extends Controller
      */
     public function store(Request $request)
     {
-        return $product = Model::create($request->all());
-        // if($product)
-        // $request->
+        $product = Model::create($request->all());
+        $suggestion = [];
+        foreach ($request->suggestion_id as $id) {
+            array_push($suggestion, ['product_id' => $id, 'relate_id' => $product->_id]);
+        }
+        return Suggestion::insert($suggestion);
     }
 
     /**
@@ -64,7 +68,13 @@ class ProductController extends Controller
      */
     public function update(Request $request, Model $product)
     {
-        return $product->update($request->all());
+        $product->update($request->all());
+        $product->Suggestion()->delete();
+        $suggestion = [];
+        foreach ($request->suggestion_id as $id) {
+            array_push($suggestion, ['product_id' => $id, 'relate_id' => $product->_id]);
+        }
+        return Suggestion::insert($suggestion);
     }
 
     /**

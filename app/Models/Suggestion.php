@@ -17,6 +17,6 @@ class Suggestion extends Model
     public $timestamps = false;
 
     public function Product() {
-        return $this->hasOne(Product::class, '_id', 'relate_id');
+        return $this->hasOne(Product::class, '_id', 'product_id');
     }
 }

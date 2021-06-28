@@ -14,6 +14,6 @@ class Suggestion extends JsonResource
      */
     public function toArray($request)
     { 
-        return $this->Product;
+        return new SuggestionProduct($this->Product);
     }
 }

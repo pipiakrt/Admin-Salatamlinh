@@ -47,7 +47,7 @@ class Product extends MySQL
     }
 
     public function Suggestion() {
-        return $this->hasMany(Suggestion::class, 'product_id');
+        return $this->hasMany(Suggestion::class, 'relate_id');
     }
 
     public function filterOrder(EloquentBuilder $query, $value)

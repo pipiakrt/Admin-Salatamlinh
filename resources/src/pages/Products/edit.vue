@@ -30,7 +30,7 @@
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link" data-toggle="tab" href="#kt_tab_pane_2_4">
-                                    <span class="nav-icon"><i class="flaticon2-layers"></i></span>
+                                    <span class="nav-icon"><i class="flaticon2-sheet"></i></span>
                                     <h3 class="card-title">Chi tiết sản phẩm</h3>
                                 </a>
                             </li>
@@ -42,8 +42,14 @@
                             </li>
                             <li class="nav-item" @click="setPromotion(promotion_id)">
                                 <a class="nav-link" data-toggle="tab" href="#kt_tab_pane_2_7">
-                                    <span class="nav-icon"><i class="flaticon2-drop"></i></span>
+                                    <span class="nav-icon"><i class="flaticon2-graphic"></i></span>
                                     <h3 class="card-title">Khuyễn mãi</h3>
+                                </a>
+                            </li>
+                            <li class="nav-item" @click="getApiProduct()">
+                                <a class="nav-link" data-toggle="tab" href="#kt_tab_pane_2_8">
+                                    <span class="nav-icon"><i class="flaticon2-list-2"></i></span>
+                                    <h3 class="card-title">San phẩm gợi ý</h3>
                                 </a>
                             </li>
                         </ul>
@@ -260,6 +266,61 @@
                                         </div>
                                     </div>
                                 </div>
+                                <div class="tab-pane fade" id="kt_tab_pane_2_8" role="tabpanel" aria-labelledby="kt_tab_pane_2_8">
+                                    <div class="form-group row">
+                                        <div class="col-12">
+                                            <div class="table-responsive">
+                                                <table class="table table-head-custom table-head-bg table-borderless table-vertical-center">
+                                                    <thead>
+                                                        <tr class="text-uppercase">
+                                                            <th style="min-width: 200px">
+                                                                <span class="text-dark-75">Sản phẩm</span>
+                                                            </th>
+                                                            <th style="min-width: 100px">Mô tả</th>
+                                                            <th style="min-width: 100px">Khuyễn mãi</th>
+                                                            <th style="min-width: 120px">Giá</th>
+                                                            <th style="min-width: 120px">Ngày tạo</th>
+                                                            <th class="text-center">
+                                                                <button type="button" data-toggle="modal" data-target="#exampleModalLong1" class="btn btn-block btn-primary kt-btn btn-sm kt-btn--icon d-block">Thêm</button>
+                                                            </th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        <tr v-for="(item, key) in suggestion" :key="'row' + item.id">
+                                                            <td class="pl-0 py-8">
+                                                                <div class="d-flex align-items-center">
+                                                                    <div class="symbol symbol-50 flex-shrink-0 mr-4">
+                                                                        <div class="symbol-label" :style="'background-image: url(' + item.url + ')'"></div>
+                                                                    </div>
+                                                                    <div>
+                                                                        <span class="text-dark-75 font-weight-bolder text-hover-primary mb-1 font-size-lg" v-text="Text(item.name, 50)"></span>
+                                                                        <span class="text-muted d-block" v-text="Text(item.slug, 50)"></span>
+                                                                    </div>
+                                                                </div>
+                                                            </td>
+                                                            <td>
+                                                                <span class="text-dark-75 font-weight-bolder d-block font-size-lg" v-text="Text(item.description, 250)"></span>
+                                                            </td>
+                                                            <td>
+                                                                <span class="text-dark-75 font-weight-bolder d-block font-size-lg">{{ item.promotion }}</span>
+                                                            </td>
+                                                            <td>
+                                                                <span class="text-dark-75 font-weight-bolder d-block font-size-lg" v-text="formatPrice(item.price)"></span>
+                                                            </td>
+                                                            <td>
+                                                                <span class="text-dark-75 font-weight-bolder d-block font-size-lg" v-text="formatTime(item.created_at)"></span>
+                                                                <span class="text-muted font-weight-bold" v-text="formatHuors(item.created_at)"></span>
+                                                            </td>
+                                                            <td class="text-center">
+                                                                <button @click="trashSuggestion(key)" type="button" class="btn btn-block btn-warning kt-btn btn-sm kt-btn--icon d-block">Xóa</button>
+                                                            </td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                         </ValidationObserver>
                     </form>
@@ -268,6 +329,141 @@
                     <router-link to="/san-pham/danh-sach" type="reset" class="btn btn-light-primary mr-1 font-weight-bolder"><i class="icon-sm ki ki-long-arrow-back"></i> Quay Lại</router-link>
                     <button type="reset" @click="submit(1)" class="btn btn-primary mr-1"><i class="icon-sm ki ki-bold-check-1"></i> Lưu Sản phẩm</button>
                     <button type="reset" @click="submit(0)" class="btn btn-primary mr-1"><i class="icon-sm ki ki-info"></i> Lưu Ẩn</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Modal-->
+    <div class="modal fade" id="exampleModalLong1" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="staticBackdrop" aria-hidden="true">
+        <div class="modal-dialog modal-xl modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Thêm sản phẩm gợi ý</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <i aria-hidden="true" class="ki ki-close"></i>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="card-body pt-0 pb-3">
+                        <div class="row mb-5">
+                            <div class="col-2">
+                                <input v-model="filterName1" type="text" placeholder="Tên sản phẩm" class="form-control form-control-sm form-filter datatable-input"/>
+                            </div>
+                            <div class="col-6">
+                                <div class="row">
+                                    <div class="col-3">
+                                        <select v-model="filterCategory" class="form-control form-control-sm form-filter datatable-input">
+                                            <option value="">Danh mục</option>
+                                            <template v-for="item in categories">
+                                                <option :key="item.id" v-if="item.parent_id > 0" :value="item.id" v-text="item.name"></option>
+                                            </template>
+                                        </select>
+                                    </div>
+                                    <div class="col-3">
+                                        <select v-model="filterPrice" class="form-control form-control-sm form-filter datatable-input">
+                                            <option value="">Giá</option>
+                                            <option value="DESC">Lớn dần</option>
+                                            <option value="ASC">Giảm dần</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-3">
+                                        <input v-model="filterPriceUp" type="number" class="form-control form-control-sm datatable-input" placeholder="Giá Từ" />
+                                    </div>
+                                    <div class="col-3">
+                                        <input v-model="filterPriceDown" type="number" class="form-control form-control-sm datatable-input" placeholder="Đến"/>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-3">
+                                <div class="row">
+                                    <div class="col-6">
+                                        <select v-model="filterOrder" class="form-control form-control-sm form-filter datatable-input" title="Select" data-col-index="6">
+                                            <option value="">Sắp xếp</option>
+                                            <option value="DESC">Mới nhất</option>
+                                            <option value="ASC">Cũ nhất</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-6">
+                                        <select v-model="filterStatus" class="form-control form-control-sm form-filter datatable-input" title="Chọn" data-col-index="7">
+                                            <option value="">Trạng thái</option>
+                                            <option value="1">Hoạt Động</option>
+                                            <option value="0">Tạm Ẩn</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-1">
+                                <button @click="getApiProduct()" class="btn btn-block btn-primary kt-btn btn-sm kt-btn--icon d-block">Lọc SP</button>
+                            </div>
+                        </div>
+                        <div class="table-responsive">
+                            <table class="table table-head-custom table-head-bg table-borderless table-vertical-center">
+                                <thead>
+                                    <tr class="text-uppercase">
+                                        <th style="min-width: 200px">
+                                            <span class="text-dark-75">Sản phẩm</span>
+                                        </th>
+                                        <th style="min-width: 100px">Mô tả</th>
+                                        <th style="min-width: 100px">Khuyễn mãi</th>
+                                        <th style="min-width: 120px">Giá</th>
+                                        <th style="min-width: 120px">Ngày tạo</th>
+                                        <th class="text-center">EXT</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr v-for="item in products.data" :key="'row' + item.id">
+                                        <td class="pl-0 py-8">
+                                            <div class="d-flex align-items-center">
+                                                <div class="symbol symbol-50 flex-shrink-0 mr-4">
+                                                    <div class="symbol-label" :style="'background-image: url(' + item.url + ')'"></div>
+                                                </div>
+                                                <div>
+                                                    <span class="text-dark-75 font-weight-bolder text-hover-primary mb-1 font-size-lg" v-text="Text(item.name, 50)"></span>
+                                                    <span class="text-muted d-block" v-text="Text(item.slug, 50)"></span>
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <span class="text-dark-75 font-weight-bolder d-block font-size-lg" v-text="Text(item.description, 250)"></span>
+                                        </td>
+                                        <td>
+                                            <span class="text-dark-75 font-weight-bolder d-block font-size-lg">{{ item.promotion }}</span>
+                                        </td>
+                                        <td>
+                                            <span class="text-dark-75 font-weight-bolder d-block font-size-lg" v-text="formatPrice(item.price)"></span>
+                                        </td>
+                                        <td>
+                                            <span class="text-dark-75 font-weight-bolder d-block font-size-lg" v-text="formatTime(item.created_at)"></span>
+                                            <span class="text-muted font-weight-bold" v-text="formatHuors(item.created_at)"></span>
+                                        </td>
+                                        <td class="text-center">
+                                            <button @click="addSuggestion(item)" data-dismiss="modal" aria-label="Close" class="btn btn-block btn-primary kt-btn btn-sm kt-btn--icon d-block">Thêm</button>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <paginate
+                            :container-class="'phantrang'"
+                            :prev-link-class="'btn btn-icon btn-sm border-0 btn-light mr-2 my-1'"
+                            :next-link-class="'btn btn-icon btn-sm border-0 btn-light mr-2 my-1'"
+                            :first-last-button="true"
+                            :first-button-text="`<i class='ki ki-bold-double-arrow-back icon-xs'></i>`"
+                            :last-button-text="`<i class='ki ki-bold-double-arrow-next icon-xs'></i>`"
+                            :no-li-surround="true"
+                            :page-count="(products == '' ? 0 : products.meta.last_page)"
+                            :page-range="3"
+                            :click-handler="toPage"
+                            :disabled-class="'disable'"
+                            :active-class="'btn-hover-primary active'"
+                            :prev-text="`<i class='ki ki-bold-arrow-back icon-xs'></i>`"
+                            :next-text="`<i class='ki ki-bold-arrow-next icon-xs'></i>`"
+                            :page-link-class="'btn btn-icon btn-sm border-0 btn-light mr-2 my-1'"
+                        >
+                        </paginate>
+                    </div>
                 </div>
             </div>
         </div>
@@ -364,6 +560,7 @@
 import Extends from '../../extend';
 import Breadcrumb from '../../components/breadcrumb/index'
 import FileManage from '../../components/FileManager/index'
+import Paginate from 'vuejs-paginate'
 import moment from 'moment'
 import {
     ValidationObserver,
@@ -390,6 +587,7 @@ extend('length', {
 var typeimage = 'avatar';
 export default {
     components: {
+        Paginate,
         FileManage,
         Breadcrumb,
         ValidationProvider,
@@ -430,10 +628,20 @@ export default {
             seo_description: '',
             seo_keyword: '',
             notImage: false,
+            products: [],
             promotions: [],
             filterName: '',
             promotion_id: '',
-            promotion: ''
+            promotion: '',
+            filterName1: '',
+            filterCategory: '',
+            filterOrder: '',
+            filterPrice: '',
+            filterStatus: '',
+            filterPriceUp: '',
+            filterPriceDown: '',
+            page: 1,
+            suggestion: []
         }
     },
     watch: {
@@ -462,6 +670,7 @@ export default {
             this.seo_title = res.data.data.seo_title
             this.seo_description = res.data.data.seo_description
             this.seo_keyword = res.data.data.seo_keyword
+            this.suggestion = res.data.data.suggestion
             KTUtil.ready(function () {
                 var HelloButton = function (context) {
                     var ui = $.summernote.ui;
@@ -513,12 +722,54 @@ export default {
             else
                 typeimage = status
         },
+        addSuggestion(item) {
+            this.suggestion.push(item); 
+        },
+        trashSuggestion (key) {
+            this.suggestion.splice(key, 1); 
+        },
         async getApiKM() {
             Extends.LoadPage()
             await axios('/api/promotions?name=' + this.filterName).then(res => {
                 KTApp.unblockPage();
                 this.promotions = res.data.data
             })
+        },
+        setPromotion(id) {
+            let temp = this.promotions.find(item => item.id == id)
+            if (!this.checkTime(temp.end)) {
+                this.promotion_id = id
+                this.promotion = temp
+            }
+            else {
+                toastr.success("Khuyễn mãi hết hạn!")
+            }
+        },
+        formatPrice(price) {
+            return Extends.formartPrice(price)
+        },
+        Text(text, length) {
+            return Extends.FormatText(text, length)
+        },
+        async getApiProduct() {
+            Extends.LoadPage()
+            let query = {
+                page: this.page,
+                name: this.filterName1,
+                category: this.filterCategory,
+                order: this.filterOrder,
+                price: this.filterPrice,
+                status: this.filterStatus,
+                PriceUp: this.filterPriceUp,
+                PriceDown: this.filterPriceDown,
+            }
+            let products = await axios("/api/products", { params: query });
+            this.products = products.data
+            this.allID = [];
+            products.data.data.forEach(item => {
+                this.allID.push(item.id)
+            });
+            KTApp.unblockPage();
         },
         checkTime(param) {
             let date = moment(param).format('YYYY-MM-DD hh:mm:ss');
@@ -557,8 +808,13 @@ export default {
             }
         },
         async submit(status) {
+            let listId = []; 
+            this.suggestion.forEach(item => {
+                listId.push(item.id)
+            });
             if (await this.errors() && this.checkImage()) {
                 let params = {
+                    suggestion_id: listId,
                     name: this.name,
                     promotion_id: this.promotion_id,
                     slug: this.slug,
@@ -589,6 +845,9 @@ export default {
             } else {
                 toastr.success("From thông tin chung (bắt buộc)!")
             }
+        },
+        toPage(page = 1) {
+            this.page = page
         },
         checkImage () {
             if (this.images == '') {

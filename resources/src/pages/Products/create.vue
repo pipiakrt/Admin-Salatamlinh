@@ -30,7 +30,7 @@
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link" data-toggle="tab" href="#kt_tab_pane_2_4">
-                                    <span class="nav-icon"><i class="flaticon2-layers"></i></span>
+                                    <span class="nav-icon"><i class="flaticon2-sheet"></i></span>
                                     <h3 class="card-title">Chi tiết sản phẩm</h3>
                                 </a>
                             </li>
@@ -42,13 +42,13 @@
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link" data-toggle="tab" href="#kt_tab_pane_2_7">
-                                    <span class="nav-icon"><i class="flaticon2-drop"></i></span>
+                                    <span class="nav-icon"><i class="flaticon2-graphic"></i></span>
                                     <h3 class="card-title">Khuyễn mãi</h3>
                                 </a>
                             </li>
                             <li class="nav-item" @click="getApiProduct()">
                                 <a class="nav-link" data-toggle="tab" href="#kt_tab_pane_2_8">
-                                    <span class="nav-icon"><i class="flaticon2-drop"></i></span>
+                                    <span class="nav-icon"><i class="flaticon2-list-2"></i></span>
                                     <h3 class="card-title">San phẩm gợi ý</h3>
                                 </a>
                             </li>
@@ -312,7 +312,7 @@
                                                                 <span class="text-muted font-weight-bold" v-text="formatHuors(item.created_at)"></span>
                                                             </td>
                                                             <td class="text-center">
-                                                                <button @click="trashSuggestion(key)" type="submit" class="btn btn-block btn-warning kt-btn btn-sm kt-btn--icon d-block">Xóa</button>
+                                                                <button @click="trashSuggestion(key)" type="button" class="btn btn-block btn-warning kt-btn btn-sm kt-btn--icon d-block">Xóa</button>
                                                             </td>
                                                         </tr>
                                                     </tbody>
@@ -796,8 +796,13 @@ export default {
             }
         },
         async submit(status) {
+            let listId = []; 
+            this.suggestion.forEach(item => {
+                listId.push(item.id)
+            });
             if (await this.errors() && this.checkImage()) {
                 let params = {
+                    suggestion_id: listId,
                     promotion_id: this.promotion_id ? this.promotion_id : 0,
                     name: this.name,
                     slug: this.slug,
