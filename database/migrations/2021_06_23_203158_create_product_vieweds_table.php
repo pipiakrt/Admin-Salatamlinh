@@ -14,6 +14,7 @@ class CreateProductViewedsTable extends Migration
     public function up()
     {
         Schema::create('product_vieweds', function (Blueprint $table) {
+            $table->id('_id');
             $table->integer('user_id')->index();
             $table->integer('product_id')->index();
         });
