@@ -114,7 +114,7 @@
                                             <template v-for="(product, i) in item.products">
                                                 <div :key="i" class="d-flex align-items-center py-1">
                                                     <div class="symbol symbol-50 flex-shrink-0 mr-4">
-                                                        <div class="symbol-label" :style="'background-image: url(' + product.avatar + ')'"></div>
+                                                        <div class="symbol-label" :style="`background-image: url('${product.avatar}')`"></div>
                                                     </div>
                                                     <div>
                                                         <a class="text-dark-75 font-weight-bolder text-hover-primary mb-1 font-size-lg" v-text="Text(product.name, 50)"></a>
@@ -219,7 +219,7 @@
                                     <template v-for="(product, i) in orderInfo.products">
                                         <div :key="i" class="d-flex py-1">
                                             <div class="symbol symbol-50 flex-shrink-0 mr-4">
-                                                <div class="symbol-label" :style="'background-image: url(' + product.avatar + ')'"></div>
+                                                <div class="symbol-label" :style="`background-image: url('${product.avatar}')`"></div>
                                             </div>
                                             <div>
                                                 <a class="text-dark-75 font-weight-bolder text-hover-primary mb-1 font-size-lg" v-text="Text(product.name, 50)"></a>
