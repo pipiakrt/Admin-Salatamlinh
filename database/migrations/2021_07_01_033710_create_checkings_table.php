@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateReportsTable extends Migration
+class CreateCheckingsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,12 +13,12 @@ class CreateReportsTable extends Migration
      */
     public function up()
     {
-        Schema::create('reports', function (Blueprint $table) {
+        Schema::create('checkings', function (Blueprint $table) {
             $table->id('_id');
-            $table->string('name');
-            $table->string('phone');
-            $table->string('email');
-            $table->text('content');
+            $table->string('name')->nullable();
+            $table->string('phone')->nullable();
+            $table->string('number')->nullable();
+            $table->string('content')->nullable();
             $table->timestamps();
         });
     }
@@ -30,6 +30,6 @@ class CreateReportsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('reports');
+        Schema::dropIfExists('checkings');
     }
 }

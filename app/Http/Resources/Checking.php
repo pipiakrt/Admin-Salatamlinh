@@ -4,7 +4,7 @@ namespace App\Http\Resources;
 
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class Report extends JsonResource
+class Checking extends JsonResource
 {
     /**
      * Transform the resource into an array.
@@ -17,10 +17,10 @@ class Report extends JsonResource
         return [
             'id' => $this->_id,
             'name' => $this->name,
-            'phone' => $this->phone,
-            'email' => $this->email,
             'content' => $this->content,
+            'phone' => $this->phone,
+            'number' => $this->number,
             'created_at' => $this->created_at,
-        ];;
+        ];
     }
 }

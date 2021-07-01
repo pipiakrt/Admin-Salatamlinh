@@ -6,7 +6,7 @@
             <div class="card card-custom gutter-b">
                 <div class="card-header border-0 py-5">
                     <h3 class="card-title align-items-start flex-column">
-                        <span class="card-label font-weight-bolder text-dark">Danh sách phản hồi</span>
+                        <span class="card-label font-weight-bolder text-dark">Danh sách checking</span>
                     </h3>
                     <div class="symbol-group symbol-hover">
                         <div class="card-toolbar">
@@ -24,10 +24,13 @@
                             <thead>
                                 <tr class="text-uppercase">
                                     <th style="min-width: 250px" class="pl-5">
-                                        <span class="text-dark-75">Người gửi</span>
+                                        <span class="text-dark-75">Họ tên</span>
                                     </th>
                                     <th style="min-width: 120px">Nội dung</th>
-                                    <th style="min-width: 100px">Ngày gửi</th>
+                                    <th style="min-width: 100px">Số điện thoại</th>
+                                    <th style="min-width: 100px">Số lượng</th>
+                                    <th style="min-width: 100px">Ngày tạo</th>
+                                    <th class="text-center">EXT</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -35,21 +38,49 @@
                                     <td class="pl-0 py-8">
                                         <div class="d-flex align-items-center">
                                             <div class="symbol symbol-50 flex-shrink-0 mr-4">
-                                                <div class="symbol-label" style="background-image: url(/img/avatar.png)"></div>
-                                            </div>
-                                            <div>
-                                                <router-link :to="'/bai-viet/' + item.id + '/chinh-sua'" class="text-dark-75 font-weight-bolder text-hover-primary mb-1 font-size-lg" v-text="item.name"></router-link>
-                                                <span class="text-muted d-block" v-text="item.email"></span>
-                                                <span class="text-muted d-block" v-text="item.phone"></span>
+                                                {{ item.name }}
                                             </div>
                                         </div>
                                     </td>
                                     <td>
-                                        <span class="text-dark-75 font-weight-bolder d-block font-size-lg" v-text="Text(item.content, 500)"></span>
+                                        <div class="symbol symbol-50 flex-shrink-0 mr-4">
+                                            {{ item.content }}
+                                        </div>
                                     </td>
                                     <td>
-                                        <span class="text-dark-75 font-weight-bolder d-block font-size-lg" v-text="formatTime(item.created_at)"></span>
-                                        <span class="text-muted font-weight-bold" v-text="formatHuors(item.created_at)"></span>
+                                        <div class="symbol symbol-50 flex-shrink-0 mr-4">
+                                            {{ item.phone }}
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="symbol symbol-50 flex-shrink-0 mr-4">
+                                            {{ item.number }}
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="symbol symbol-50 flex-shrink-0 mr-4">
+                                            {{ formatTime(item.created_at) }}
+                                        </div>
+                                    </td>
+                                    
+                                    <td class="text-center">
+                                        <div class="dropdown dropdown-inline">
+                                            <a href="#" class="btn btn-clean btn-hover-light-primary btn-sm btn-icon" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                <i class="ki ki-bold-more-hor"></i>
+                                            </a>
+                                            <div class="dropdown-menu dropdown-menu-sm dropdown-menu-right">
+                                                <ul class="navi navi-hover">
+                                                    <li class="navi-item">
+                                                        <a @click="destroy(item.id)" class="navi-link">
+                                                            <span class="navi-icon">
+                                                                <i class="flaticon2 flaticon2-trash"></i>
+                                                            </span>
+                                                            <span class="navi-text">Xóa</span>
+                                                        </a>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                        </div>
                                     </td>
                                 </tr>
                             </tbody>
@@ -96,8 +127,8 @@ export default {
         return {
             subHeader: {
                 links: [{
-                        name: 'Phản hồi',
-                        url: '/phan-hoi',
+                        name: 'checking',
+                        url: '/checking',
                     },
                 ],
                 action: {
@@ -110,35 +141,23 @@ export default {
         }
     },
     created() {
-        Extends.LoadPage()
-        axios('/api/reports').then(res => {
-            KTApp.unblockPage();
-            this.posts = res.data
-            res.data.data.forEach(item => {
-                this.allID.push(item.id)
-            });
-        })
+        this.toPage()
     },
     methods: {
         async toPage(page = 1) {
             Extends.LoadPage()
-            let posts = await axios("/api/posts?page=" + page);
+            let posts = await axios("/api/checkings?page=" + page);
             this.posts = posts.data
-            this.allID = [];
-            posts.data.data.forEach(item => {
-                this.allID.push(item.id)
-            });
             KTApp.unblockPage();
         },
         formatTime(time) {
             return moment(time).format('DD/MM/YYYY');
         },
-        formatHuors(time) {
-            return moment(time).format('hh:mm:ss');
+        destroy(id) {
+            axios.delete('/api/checkings/' + id).then(res => {
+                this.posts.data = this.posts.data.filter(item => item.id !== id)
+            })
         },
-        Text(text, length) {
-            return Extends.FormatText(text, length)
-        }
     },
     
 }

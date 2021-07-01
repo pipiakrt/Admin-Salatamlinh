@@ -21,6 +21,7 @@ use App\Http\Controllers\Api\ProductHotController;
 use App\Http\Controllers\Api\ProductTopController;
 use App\Http\Controllers\Api\PromotionController;
 use App\Http\Controllers\Api\ReportController;
+use App\Http\Controllers\Api\CheckingController;
 
 /*
 |--------------------------------------------------------------------------
@@ -53,4 +54,5 @@ Route::resources([
     'members' => MemberController::class,
     'sliders' => SliderController::class,
     'accounts' => AccountController::class,
+    'checkings' => CheckingController::class,
 ]);

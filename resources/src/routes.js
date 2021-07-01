@@ -21,6 +21,8 @@ import CreateNotification from './pages/Notification/create'
 import Users from './pages/Users/index'
 // Reports
 import Reports from './pages/Reports/index'
+// Checking
+import Checking from './pages/Checking/index'
 // Menu
 import MenuSearch from './pages/Menu/search'
 import MenuCategory from './pages/Menu/category'
@@ -134,6 +136,12 @@ const routes = [
         path: '/nguoi-dung/phan-hoi',
         component: Reports,
         name: 'Users',
+    },
+    // Reports
+    {
+        path: '/checking',
+        component: Checking,
+        name: 'Checking',
     },
     // Products
     {
