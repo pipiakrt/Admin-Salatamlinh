@@ -116,7 +116,7 @@
                                                     <td class="pl-0 py-8">
                                                         <div class="d-flex align-items-center">
                                                             <div class="symbol symbol-50 flex-shrink-0 mr-4">
-                                                                <div class="symbol-label" :style="'background-image: url(' + item.url + ')'"></div>
+                                                                <div class="symbol-label" :style="`background-image: url('${item.url}')`"></div>
                                                             </div>
                                                             <div>
                                                                 <span class="text-dark-75 font-weight-bolder text-hover-primary mb-1 font-size-lg" v-text="item.name"></span>
