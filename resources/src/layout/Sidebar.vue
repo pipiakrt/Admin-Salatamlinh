@@ -313,6 +313,14 @@ export default {
                             name: 'Danh mục',
                             url: '/bai-viet/danh-muc'
                         },
+                        {
+                            name: 'Bài viết nổi bật',
+                            url: '/bai-viet/bai-viet-new'
+                        },
+                        {
+                            name: 'Bài viết hot',
+                            url: '/bai-viet/bai-viet-hot'
+                        },
                     ]
                 },
                 {

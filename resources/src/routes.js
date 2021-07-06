@@ -39,6 +39,8 @@ import Posts from './pages/Posts/index'
 import CreatePost from './pages/Posts/create'
 import EditPost from './pages/Posts/edit'
 import CategoryPost from './pages/Posts/category'
+import PostNew from './pages/Posts/new'
+import PostHot from './pages/Posts/hot'
 // Banner
 import Banner from './pages/Banner/index'
 // Slider
@@ -198,6 +200,16 @@ const routes = [
     {
         path: '/bai-viet/danh-muc',
         component: CategoryPost,
+        name: 'Posts',
+    },
+    {
+        path: '/bai-viet/bai-viet-new',
+        component: PostNew,
+        name: 'Posts',
+    },
+    {
+        path: '/bai-viet/bai-viet-hot',
+        component: PostHot,
         name: 'Posts',
     },
     // Menu

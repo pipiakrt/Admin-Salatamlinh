@@ -22,6 +22,9 @@ use App\Http\Controllers\Api\ProductTopController;
 use App\Http\Controllers\Api\PromotionController;
 use App\Http\Controllers\Api\ReportController;
 use App\Http\Controllers\Api\CheckingController;
+use App\Http\Controllers\Api\PostHotController;
+use App\Http\Controllers\Api\PostNewController;
+use App\Http\Resources\PostHot;
 
 /*
 |--------------------------------------------------------------------------
@@ -48,6 +51,8 @@ Route::resources([
     'producthightlights' => ProductHightlightController::class,
     'producthots' => ProductHotController::class,
     'producttops' => ProductTopController::class,
+    'posthots' => PostHotController::class,
+    'postnews' => PostNewController::class,
     'images' => ImageController::class,
     'banners' => BannerController::class,
     'reports' => ReportController::class,
