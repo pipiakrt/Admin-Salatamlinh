@@ -4,7 +4,6 @@
 /storage/*.key
 /vendor
 /public/uploads/products
-/public/js/app.js.LICENSE.txt
 .env.backup
 .phpunit.result.cache
 docker-compose.override.yml
@@ -16,8 +15,6 @@ package-lock.json
 node_modules
 /.vscode
 .env
-/public/js/app.js
-/public/js/app.js.LICENSE.txt
 /public/mix-manifest.json
 .rnd
 web.config
